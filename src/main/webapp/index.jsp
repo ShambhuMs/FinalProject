@@ -1,37 +1,81 @@
-<html>
+ <!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <base href="http://localhost:8080/springmvcPractice/" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <base href="http://localhost:8080/FinalProject/" />
+    <style>
+        body {
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+        .signup-form {
+                    width: 360px;
+                    margin: 100px auto;
+                    font-family: Arial, sans-serif;
+                }
+                .signup-form form {
+                    background: #fff;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+                }
+        .navbar {
+            margin-bottom: 20px; /* Adds space below the navbar */
+        }
+        .logo-img {
+            margin-right: 15px;
+        }
+        .form-container {
+            padding-top: 80px; /* Ensures the form is not hidden behind the navbar */
+        }
+    </style>
 </head>
-<style>
-    body {
-               background-color: #f0f2f5;
-               margin:0px;
-            }
-
-
-</style>
 <body>
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item" id="img">
-                   <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
+                    <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
                 </li>
-                <li class="nav-item" id="travel">
-                    <a class="nav-link text-light" href="travelForm.jsp">TravelForm</a>
+                <li class="nav-item" id="signup">
+                    <a class="nav-link text-light" href="Signup.jsp">Signup</a>
                 </li>
+
             </ul>
         </div>
-   </nav>
-    <div class="signup-form">
-       <form id="contactForm" action="loan" method="post">
+    </nav>
+    <div class="signup-form form-container">
+        <form id="contactForm" action="loan" method="post">
+                    <div class="mb-1 mt-3">
+                        <p class="fw-bold">
+                            <h4>Tech Stack:</h4>
+                            <span>JSP, Bootstrap CSS, JavaScript, Java, Spring, Spring JPA/Hibernate.</span>
+                        </p>
+                    </div>
+                    <div class="mb-1 mt-3">
+                        <p class="fw-bold">
+                            <h4>Start Date:</h4>
+                            <span>6-11-2024</span>
+                        </p>
+                    </div>
+                    <div class="mb-1 mt-3">
+                        <p class="fw-bold">
+                            <h4>VCS:</h4>
 
-           </form>
-       </div>
-<h2>Welcome to Spring Web MVC</h2>
+                            <a href="https://github.com/ShambhuMs/">GitHub</a>
+                        </p>
+                    </div>
+                    <div class="mb-1 mt-3">
+                        <p class="fw-bold">
+                            <h4>Description:</h4>
+                            <span>Currently working on designing Landing Page and Sign Up page. Saving data to the database.</span>
+                        </p>
+                    </div>
+
+        </form>
+    </div>
 </body>
 </html>
-
-

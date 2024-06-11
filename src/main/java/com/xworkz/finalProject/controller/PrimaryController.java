@@ -1,0 +1,52 @@
+package com.xworkz.finalProject.controller;
+
+import com.xworkz.finalProject.dto.SignupDTO;
+import com.xworkz.finalProject.model.service.interfaces.SignUpService;
+import com.xworkz.finalProject.randomPassword.RandomPasswordGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Controller
+@RequestMapping("/")
+public class PrimaryController {
+    @Autowired
+    private SignUpService signUpService;
+    public PrimaryController() {
+        System.out.println("Created no arg constructor in PrimaryController...");
+    }
+
+    @PostMapping("/sign")
+    public String validateAndSave(@Valid SignupDTO signupDTO, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError));
+            model.addAttribute("errorMessage",bindingResult.getAllErrors());
+        }else {
+            String fullName=signupDTO.getFirstName()+" "+signupDTO.getLastName();
+            signupDTO.setCreatedBy(fullName);
+            signupDTO.setUpdatedBy(fullName);
+            signupDTO.setCreatedDate(LocalDateTime.now());
+            signupDTO.setUpdatedDate(LocalDateTime.now());
+            String password= RandomPasswordGenerator.generatePassword();
+            signupDTO.setPassword(password);
+           boolean result= this.signUpService.save(signupDTO);
+           if (result){
+               model.addAttribute("msg",signupDTO.getFirstName()+", Your application submitted..");
+               model.addAttribute("password","Your password is : "+signupDTO.getPassword());
+               System.out.println("dto in controller"+signupDTO.getPassword());
+           }
+            else {
+                model.addAttribute("failedMsg","Data already exist...");
+               System.out.println("dto in controller"+signupDTO);
+           }
+        }
+        return "Signup";
+    }
+}
