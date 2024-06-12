@@ -50,7 +50,7 @@
                     <a class="nav-link text-light" href="Signup.jsp">Signup</a>
                 </li>
                 <li class="nav-item" id="signup">
-                    <a class="nav-link text-light" href="Login.jsp">Login</a>
+                    <a class="nav-link text-light" href="SignIn.jsp">Login</a>
                 </li>
             </ul>
         </div>

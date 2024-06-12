@@ -4,10 +4,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -19,7 +16,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "signup")
 @NamedQuery(name = "findByEmail",query = "select signup from SignupDTO signup where signup.email=:email")
-@NamedQuery(name = "findByPhoneNumber",query = "select signup from SignupDTO signup where signup.phoneNumber=:phoneNumber")
+@NamedQuery(name = "findByPhoneNumber",query = "select signup from SignupDTO signup where" +
+        " signup.phoneNumber=:phoneNumber")
+@NamedQuery(name = "findByEmailAndPassword",query = "select signup from SignupDTO signup where " +
+        "signup.email=:email and signup.password=:password")
+@NamedQuery(name = "findByEmailAndUserPassword",query = "select signup from SignupDTO signup where " +
+        "signup.email=:email and signup.userPassword=:password")
 public class SignupDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +41,6 @@ public class SignupDTO {
     @NotNull(message = "email not be null")
     @Email(message = "Enter valid email" )
     private String email;
-    @Getter
     private String password;
     @Column(name = "created_by")
     private String createdBy;
@@ -49,6 +50,9 @@ public class SignupDTO {
     private LocalDateTime createdDate;
     @Column(name = "modified_date")
     private LocalDateTime updatedDate;
+    @Column(name = "user_password")
+    private String userPassword;
+    private int login_count;
 
     public String getPassword() {
         return password;
@@ -56,5 +60,21 @@ public class SignupDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public int getLogin_count() {
+        return login_count;
+    }
+
+    public void setLogin_count(int login_count) {
+        this.login_count = login_count;
     }
 }

@@ -61,7 +61,7 @@
                 <li class="nav-item" id="img">
                     <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
                 </li>
-                <li class="nav-item" id="Login">
+                <li class="nav-item" id="SignIn">
                     <a class="nav-link text-light" href="SignIn.jsp">SignIn</a>
                 </li>
                 <li class="nav-item" id="home">
@@ -71,50 +71,35 @@
         </div>
     </nav>
     <div class="signup-form">
-        <form id="contactForm" action="sign" method="post">
-     <span style="color:red">
-       <c:forEach items="${errorMessage}" var="error">
-        ${error.defaultMessage}
-        </c:forEach>
-        </span>
+        <form id="contactForm" action="resetPassword" method="post">
+            <h2>Password Set</h2>
         <span style="color:green">${msg}</span>
-            <h2>Sign Up</h2>
             <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" class="form-control" placeholder="Enter First Name" id="firstName" name="firstName" value="${atmDTO.firstName}" required>
-                <div id="error-firstName" class="error"></div>
-            </div>
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" class="form-control" placeholder="Enter Last Name" id="lastName" name="lastName" value="${atmDTO.lastName}" required>
-                <div id="error-lastName" class="error"></div>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" value="${atmDTO.email}" required>
+                <input type="text" ${readOnly=='disable' ? 'readonly': ' '} class="form-control" placeholder="Enter email" id="email" name="email" value="${dto.email}" required>
                 <div id="error-email" class="error"> </div>
-              <div>  <span style="color:red">${failedEmailMsg}</span> </div>
-
+            </div>
+             <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password"  ${readOnly=='disable' ? 'readonly': ' '}  class="form-control" placeholder="Enter password" id="password" name="password" value="${dto.password}" required>
+                <div id="error-password" class="error"></div>
             </div>
             <div class="form-group">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="text" class="form-control" placeholder="Enter Phone Number" id="phoneNumber" name="phoneNumber" value="${atmDTO.phoneNumber}" required>
-                <div id="error-phoneNumber" class="error">
-                </div>
-             <div> <span style="color:red">${failedPhNoMsg}</span> </div>
-            </div>
-            <div class="form-group form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="signUpCheck">
-                <label class="form-check-label" for="signUpCheck">Sign up for newsletter</label>
-                <div id="error-signUpCheck" class="error"></div>
+                <label for="newPassword">New password</label>
+                <input type="password" class="form-control" placeholder="Enter New password" id="newPassword" name="newPassword"  required>
+                <div id="error-newPassword" class="error"></div>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary btn-block" id="submitBtn" value="Submit" name="submit" disabled/>
+                <label for="confirmNewPassword">Confirm New password</label>
+                <input type="password" class="form-control" placeholder=" " id="confirmNewPassword" name="confirmNewPassword"  required>
+                <div id="error-confirmNewPassword" class="error"></div>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-block" id="submitBtn" value="Reset" name="submit" />
             </div>
         </form>
     </div>
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         const firstNameInput = document.getElementById('firstName');
         const lastNameInput = document.getElementById('lastName');
@@ -207,6 +192,6 @@
 
         validateForm();
     });
-</script>
+</script> -->
 </body>
 </html>

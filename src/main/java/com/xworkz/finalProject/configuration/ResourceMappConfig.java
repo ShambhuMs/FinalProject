@@ -22,7 +22,7 @@ public class ResourceMappConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-     registry.addResourceHandler("/image/**")
+     registry.addResourceHandler("/images/**")
              .addResourceLocations("/images/");
     }
 }

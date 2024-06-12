@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -30,17 +31,10 @@ public class PrimaryController {
             bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError));
             model.addAttribute("errorMessage",bindingResult.getAllErrors());
         }else {
-            String fullName=signupDTO.getFirstName()+" "+signupDTO.getLastName();
-            signupDTO.setCreatedBy(fullName);
-            signupDTO.setUpdatedBy(fullName);
-            signupDTO.setCreatedDate(LocalDateTime.now());
-            signupDTO.setUpdatedDate(LocalDateTime.now());
-            String password= RandomPasswordGenerator.generatePassword();
-            signupDTO.setPassword(password);
            boolean result= this.signUpService.save(signupDTO);
            if (result){
                model.addAttribute("msg",signupDTO.getFirstName()+", Your application submitted..");
-               model.addAttribute("password","Your password is : "+signupDTO.getPassword());
+               /*model.addAttribute("password","Your password is : "+signupDTO.getPassword());*/
                System.out.println("dto in controller"+signupDTO.getPassword());
            }
             else {
@@ -58,4 +52,7 @@ public class PrimaryController {
         }
         return "Signup";
     }
+
+
+
 }

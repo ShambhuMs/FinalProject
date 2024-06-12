@@ -12,4 +12,11 @@ public interface SignUpService {
     default Optional<SignupDTO> findByPhoneNumber(long phoneNumber){
         return Optional.empty();
     }
+    default Optional<SignupDTO> findByEamilAndPassword(String email,String password){
+        return Optional.empty();
+    }
+    boolean update(SignupDTO signupDTO);
+    default Optional<SignupDTO> findByEamilAndUsePassword(String email,String password){
+        return Optional.empty();
+    }
 }

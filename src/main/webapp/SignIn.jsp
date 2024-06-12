@@ -75,14 +75,18 @@
                 <li class="nav-item" id="home">
                     <a class="nav-link text-light" href="index.jsp">Home</a>
                 </li>
+                <li class="nav-item" id="pass">
+                    <a class="nav-link text-light" href="PasswordReset.jsp">Password</a>
+                </li>
             </ul>
         </div>
     </nav>
 <div class="login-form">
-    <form action="loginServlet" method="post">
+    <form action="signIn" method="post">
         <h2 class="text-center">Login</h2>
+       <span style="color:red">  ${msg} </span>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Email or Phone" id="emailOrPhone" name="emailOrPhone" required>
+            <input type="text" class="form-control" placeholder="Email or Phone" id="emailOrPhone" name="email" required>
             <div id="error-emailOrPhone" class="error"></div>
         </div>
         <div class="form-group">
@@ -90,7 +94,7 @@
             <div id="error-password" class="error"></div>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block" id="submitBtn" disabled>Login</button>
+            <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="" name="submit">Login</button>
         </div>
         <div class="clearfix">
 <!--            <label class="float-left form-check-label"><input type="checkbox"> Remember me</label>-->
@@ -102,7 +106,7 @@
      </p>
 </div>
 
-<script>
+<!-- <script>
     const emailOrPhoneInput = document.getElementById('emailOrPhone');
     const passwordInput = document.getElementById('password');
     const submitBtn = document.getElementById('submitBtn');
@@ -118,7 +122,7 @@
             } else {
                 errorEmailOrPhone.textContent = 'Please enter 10 digit number';
             }
-        } else if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue)) {
+        } else if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue) || inputValue.length<=8 || inputValue.length>=28) {
             errorEmailOrPhone.textContent = 'Mail must be @, special characters, digits';
         } else {
             errorEmailOrPhone.textContent = '';
@@ -152,6 +156,6 @@
             submitBtn.setAttribute('disabled', 'disabled');
         }
     }
-</script>
+</script> -->
 </body>
 </html>

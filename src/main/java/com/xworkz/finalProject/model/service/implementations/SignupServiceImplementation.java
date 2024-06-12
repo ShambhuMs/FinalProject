@@ -1,22 +1,49 @@
 package com.xworkz.finalProject.model.service.implementations;
 
+import com.xworkz.finalProject.configuration.mailConfiguration.EmailConfiguration;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.implementations.SignupRepository;
 import com.xworkz.finalProject.model.service.interfaces.SignUpService;
+import com.xworkz.finalProject.randomPassword.RandomPasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 public class SignupServiceImplementation implements SignUpService {
     @Autowired
     private SignupRepository signupRepository;
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+    public void sendEmail(SignupDTO signupDTO){
+        SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
+        simpleMailMessage.setTo(signupDTO.getEmail());
+        simpleMailMessage.setSubject("One time Password");
+        simpleMailMessage.setText("Dear "+signupDTO.getFirstName()+" "+signupDTO.getLastName()+
+                " your signup success Please SignIn through this password :"+signupDTO.getPassword()+"\n\n"+
+                "Thanks and Regards,\n"+" "+"X-workz Team");
+        javaMailSender.send(simpleMailMessage);
+    }
     @Override
     public boolean save(SignupDTO signupDTO) {
         System.out.println("Running save method in Service....");
-
+        String fullName=signupDTO.getFirstName()+" "+signupDTO.getLastName();
+        signupDTO.setCreatedBy(fullName);
+     //   signupDTO.setUpdatedBy(fullName);
+        signupDTO.setCreatedDate(LocalDateTime.now());
+      //  signupDTO.setUpdatedDate(LocalDateTime.now());
+        signupDTO.setLogin_count(0);
+        String password= RandomPasswordGenerator.generatePassword();
+        signupDTO.setPassword(password);
         boolean saveResult= this.signupRepository.save(signupDTO);
+        if (saveResult){
+            sendEmail(signupDTO);
+        }
         System.out.println("dto in service"+signupDTO.getPassword());
         return saveResult;
     }
@@ -41,6 +68,43 @@ public class SignupServiceImplementation implements SignUpService {
             return optionalSignupDTO;
         }else {
             System.out.println("data not found for phoneNumber : "+phoneNumber);
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<SignupDTO> findByEamilAndPassword(String email, String password) {
+        Optional<SignupDTO>  optionalSignupDTO=this.signupRepository.findByEamilAndPassword(email,password);
+        if (optionalSignupDTO.isPresent()){
+            System.out.println("data found for Email  : "+email);
+            return optionalSignupDTO;
+        }else {
+            System.out.println("data not found for Email : "+email);
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public boolean update(SignupDTO signupDTO) {
+      boolean result=  this.signupRepository.update( signupDTO);
+      if (result){
+          System.out.println("update success..."+signupDTO);
+          return result;
+      }else {
+          System.out.println("update failed..."+signupDTO);
+          return false;
+      }
+
+    }
+
+    @Override
+    public Optional<SignupDTO> findByEamilAndUsePassword(String email, String password) {
+        Optional<SignupDTO>  optionalSignupDTO=this.signupRepository.findByEamilAndUsePassword(email,password);
+        if (optionalSignupDTO.isPresent()){
+            System.out.println("data found for Email  : "+email);
+            return optionalSignupDTO;
+        }else {
+            System.out.println("data not found for Email : "+email);
             return Optional.empty();
         }
     }
