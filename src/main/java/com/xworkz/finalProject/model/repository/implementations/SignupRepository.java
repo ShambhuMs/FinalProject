@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import java.util.Optional;
 
 @Repository
 public class SignupRepository implements SignUpRepo {
@@ -30,5 +32,39 @@ public class SignupRepository implements SignUpRepo {
             entityManager.close();
         }
         return false;
+    }
+
+    @Override
+    public Optional<SignupDTO> findByEmail(String email) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+         Query query= entityManager.createNamedQuery("findByEmail");
+         query.setParameter("email",email);
+        Object object=  query.getSingleResult();
+         SignupDTO signupDTO=(SignupDTO) object;
+         return Optional.ofNullable(signupDTO);
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            entityManager.close();
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<SignupDTO> findByPhoneNumber(long phoneNumber) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            Query query= entityManager.createNamedQuery("findByPhoneNumber");
+            query.setParameter("phoneNumber",phoneNumber);
+            Object object=  query.getSingleResult();
+            SignupDTO signupDTO=(SignupDTO) object;
+            return Optional.ofNullable(signupDTO);
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            entityManager.close();
+        }
+        return Optional.empty();
     }
 }

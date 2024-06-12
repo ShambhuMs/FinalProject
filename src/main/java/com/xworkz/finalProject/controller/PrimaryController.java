@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -43,8 +44,16 @@ public class PrimaryController {
                System.out.println("dto in controller"+signupDTO.getPassword());
            }
             else {
-                model.addAttribute("failedMsg","Data already exist...");
-               System.out.println("dto in controller"+signupDTO);
+                System.out.println("dto in controller"+signupDTO);
+               String email=signupDTO.getEmail();
+               Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(email);
+               long phoneNumber= signupDTO.getPhoneNumber();
+               Optional<SignupDTO> optionalPhoneNumber=this.signUpService.findByPhoneNumber(phoneNumber);
+               if (optionalSignupDTO.isPresent()){
+                   model.addAttribute("failedEmailMsg","Email already exist...");
+               }else if (optionalPhoneNumber.isPresent()){
+                   model.addAttribute("failedPhNoMsg","PhoneNumber already exist...");
+               }
            }
         }
         return "Signup";

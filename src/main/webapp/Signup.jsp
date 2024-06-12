@@ -46,6 +46,12 @@
         h2 {
             color: black;
         }
+          .navbar-nav {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -56,10 +62,10 @@
                     <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
                 </li>
                 <li class="nav-item" id="Login">
-                    <a class="nav-link" href="Login.jsp">Login</a>
+                    <a class="nav-link text-light" href="Login.jsp">Login</a>
                 </li>
                 <li class="nav-item" id="home">
-                    <a class="nav-link" href="index.jsp">Home</a>
+                    <a class="nav-link text-light" href="index.jsp">Home</a>
                 </li>
             </ul>
         </div>
@@ -72,7 +78,6 @@
         </c:forEach>
         </span>
         <span style="color:green">${msg}</span>
-        <span style="color:red">${failedMsg}</span>
             <h2>Sign Up</h2>
             <div class="form-group">
                 <label for="firstName">First Name</label>
@@ -87,12 +92,16 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" value="${atmDTO.email}" required>
-                <div id="error-email" class="error"></div>
+                <div id="error-email" class="error"> </div>
+              <div>  <span style="color:red">${failedEmailMsg}</span> </div>
+
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Phone Number</label>
                 <input type="text" class="form-control" placeholder="Enter Phone Number" id="phoneNumber" name="phoneNumber" value="${atmDTO.phoneNumber}" required>
-                <div id="error-phoneNumber" class="error"></div>
+                <div id="error-phoneNumber" class="error">
+                </div>
+             <div> <span style="color:red">${failedPhNoMsg}</span> </div>
             </div>
             <div class="form-group form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="signUpCheck">

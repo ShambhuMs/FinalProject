@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Landing</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <base href="http://localhost:8080/FinalProject/" />
     <style>
@@ -23,13 +23,19 @@
                     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
                 }
         .navbar {
-            margin-bottom: 20px; /* Adds space below the navbar */
+            margin-bottom: 20px;
         }
         .logo-img {
             margin-right: 15px;
         }
         .form-container {
-            padding-top: 80px; /* Ensures the form is not hidden behind the navbar */
+            padding-top: 80px;
+        }
+         .navbar-nav {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            height: 100%;
         }
     </style>
 </head>
@@ -43,7 +49,9 @@
                 <li class="nav-item" id="signup">
                     <a class="nav-link text-light" href="Signup.jsp">Signup</a>
                 </li>
-
+                <li class="nav-item" id="signup">
+                    <a class="nav-link text-light" href="Login.jsp">Login</a>
+                </li>
             </ul>
         </div>
     </nav>

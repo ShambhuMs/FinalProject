@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "signup")
+@NamedQuery(name = "findByEmail",query = "select signup from SignupDTO signup where signup.email=:email")
+@NamedQuery(name = "findByPhoneNumber",query = "select signup from SignupDTO signup where signup.phoneNumber=:phoneNumber")
 public class SignupDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
