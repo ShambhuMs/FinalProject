@@ -50,6 +50,7 @@ public class SignupDTO {
     private LocalDateTime createdDate;
     @Column(name = "modified_date")
     private LocalDateTime updatedDate;
+    @Pattern(regexp = "^(?=.*[a-zA-Z0-9]).{6,}$\n",message = "password should be digit or alphabet and special characters")
     @Column(name = "user_password")
     private String userPassword;
     private int login_count;

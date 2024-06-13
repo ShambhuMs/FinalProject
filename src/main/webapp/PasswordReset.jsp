@@ -98,100 +98,78 @@
             </div>
         </form>
     </div>
+    <script>
+const emailInput = document.getElementById('email');
+const newPasswordInput = document.getElementById('newPassword');
+const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
+const submitBtn = document.getElementById('submitBtn');
 
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const firstNameInput = document.getElementById('firstName');
-        const lastNameInput = document.getElementById('lastName');
-        const emailInput = document.getElementById('email');
-        const phoneNumberInput = document.getElementById('phoneNumber');
-        const signUpCheck = document.getElementById('signUpCheck');
-        const submitBtn = document.getElementById('submitBtn');
+newPasswordInput.addEventListener('input', function() {
+    validateNewPassword();
+    validateConfirmPassword();
+    validateForm();
+});
 
-        const errorFirstName = document.getElementById('error-firstName');
-        const errorLastName = document.getElementById('error-lastName');
-        const errorEmail = document.getElementById('error-email');
-        const errorPhoneNumber = document.getElementById('error-phoneNumber');
-        const errorSignUpCheck = document.getElementById('error-signUpCheck');
+confirmNewPasswordInput.addEventListener('input', function() {
+    validateConfirmPassword();
+    validateForm();
+});
 
-        function validateFirstName() {
-            const firstName = firstNameInput.value;
-            if (firstName.length < 3 || firstName.length > 15 || /\d/.test(firstName)) {
-                errorFirstName.textContent = "First name must be between 3 and 15 characters and not contain numbers.";
-                errorFirstName.style.display = 'block';
-            } else {
-                errorFirstName.textContent = "";
-                errorFirstName.style.display = 'none';
-            }
-            validateForm();
+function validateNewPassword() {
+    const inputValue = newPasswordInput.value.trim();
+    const errorNewPassword = document.getElementById('error-newPassword');
+
+    const hasAlphabet = /[a-zA-Z]/.test(inputValue);
+    const hasDigit = /[0-9]/.test(inputValue);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(inputValue);
+    const isValidLength = inputValue.length > 6 && inputValue.length < 18;
+
+    if (!isValidLength) {
+        errorNewPassword.textContent = 'Password length should be greater than 6 and less than 18';
+        errorNewPassword.style.display = 'block';
+    }else if(hasDigit){
+             errorNewPassword.textContent = '';
+             errorNewPassword.style.display = 'none';
+    }
+    else if (!hasAlphabet || !hasSpecialChar) {
+        errorNewPassword.textContent = 'Password must contain alphabets and special characters';
+        errorNewPassword.style.display = 'block';
+    }  else{
+        errorNewPassword.textContent = '';
+        errorNewPassword.style.display = 'none';
+    }
+}
+
+function validateConfirmPassword() {
+    const newPasswordValue = newPasswordInput.value.trim();
+    const confirmPasswordValue = confirmNewPasswordInput.value.trim();
+    const errorConfirmNewPassword = document.getElementById('error-confirmNewPassword');
+
+    if (confirmNewPasswordInput === document.activeElement || confirmPasswordValue.length > 0) {
+        if (confirmPasswordValue !== newPasswordValue) {
+            errorConfirmNewPassword.textContent = 'Passwords do not match';
+            errorConfirmNewPassword.style.display = 'block';
+        } else {
+            errorConfirmNewPassword.textContent = '';
+            errorConfirmNewPassword.style.display = 'none';
         }
+    } else {
+        errorConfirmNewPassword.textContent = '';
+        errorConfirmNewPassword.style.display = 'none';
+    }
+}
 
-        function validateLastName() {
-            const lastName = lastNameInput.value;
-            if (lastName.length < 3 || lastName.length > 15 || /\d/.test(lastName)) {
-                errorLastName.textContent = "Last name must be between 3 and 15 characters and not contain numbers.";
-                errorLastName.style.display = 'block';
-            } else {
-                errorLastName.textContent = "";
-                errorLastName.style.display = 'none';
-            }
-            validateForm();
-        }
+function validateForm() {
+    const errorNewPassword = document.getElementById('error-newPassword').textContent;
+    const errorConfirmNewPassword = document.getElementById('error-confirmNewPassword').textContent;
 
-        function validateEmail() {
-            const email = emailInput.value;
-            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            if (!emailPattern.test(email)) {
-                errorEmail.textContent = "Please enter a valid email address.";
-                errorEmail.style.display = 'block';
-            } else {
-                errorEmail.textContent = "";
-                errorEmail.style.display = 'none';
-            }
-            validateForm();
-        }
+    if (errorNewPassword === '' && errorConfirmNewPassword === '' && newPasswordInput.value.trim() !== '' && confirmNewPasswordInput.value.trim() !== '') {
+        submitBtn.removeAttribute('disabled');
+    } else {
+        submitBtn.setAttribute('disabled', 'disabled');
+    }
+}
 
-        function validatePhoneNumber() {
-            const phoneNumber = phoneNumberInput.value;
-            if (!/^\d{10}$/.test(phoneNumber)) {
-                errorPhoneNumber.textContent = "Phone number must be 10 digits.";
-                errorPhoneNumber.style.display = 'block';
-            } else {
-                errorPhoneNumber.textContent = "";
-                errorPhoneNumber.style.display = 'none';
-            }
-            validateForm();
-        }
-
-        function validateCheckbox() {
-            if (!signUpCheck.checked) {
-                errorSignUpCheck.textContent = "You must agree to sign up for the newsletter.";
-                errorSignUpCheck.style.display = 'block';
-            } else {
-                errorSignUpCheck.textContent = "";
-                errorSignUpCheck.style.display = 'none';
-            }
-            validateForm();
-        }
-
-        function validateForm() {
-            const isFirstNameValid = errorFirstName.textContent === "";
-            const isLastNameValid = errorLastName.textContent === "";
-            const isEmailValid = errorEmail.textContent === "";
-            const isPhoneNumberValid = errorPhoneNumber.textContent === "";
-            const isCheckboxValid = signUpCheck.checked;
-
-            submitBtn.disabled = !(isFirstNameValid && isLastNameValid && isEmailValid && isPhoneNumberValid && isCheckboxValid);
-        }
-
-        firstNameInput.addEventListener('input', validateFirstName);
-        lastNameInput.addEventListener('input', validateLastName);
-        emailInput.addEventListener('input', validateEmail);
-        phoneNumberInput.addEventListener('input', validatePhoneNumber);
-        signUpCheck.addEventListener('change', validateCheckbox);
-
-        validateForm();
-    });
-</script> -->
+ </script>
 </body>
 </html>

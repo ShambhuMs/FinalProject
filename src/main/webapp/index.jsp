@@ -52,6 +52,9 @@
                 <li class="nav-item" id="signup">
                     <a class="nav-link text-light" href="SignIn.jsp">Login</a>
                 </li>
+                <li class="nav-item" id="signup">
+                                    <a class="nav-link text-light" href="PasswordReset.jsp">PasswordReset</a>
+                                </li>
             </ul>
         </div>
     </nav>

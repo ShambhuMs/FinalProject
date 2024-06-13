@@ -93,11 +93,6 @@ public class SignupRepository implements SignUpRepo {
         EntityTransaction entityTransaction= entityManager.getTransaction();
         try {
             entityTransaction.begin();
-          /* Query query=entityManager.createQuery("update SignupDTO set user_password=:password where email=:email");
-           query.setParameter("email",email);
-           query.setParameter("password",signupDTO.getUserPassword());
-           int result=  query.executeUpdate();
-            System.out.println("result from implementation.. : "+result);*/
             entityManager.merge(signupDTO);
             entityTransaction.commit();
             return true;

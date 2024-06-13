@@ -86,11 +86,11 @@
         <h2 class="text-center">Login</h2>
        <span style="color:red">  ${msg} </span>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Email or Phone" id="emailOrPhone" name="email" required>
-            <div id="error-emailOrPhone" class="error"></div>
+            <input type="text" class="form-control" placeholder="Enter email " id="email" name="email" required>
+            <div id="error-email" class="error"></div>
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
+            <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" required>
             <div id="error-password" class="error"></div>
         </div>
         <div class="form-group">
@@ -106,56 +106,50 @@
      </p>
 </div>
 
-<!-- <script>
-    const emailOrPhoneInput = document.getElementById('emailOrPhone');
+ <script>
+    const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const submitBtn = document.getElementById('submitBtn');
 
-    emailOrPhoneInput.addEventListener('input', function() {
+    emailInput.addEventListener('input', function() {
         const inputValue = this.value.trim();
-        const errorEmailOrPhone = document.getElementById('error-emailOrPhone');
+        const errorEmail = document.getElementById('error-email');
 
-        if (/^\d+$/.test(inputValue)) {
-            if (inputValue.length === 10) {
-                errorEmailOrPhone.textContent = '';
-                this.blur(); // Turn off focus
-            } else {
-                errorEmailOrPhone.textContent = 'Please enter 10 digit number';
-            }
-        } else if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue) || inputValue.length<=8 || inputValue.length>=28) {
-            errorEmailOrPhone.textContent = 'Mail must be @, special characters, digits';
+         if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue) || inputValue.length<=8 || inputValue.length>=28 ) {
+            errorEmail.textContent = 'Mail must be @, special characters, digits';
         } else {
-            errorEmailOrPhone.textContent = '';
+            errorEmail.textContent = '';
         }
-
         validateForm();
     });
 
-    passwordInput.addEventListener('input', function() {
-        const inputValue = this.value.trim();
-        const errorPassword = document.getElementById('error-password');
+   passwordInput.addEventListener('input', function() {
+       const inputValue = this.value.trim();
+       const errorPassword = document.getElementById('error-password');
 
-        if (inputValue.length < 6 || inputValue.length > 18) {
-            errorPassword.textContent = 'Password length should be greater than 6 and less than 18';
-        } else if (!/[A-Z]/.test(inputValue) || !/[\W_]/.test(inputValue) || !/\d/.test(inputValue) || !/[a-z]/.test(inputValue)) {
-            errorPassword.textContent = 'Password must contain Capital letter, Special character, Digit, and Text';
-        } else {
-            errorPassword.textContent = '';
-        }
+       const hasAlphabet = /[a-zA-Z]/.test(inputValue);
+       const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(inputValue);
+       const isValidLength = inputValue.length > 6 && inputValue.length < 18;
 
-        validateForm();
-    });
+       if (!isValidLength) {
+           errorPassword.textContent = 'Password length should be greater than 6 and less than 18';
+       } else if (!hasAlphabet || !hasSpecialChar) {
+           errorPassword.textContent = 'Password must contain alphabets and special characters';
+       } else {
+           errorPassword.textContent = '';
+       }
+       validateForm();
+   });
 
     function validateForm() {
-        const errorEmailOrPhone = document.getElementById('error-emailOrPhone').textContent;
+        const errorEmail = document.getElementById('error-email').textContent;
         const errorPassword = document.getElementById('error-password').textContent;
-
-        if (errorEmailOrPhone === '' && errorPassword === '') {
+        if (errorEmail === '' && errorPassword === '') {
             submitBtn.removeAttribute('disabled');
         } else {
             submitBtn.setAttribute('disabled', 'disabled');
         }
     }
-</script> -->
+</script>
 </body>
 </html>
