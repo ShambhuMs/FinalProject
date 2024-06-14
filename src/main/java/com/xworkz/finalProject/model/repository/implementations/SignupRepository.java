@@ -70,7 +70,7 @@ public class SignupRepository implements SignUpRepo {
     }
 
     @Override
-    public Optional<SignupDTO> findByEamilAndPassword(String email,String password) {
+    public Optional<SignupDTO> findByEmailAndPassword(String email, String password) {
         EntityManager entityManager= entityManagerFactory.createEntityManager();
         try {
             Query query= entityManager.createNamedQuery("findByEmailAndPassword");
@@ -105,21 +105,5 @@ public class SignupRepository implements SignUpRepo {
         return false;
     }
 
-    @Override
-    public Optional<SignupDTO> findByEamilAndUsePassword(String email, String password) {
-        EntityManager entityManager= entityManagerFactory.createEntityManager();
-        try {
-            Query query= entityManager.createNamedQuery("findByEmailAndUserPassword");
-            query.setParameter("email",email);
-            query.setParameter("password",password);
-            Object object=  query.getSingleResult();
-            SignupDTO signupDTO=(SignupDTO) object;
-            return Optional.ofNullable(signupDTO);
-        }catch (Exception e){
-            System.out.println(e);
-        }finally {
-            entityManager.close();
-        }
-        return Optional.empty();
-    }
+
 }

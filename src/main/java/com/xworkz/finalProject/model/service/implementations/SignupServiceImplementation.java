@@ -1,6 +1,5 @@
 package com.xworkz.finalProject.model.service.implementations;
 
-import com.xworkz.finalProject.configuration.mailConfiguration.EmailConfiguration;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.implementations.SignupRepository;
 import com.xworkz.finalProject.model.service.interfaces.SignUpService;
@@ -73,8 +72,8 @@ public class SignupServiceImplementation implements SignUpService {
     }
 
     @Override
-    public Optional<SignupDTO> findByEamilAndPassword(String email, String password) {
-        Optional<SignupDTO>  optionalSignupDTO=this.signupRepository.findByEamilAndPassword(email,password);
+    public Optional<SignupDTO> findByEmailAndPassword(String email, String password) {
+        Optional<SignupDTO>  optionalSignupDTO=this.signupRepository.findByEmailAndPassword(email,password);
         if (optionalSignupDTO.isPresent()){
             System.out.println("data found for Email  : "+email);
             return optionalSignupDTO;
@@ -97,15 +96,5 @@ public class SignupServiceImplementation implements SignUpService {
 
     }
 
-    @Override
-    public Optional<SignupDTO> findByEamilAndUsePassword(String email, String password) {
-        Optional<SignupDTO>  optionalSignupDTO=this.signupRepository.findByEamilAndUsePassword(email,password);
-        if (optionalSignupDTO.isPresent()){
-            System.out.println("data found for Email  : "+email);
-            return optionalSignupDTO;
-        }else {
-            System.out.println("data not found for Email : "+email);
-            return Optional.empty();
-        }
-    }
+
 }

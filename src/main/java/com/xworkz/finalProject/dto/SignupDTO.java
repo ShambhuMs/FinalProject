@@ -19,9 +19,9 @@ import java.time.LocalDateTime;
 @NamedQuery(name = "findByPhoneNumber",query = "select signup from SignupDTO signup where" +
         " signup.phoneNumber=:phoneNumber")
 @NamedQuery(name = "findByEmailAndPassword",query = "select signup from SignupDTO signup where " +
-        "signup.email=:email and signup.password=:password")
-@NamedQuery(name = "findByEmailAndUserPassword",query = "select signup from SignupDTO signup where " +
-        "signup.email=:email and signup.userPassword=:password")
+        "signup.email=:email and signup.password=:password or signup.userPassword=:password")
+/*@NamedQuery(name = "findByEmailAndUserPassword",query = "select signup from SignupDTO signup where " +
+        "signup.email=:email and signup.userPassword=:password")*/
 public class SignupDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +50,7 @@ public class SignupDTO {
     private LocalDateTime createdDate;
     @Column(name = "modified_date")
     private LocalDateTime updatedDate;
-    @Pattern(regexp = "^(?=.*[a-zA-Z0-9]).{6,}$\n",message = "password should be digit or alphabet and special characters")
+  //  @Pattern(regexp = "^(?=.*[a-zA-Z0-9]).{6,}$\n",message = "password should be digit or alphabet and special characters")
     @Column(name = "user_password")
     private String userPassword;
     private int login_count;

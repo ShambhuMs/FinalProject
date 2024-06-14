@@ -12,11 +12,10 @@ public interface SignUpRepo {
     default Optional<SignupDTO> findByPhoneNumber(long phoneNumber){
         return Optional.empty();
     }
-    default Optional<SignupDTO> findByEamilAndPassword(String email,String password){
+    default Optional<SignupDTO> findByEmailAndPassword(String email, String password){
         return Optional.empty();
     }
-    default Optional<SignupDTO> findByEamilAndUsePassword(String email,String password){
-        return Optional.empty();
-    }
+
     boolean update(SignupDTO signupDTO);
+
 }

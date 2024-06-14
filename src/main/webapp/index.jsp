@@ -49,12 +49,15 @@
                 <li class="nav-item" id="signup">
                     <a class="nav-link text-light" href="Signup.jsp">Signup</a>
                 </li>
-                <li class="nav-item" id="signup">
-                    <a class="nav-link text-light" href="SignIn.jsp">Login</a>
+                <li class="nav-item" id="AdminSignIn">
+                    <a class="nav-link text-light" href="AdminSignIn.jsp">AdminSignIn</a>
                 </li>
-                <li class="nav-item" id="signup">
-                                    <a class="nav-link text-light" href="PasswordReset.jsp">PasswordReset</a>
-                                </li>
+                <li class="nav-item" id="SignIn.jsp">
+                       <a class="nav-link text-light" href="SignIn.jsp">SignIn</a>
+                </li>
+                <li class="nav-item" id="SignIn.jsp">
+                       <a class="nav-link text-light" href="PasswordReset.jsp">PasswordReset</a>
+                 </li>
             </ul>
         </div>
     </nav>
