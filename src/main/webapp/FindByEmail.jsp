@@ -82,23 +82,23 @@
         </div>
     </nav>
 <div class="login-form">
-    <form action="signIn" method="post">
+    <form action="fetchByEmail" method="get">
         <h2 class="text-center">Login</h2>
        <span style="color:red">  ${msg} </span>
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Enter email " id="email" name="email" required>
             <div id="error-email" class="error"></div>
         </div>
-        <div class="form-group">
-            <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" required>
+      <!--  <div class="form-group">
+            <input type="password" ${readOnly=='disable' ? 'readonly': 'hidden'} class="form-control" placeholder="Enter Password" id="password" name="password" required>
             <div id="error-password" class="error"></div>
-        </div>
+        </div> -->
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="" name="submit">Login</button>
         </div>
         <div class="clearfix">
-<!--            <label class="float-left form-check-label"><input type="checkbox"> Remember me</label>-->
-           <a href="FindByEmail.jsp" class="float-right">Forgot Password?</a>
+<!--            <label class="float-left form-check-label"><input type="checkbox"> Remember me</label>
+           <a href="FindByEmail.jsp" class="float-right">Forgot Password?</a> -->
         </div>
     </form>
     <p class="login-link">Don't have an account?
@@ -106,7 +106,7 @@
      </p>
 </div>
 
- <!--<script>
+<!-- <script>
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const submitBtn = document.getElementById('submitBtn');

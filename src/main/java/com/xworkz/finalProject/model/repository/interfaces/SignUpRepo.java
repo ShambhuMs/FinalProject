@@ -17,5 +17,8 @@ public interface SignUpRepo {
     }
 
     boolean update(SignupDTO signupDTO);
+    default Optional<SignupDTO> findByEmailForReset(String email){
+        return Optional.empty();
+    }
 
 }

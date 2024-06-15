@@ -25,7 +25,7 @@ public class PrimaryController {
         System.out.println("Created no arg constructor in PrimaryController...");
     }
 
-    @PostMapping("/sign")
+    @PostMapping("/sign") //signup
     public String validateAndSave(@Valid SignupDTO signupDTO, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError));
@@ -39,8 +39,7 @@ public class PrimaryController {
            }
             else {
                 System.out.println("dto in controller"+signupDTO);
-               String email=signupDTO.getEmail();
-               Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(email);
+               Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(signupDTO.getEmail());
                long phoneNumber= signupDTO.getPhoneNumber();
                Optional<SignupDTO> optionalPhoneNumber=this.signUpService.findByPhoneNumber(phoneNumber);
                if (optionalSignupDTO.isPresent()){

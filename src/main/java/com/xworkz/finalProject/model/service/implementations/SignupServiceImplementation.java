@@ -48,6 +48,26 @@ public class SignupServiceImplementation implements SignUpService {
     }
 
     @Override
+    public Optional<SignupDTO> findByEmailForReset(String email) {
+        Optional<SignupDTO> optionalSignupDTO=this.signupRepository.findByEmailForReset(email);
+        int attempts=0;
+        if (optionalSignupDTO.isPresent()){
+            String password= RandomPasswordGenerator.generatePassword();
+            optionalSignupDTO.get().setPassword(password);
+            boolean update= this.update(optionalSignupDTO.get());
+            if(attempts<=3 && update){
+                sendEmail(optionalSignupDTO.get());
+                attempts = attempts + 1;
+            }else {
+                attempts=0;
+            }
+            return optionalSignupDTO;
+        }else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public Optional<SignupDTO> findByemail(String email) {
         Optional<SignupDTO>  optionalSignupDTO= this.signupRepository.findByEmail(email);
         if (optionalSignupDTO.isPresent()){

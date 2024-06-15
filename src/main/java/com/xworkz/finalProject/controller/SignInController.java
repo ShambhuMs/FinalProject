@@ -6,6 +6,7 @@ import com.xworkz.finalProject.model.service.interfaces.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,8 @@ import java.util.Optional;
 public class SignInController {
     @Autowired
     private SignUpService signUpService;
+
+
     public SignInController() {
         System.out.println("created no-arg constructor in SignInController...");
     }
@@ -74,5 +77,41 @@ public class SignInController {
         return "PasswordReset";
     }
 
+   @GetMapping("/fetchByEmail")
+    public  String  getDataByEmail(@RequestParam String email,Model model){
+       Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByEmailForReset(email);
+       if (optionalSignupDTO.isPresent()){
+           model.addAttribute("mail","Enter password sent by email..");
+           model.addAttribute("dto", optionalSignupDTO.get());
+           return "ResetPasswordAnyTime";
+       }else {
+           model.addAttribute("msg","Enter valid email..");
+           return "FindByEmail";
+       }
 
+   }
+    @PostMapping("/resetPasswordAnyTime")
+    public String resetUserPassword2(@Valid UserSignInDTO userSignInDTO, Model model){
+        System.out.println("newPassword : "+userSignInDTO.getPassword());
+        System.out.println("confirmNewPassword : "+userSignInDTO.getConfirmNewPassword());
+        Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmailAndPassword(userSignInDTO.getEmail(),
+                userSignInDTO.getPassword());
+
+        if (userSignInDTO.getNewPassword().equals(userSignInDTO.getConfirmNewPassword())){
+            optionalSignupDTO.get().setUserPassword(userSignInDTO.getConfirmNewPassword());
+            System.out.println("optionalSignupDTO in controller...: "+optionalSignupDTO);
+            boolean updateValue=this.signUpService.update(optionalSignupDTO.get());
+            if (updateValue){
+                System.out.println("data saved for email: " + optionalSignupDTO.get().getEmail());
+                model.addAttribute("msg","Password Reset Success..");
+                return "ResetPasswordAnyTime";
+            }else {
+                System.out.println("Data not saved!!!!!!!!");
+            }
+        } else {
+            model.addAttribute("errorMsg","NewPassword and Confirm Password should be same");
+            return "ResetPasswordAnyTime";
+        }
+        return "ResetPasswordAnyTime";
+    }
 }

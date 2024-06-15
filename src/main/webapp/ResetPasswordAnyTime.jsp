@@ -71,19 +71,19 @@
         </div>
     </nav>
     <div class="signup-form">
-        <form id="contactForm" action="resetPassword" method="post">
+        <form id="contactForm" action="resetPasswordAnyTime" method="post">
             <h2>Password Set</h2>
         <span style="color:green">${msg}</span>
         <span style="color:red">${errorMsg}</span>
-        <span style="color:red">${mail}</span>
+        <span style="color:green">${mail}</span>
 
             <div class="form-group">
-                <input type="text" ${readOnly=='disable' ? 'readonly': ''} class="form-control" placeholder="Enter email" id="email" name="email" value="${dto.email}" required>
+                <input type="text" ${readOnly=='disable' ? 'readonly': 'hidden'} class="form-control" placeholder="Enter email" id="email" name="email" value="${dto.email}" required>
                 <div id="error-email" class="error"> </div>
             </div>
              <div class="form-group">
                <label for="password">Password</label>
-                <input type="password"  ${readOnly=='disable' ? 'readonly': ''}  class="form-control" placeholder="Enter password" id="password" name="password" value="${dto.password}" required>
+                <input type="password"   class="form-control" placeholder="Enter password" id="password" name="password" value="" required>
                 <div id="error-password" class="error"></div>
             </div>
             <div class="form-group">

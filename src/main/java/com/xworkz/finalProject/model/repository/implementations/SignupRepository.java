@@ -105,5 +105,20 @@ public class SignupRepository implements SignUpRepo {
         return false;
     }
 
-
+    @Override
+    public Optional<SignupDTO> findByEmailForReset(String email) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            Query query= entityManager.createNamedQuery("findByEmail");
+            query.setParameter("email",email);
+            Object object=  query.getSingleResult();
+            SignupDTO signupDTO=(SignupDTO) object;
+            return Optional.ofNullable(signupDTO);
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            entityManager.close();
+        }
+        return Optional.empty();
+    }
 }
