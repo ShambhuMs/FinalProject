@@ -48,8 +48,9 @@
         .tableOut{
         position:relative;
         top:-70px;
-          margin-left: 200px;
+          margin-left: 60px;
           margin-right:100px;
+          width: 90%;
         }
 
     </style>

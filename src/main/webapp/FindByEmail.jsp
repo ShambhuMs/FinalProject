@@ -83,18 +83,14 @@
     </nav>
 <div class="login-form">
     <form action="fetchByEmail" method="get">
-        <h2 class="text-center">Login</h2>
+        <h4 class="text-center">Enter Your Email </h4>
        <span style="color:red">  ${msg} </span>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Enter email " id="email" name="email" required>
+            <input type="text" class="form-control" placeholder=" email " id="email" name="email" required>
             <div id="error-email" class="error"></div>
         </div>
-      <!--  <div class="form-group">
-            <input type="password" ${readOnly=='disable' ? 'readonly': 'hidden'} class="form-control" placeholder="Enter Password" id="password" name="password" required>
-            <div id="error-password" class="error"></div>
-        </div> -->
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="" name="submit">Login</button>
+            <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="" name="submit">Generate Password</button>
         </div>
         <div class="clearfix">
 <!--            <label class="float-left form-check-label"><input type="checkbox"> Remember me</label>

@@ -93,6 +93,20 @@
             <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" required>
             <div id="error-password" class="error"></div>
         </div>
+        <div class="mb-3">
+           <div class="captcha">
+               <label for="captcha-input">Enter Captcha</label>
+                    <div id="captchaPreview" class="mb-2 bg-white p-2 text-center border"></div>
+                    <div class="captcha d-flex align-items-center">
+                          <input type="text" name="captcha" id="captcha" placeholder="Enter captcha text" class="form-control me-2">
+                          <button type="button" class="btn btn-secondary" onclick="generateCaptcha()">
+                               <i class="fas fa-sync-alt"></i>
+                               &#8635;
+                          </button>
+               </div>
+                   <span id="captchaError" class="text-danger"></span>
+              </div>
+         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="" name="submit">Login</button>
         </div>
@@ -106,22 +120,23 @@
      </p>
 </div>
 
- <!--<script>
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const submitBtn = document.getElementById('submitBtn');
+ <script>
+   const emailInput = document.getElementById('email');
+   const passwordInput = document.getElementById('password');
+   const submitBtn = document.getElementById('submitBtn');
+   let captchaCode = '';
 
-    emailInput.addEventListener('input', function() {
-        const inputValue = this.value.trim();
-        const errorEmail = document.getElementById('error-email');
+   emailInput.addEventListener('input', function() {
+       const inputValue = this.value.trim();
+       const errorEmail = document.getElementById('error-email');
 
-         if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue) || inputValue.length<=8 || inputValue.length>=28 ) {
-            errorEmail.textContent = 'Mail must be @, special characters, digits';
-        } else {
-            errorEmail.textContent = '';
-        }
-        validateForm();
-    });
+       if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue) || inputValue.length <= 8 || inputValue.length >= 28) {
+           errorEmail.textContent = 'Email must be valid and contain @, special characters, digits, and be between 8 and 28 characters.';
+       } else {
+           errorEmail.textContent = '';
+       }
+       validateForm();
+   });
 
    passwordInput.addEventListener('input', function() {
        const inputValue = this.value.trim();
@@ -132,24 +147,85 @@
        const isValidLength = inputValue.length > 6 && inputValue.length < 18;
 
        if (!isValidLength) {
-           errorPassword.textContent = 'Password length should be greater than 6 and less than 18';
+           errorPassword.textContent = 'Password length should be greater than 6 and less than 18.';
        } else if (!hasAlphabet || !hasSpecialChar) {
-           errorPassword.textContent = 'Password must contain alphabets and special characters';
+           errorPassword.textContent = 'Password must contain alphabets and special characters.';
        } else {
            errorPassword.textContent = '';
        }
        validateForm();
    });
 
-    function validateForm() {
-        const errorEmail = document.getElementById('error-email').textContent;
-        const errorPassword = document.getElementById('error-password').textContent;
-        if (errorEmail === '' && errorPassword === '') {
-            submitBtn.removeAttribute('disabled');
-        } else {
-            submitBtn.setAttribute('disabled', 'disabled');
-        }
-    }
-</script> -->
+   function validateForm() {
+       const errorEmail = document.getElementById('error-email').textContent;
+       const errorPassword = document.getElementById('error-password').textContent;
+       if (errorEmail === '' && errorPassword === '' && getFields["captcha"]) {
+           submitBtn.removeAttribute('disabled');
+       } else {
+           submitBtn.setAttribute('disabled', 'disabled');
+       }
+   }
+
+   let getFields = {
+       "captcha": false
+   };
+
+   function validate() {
+       let flag = false;
+
+       for (let [key, value] of Object.entries(getFields)) {
+           if (value === false) {
+               flag = true;
+               break;
+           }
+       }
+       if (!flag) {
+           submitBtn.removeAttribute("disabled");
+       } else {
+           submitBtn.setAttribute("disabled", "disabled");
+       }
+   }
+
+   function generateCaptcha() {
+       let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+       captchaCode = '';
+       for (let i = 0; i < 6; i++) {
+           captchaCode += characters.charAt(Math.floor(Math.random() * characters.length));
+       }
+       document.getElementById("captchaPreview").innerText = captchaCode;
+       getFields["captcha"] = false; // Reset captcha validation
+       document.getElementById("captchaError").innerText = ""; // Clear any previous error message
+       validate();
+   }
+
+   function setCaptcha() {
+       let captchaInput = document.getElementById("captcha").value.trim();
+       let error = document.getElementById("captchaError");
+
+       if (captchaInput === captchaCode) {
+           getFields["captcha"] = true;
+           error.innerHTML = "";
+       } else {
+           error.innerHTML = "Please enter the correct captcha.";
+           error.style.color = 'red';
+           getFields["captcha"] = false;
+       }
+       validate();
+   }
+
+   document.addEventListener("DOMContentLoaded", function() {
+       generateCaptcha();
+
+       document.getElementById("captcha").addEventListener("input", setCaptcha);
+
+       document.querySelector("form").addEventListener("submit", function(event) {
+           setCaptcha(); // Validate captcha on form submit
+
+           if (!getFields["captcha"]) {
+               event.preventDefault(); // Prevent form submission if captcha is incorrect
+           }
+       });
+   });
+</script>
 </body>
 </html>

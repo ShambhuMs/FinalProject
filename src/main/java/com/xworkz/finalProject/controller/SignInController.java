@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -29,11 +30,11 @@ public class SignInController {
     @PostMapping("/signIn")
     public String checkSignIn(@RequestParam String email,@RequestParam String password,  Model model)  {
         Optional<SignupDTO> signupDTOOptional= this.signUpService.findByEmailAndPassword(email, password);
-        int count=0;
              if (signupDTOOptional.isPresent()) {
                 model.addAttribute("dto", signupDTOOptional.get());
                 model.addAttribute("readOnly", "disable");
-                count = signupDTOOptional.get().getLogin_count();
+              int  count = signupDTOOptional.get().getLogin_count();
+              signupDTOOptional.get().setLock_account(0);
                 if (count==0) {
                     signupDTOOptional.get().setLogin_count(1);
                     this.signUpService.update(signupDTOOptional.get());
@@ -46,8 +47,27 @@ public class SignInController {
                 }
             }
             else  {
-                   model.addAttribute("msg", "In-correct Email or Password..");
-                   return "SignIn";
+                Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(email);
+                  int lockAccount=optionalSignupDTO.get().getLock_account();
+                  if (lockAccount<3){
+                      if (optionalSignupDTO.isPresent()){
+                          int lockAc= lockAccount+1;
+                          optionalSignupDTO.get().setLock_account(lockAc);
+                          this.signUpService.update(optionalSignupDTO.get());
+                          int chance=3-lockAc;
+                              model.addAttribute("msg","You have only "+chance+" attempts"+
+                                      "\"In-correct Email or Password..");
+                          return "SignIn";
+                      }
+                  }else {
+                      optionalSignupDTO.get().setPassword(null);
+                      optionalSignupDTO.get().setUserPassword(null);
+                      optionalSignupDTO.get().setUpdatedDate(LocalDateTime.now());
+                      this.signUpService.update(optionalSignupDTO.get());
+                      model.addAttribute("msg","Your account is locked...please reset password");
+                      return "FindByEmail";
+                  }
+                  return "SignIn";
             }
     }
 

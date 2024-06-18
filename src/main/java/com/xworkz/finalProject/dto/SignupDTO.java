@@ -54,6 +54,7 @@ public class SignupDTO {
     @Column(name = "user_password")
     private String userPassword;
     private int login_count;
+    private int lock_account;
 
     public String getPassword() {
         return password;
