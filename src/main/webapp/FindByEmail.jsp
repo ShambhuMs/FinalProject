@@ -92,10 +92,6 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="" name="submit">Generate Password</button>
         </div>
-        <div class="clearfix">
-<!--            <label class="float-left form-check-label"><input type="checkbox"> Remember me</label>
-           <a href="FindByEmail.jsp" class="float-right">Forgot Password?</a> -->
-        </div>
     </form>
     <p class="login-link">Don't have an account?
      <a href="Signup.jsp">Sign up here</a>

@@ -39,9 +39,9 @@
             font-size: 12px;
             display: none;
         }
-        #home {
+        #userHome {
             position: relative;
-            left: 1200px;
+            left: 1150px;
         }
         h2 {
             color: black;
@@ -64,8 +64,8 @@
                 <li class="nav-item" id="SignIn">
                     <a class="nav-link text-light" href="SignIn.jsp">SignIn</a>
                 </li>
-                <li class="nav-item" id="home">
-                    <a class="nav-link text-light" href="index.jsp">Home</a>
+                <li class="nav-item" id="userHome">
+                    <a class="nav-link text-light" href="UserHomePage.jsp">UserHomePage</a>
                 </li>
             </ul>
         </div>

@@ -1,7 +1,7 @@
 package com.xworkz.finalProject.controller;
 
 import com.xworkz.finalProject.dto.SignupDTO;
-import com.xworkz.finalProject.dto.UserSignInDTO;
+import com.xworkz.finalProject.dto.PasswordResetDTO;
 import com.xworkz.finalProject.model.service.interfaces.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
@@ -28,7 +31,8 @@ public class SignInController {
     }
 
     @PostMapping("/signIn")
-    public String checkSignIn(@RequestParam String email,@RequestParam String password,  Model model)  {
+    public String checkSignIn(@RequestParam String email, @RequestParam String password, Model model,
+                              HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
         Optional<SignupDTO> signupDTOOptional= this.signUpService.findByEmailAndPassword(email, password);
              if (signupDTOOptional.isPresent()) {
                 model.addAttribute("dto", signupDTOOptional.get());
@@ -43,20 +47,23 @@ public class SignInController {
                     int num=count+1;
                     signupDTOOptional.get().setLogin_count(num);
                     this.signUpService.update(signupDTOOptional.get());
-                    return "index";
+                    model.addAttribute("dto",signupDTOOptional);
+                   HttpSession httpSession= request.getSession();
+                   httpSession.setAttribute("email",email);
+                    return "UserHomePage";
                 }
             }
             else  {
                 Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(email);
                   int lockAccount=optionalSignupDTO.get().getLock_account();
-                  if (lockAccount<3){
+                  if (lockAccount<2){
                       if (optionalSignupDTO.isPresent()){
                           int lockAc= lockAccount+1;
                           optionalSignupDTO.get().setLock_account(lockAc);
                           this.signUpService.update(optionalSignupDTO.get());
                           int chance=3-lockAc;
                               model.addAttribute("msg","You have only "+chance+" attempts"+
-                                      "\"In-correct Email or Password..");
+                                      "\"Enter Valid Email or Password..");
                           return "SignIn";
                       }
                   }else {
@@ -71,16 +78,15 @@ public class SignInController {
             }
     }
 
-
     @PostMapping("/resetPassword")
-    public String resetUserPassword(@Valid UserSignInDTO userSignInDTO, Model model){
-        System.out.println("newPassword : "+userSignInDTO.getPassword());
-        System.out.println("confirmNewPassword : "+userSignInDTO.getConfirmNewPassword());
-        Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmailAndPassword(userSignInDTO.getEmail(),
-                userSignInDTO.getPassword());
+    public String resetUserPassword(@Valid PasswordResetDTO passwordResetDTO, Model model){
+        System.out.println("newPassword : "+ passwordResetDTO.getPassword());
+        System.out.println("confirmNewPassword : "+ passwordResetDTO.getConfirmNewPassword());
+        Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmailAndPassword(passwordResetDTO.getEmail(),
+                passwordResetDTO.getPassword());
 
-        if (userSignInDTO.getNewPassword().equals(userSignInDTO.getConfirmNewPassword())){
-            optionalSignupDTO.get().setUserPassword(userSignInDTO.getNewPassword());
+        if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
+            optionalSignupDTO.get().setUserPassword(passwordResetDTO.getNewPassword());
             System.out.println("optionalSignupDTO in controller...: "+optionalSignupDTO);
               boolean updateValue=this.signUpService.update(optionalSignupDTO.get());
               if (updateValue){
@@ -110,15 +116,29 @@ public class SignInController {
        }
 
    }
-    @PostMapping("/resetPasswordAnyTime")
-    public String resetUserPassword2(@Valid UserSignInDTO userSignInDTO, Model model){
-        System.out.println("newPassword : "+userSignInDTO.getPassword());
-        System.out.println("confirmNewPassword : "+userSignInDTO.getConfirmNewPassword());
-        Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmailAndPassword(userSignInDTO.getEmail(),
-                userSignInDTO.getPassword());
+    @GetMapping("/findByEmail")
+    public  String  findByEmail(@RequestParam String email,Model model){
+        Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(email);
+        if (optionalSignupDTO.isPresent()){
+            model.addAttribute("mail","Enter password sent by email..");
+            model.addAttribute("dto", optionalSignupDTO.get());
+            model.addAttribute("readOnly","disable");
+            return "EditProfile";
+        }else {
+            model.addAttribute("msg","Enter valid email..");
+            return "UserHomePage";
+        }
 
-        if (userSignInDTO.getNewPassword().equals(userSignInDTO.getConfirmNewPassword())){
-            optionalSignupDTO.get().setUserPassword(userSignInDTO.getConfirmNewPassword());
+    }
+    @PostMapping("/resetPasswordAnyTime")
+    public String resetUserPassword2(@Valid PasswordResetDTO passwordResetDTO, Model model){
+        System.out.println("newPassword : "+ passwordResetDTO.getPassword());
+        System.out.println("confirmNewPassword : "+ passwordResetDTO.getConfirmNewPassword());
+        Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmailAndPassword(passwordResetDTO.getEmail(),
+                passwordResetDTO.getPassword());
+
+        if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
+            optionalSignupDTO.get().setUserPassword(passwordResetDTO.getConfirmNewPassword());
             System.out.println("optionalSignupDTO in controller...: "+optionalSignupDTO);
             boolean updateValue=this.signUpService.update(optionalSignupDTO.get());
             if (updateValue){

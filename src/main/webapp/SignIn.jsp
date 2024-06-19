@@ -148,8 +148,6 @@
 
        if (!isValidLength) {
            errorPassword.textContent = 'Password length should be greater than 6 and less than 18.';
-       } else if (!hasAlphabet || !hasSpecialChar) {
-           errorPassword.textContent = 'Password must contain alphabets and special characters.';
        } else {
            errorPassword.textContent = '';
        }
@@ -226,6 +224,9 @@
            }
        });
    });
+
 </script>
+<!--    } else if (!hasAlphabet || !hasSpecialChar ) {
+           errorPassword.textContent = 'Password must contain alphabets and special characters.'; -->
 </body>
 </html>

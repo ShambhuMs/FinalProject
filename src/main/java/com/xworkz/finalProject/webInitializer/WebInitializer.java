@@ -1,6 +1,7 @@
 package com.xworkz.finalProject.webInitializer;
 
 import com.xworkz.finalProject.configuration.DatabaseConfig;
+import com.xworkz.finalProject.configuration.FileUploadConfig;
 import com.xworkz.finalProject.configuration.ResourceMappConfig;
 import com.xworkz.finalProject.controller.AdminController;
 import com.xworkz.finalProject.controller.SignInController;
@@ -16,7 +17,8 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{DatabaseConfig.class, ResourceMappConfig.class, SignInController.class, AdminController.class};
+        return new Class[]{DatabaseConfig.class, ResourceMappConfig.class, FileUploadConfig.class,
+                SignInController.class, AdminController.class};
     }
 
     @Override

@@ -54,66 +54,18 @@ public class SignupServiceImplementation implements SignUpService {
     public Optional<SignupDTO> findByEmailForReset(String email) {
         Optional<SignupDTO> optionalSignupDTO = this.signupRepository.findByEmailForReset(email);
         if (optionalSignupDTO.isPresent()) {
-          int  attempts = optionalSignupDTO.get().getLock_account();
-            LocalDateTime lastSentTime = optionalSignupDTO.get().getUpdatedDate();
-            LocalDateTime currentTime = LocalDateTime.now();
-            if (attempts < 6) {
-                String password = RandomPasswordGenerator.generatePassword();
+            String password = RandomPasswordGenerator.generatePassword();
                 optionalSignupDTO.get().setPassword(password);
                 optionalSignupDTO.get().setUpdatedDate(LocalDateTime.now());
                 optionalSignupDTO.get().setUpdatedBy(optionalSignupDTO.get().getFirstName());
                 boolean update = this.update(optionalSignupDTO.get());
                 if (update) {
                         sendEmail(optionalSignupDTO.get());
-                        attempts = attempts + 1;
-                        optionalSignupDTO.get().setLock_account(attempts);
-                        this.update(optionalSignupDTO.get());
                 }
-            } else {
-                if (lastSentTime == null || ChronoUnit.HOURS.between(lastSentTime, currentTime) >= 24) {
-                    // Reset attempts after 24 hours have passed
-                    attempts = 3;
-                    optionalSignupDTO.get().setLock_account(attempts);
-                    this.update(optionalSignupDTO.get());
-                }else {
-                    System.out.println("getting mail after 24 hours..");
-                }
-            }
             return optionalSignupDTO;
         } else {
             return Optional.empty();
         }
-        /*LocalDateTime lastSentTime =optionalSignupDTO.get().getUpdatedDate();
-        LocalDateTime currentTime=LocalDateTime.now();
-        long hoursSinceLastEmail = ChronoUnit.HOURS.between(lastSentTime, currentTime);
-        if (attempts >=3 || hoursSinceLastEmail >= 24) {
-                // Reset attempts after 24 hours have passed
-                attempts = 3;
-                optionalSignupDTO.get().setLock_account(attempts);
-                this.update(optionalSignupDTO.get());
-            }
-        if (attempts<6){
-            String password = RandomPasswordGenerator.generatePassword();
-            optionalSignupDTO.get().setPassword(password);
-            optionalSignupDTO.get().setUpdatedDate(currentTime);
-            optionalSignupDTO.get().setUpdatedBy(optionalSignupDTO.get().getFirstName());
-
-            boolean update = this.update(optionalSignupDTO.get());
-            if (update) {
-                // Send email and increment the attempt counter
-                sendEmail(optionalSignupDTO.get());
-                attempts += 1;
-                optionalSignupDTO.get().setLock_account(attempts);
-                this.update(optionalSignupDTO.get());
-            }
-            return Optional.of(optionalSignupDTO.get());
-        }
-        else {
-        System.out.println("Email sending blocked. Please try again after 24 hours.");
-        return Optional.empty();
-    }
-    }
-*/
     }
 
     @Override
