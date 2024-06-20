@@ -2,6 +2,7 @@ package com.xworkz.finalProject.model.service.interfaces;
 
 import com.xworkz.finalProject.dto.ProfileDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProfileService {
@@ -9,4 +10,7 @@ public interface ProfileService {
    default Optional<ProfileDTO> findByUserId(int userId){
         return Optional.empty();
     }
+    boolean updateProfileDetails(ProfileDTO profileDTO);
+    boolean updateStatus(ProfileDTO profileDTO);
+    List<ProfileDTO> findDatasById(int userId);
 }

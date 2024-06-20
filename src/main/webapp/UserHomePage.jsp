@@ -1,3 +1,5 @@
+ <%@ page isELIgnored="false" %>
+ <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
  <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,11 +52,13 @@
                        <a class="nav-link text-light" href="ResetPasswordAnyTime.jsp">ResetPasswordAnyTime</a>
                  </li>
                   <li class="nav-item" id="SignIn.jsp">
-                       <a class="nav-link text-light" href="findByEmail?email=<%= session.getAttribute("email") %>">EditProfile</a>
+                       <a class="nav-link text-light" href="EditProfile.jsp">EditProfile</a>
                  </li>
+                 <li>
+             <img src="${pageContext.request.contextPath}${sessionScope.profileDTO}" width="70" height="70" value="" class="rounded-circle profile-image id=profileImage">
+            </li>
             </ul>
         </div>
     </nav>
-
 </body>
 </html>

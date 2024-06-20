@@ -42,7 +42,7 @@
         }
         #home {
             position: relative;
-            left: 1200px;
+            left: 1100px;
         }
         h2 {
             color: black;
@@ -52,6 +52,10 @@
             display: flex;
             justify-content: center;
             height: 100%;
+        }
+        #profileImage{
+           position: relative;
+           left:1120px;
         }
     </style>
 </head>
@@ -65,6 +69,8 @@
                 <li class="nav-item" id="home">
                     <a class="nav-link text-light" href="UserHomePage.jsp">UserHomePage</a>
                 </li>
+                <img src="${pageContext.request.contextPath}${sessionScope.profileDTO}" width="70" height="70" value="" class="rounded-circle profile-image" id="profileImage"/>
+
             </ul>
         </div>
     </nav>
@@ -81,23 +87,23 @@
             </div>
             <div class="form-group">
                 <label for="firstName">First Name</label>
-                <input type="text" class="form-control" placeholder="Enter First Name" id="firstName" name="firstName" value="${dto.firstName}" required>
+                <input type="text" class="form-control" placeholder="Enter First Name" id="firstName" name="firstName" value="${sessionScope.dto.firstName}" required>
                 <div id="error-firstName" class="error"></div>
             </div>
             <div class="form-group">
                 <label for="lastName">Last Name</label>
-                <input type="text" class="form-control" placeholder="Enter Last Name" id="lastName" name="lastName" value="${dto.lastName}" required>
+                <input type="text" class="form-control" placeholder="Enter Last Name" id="lastName" name="lastName" value="${sessionScope.dto.lastName}" required>
                 <div id="error-lastName" class="error"></div>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" ${readOnly == 'disable' ? 'readonly' : ''} class="form-control" placeholder="Enter email" id="email" name="email" value="${dto.email}">
+                <input type="email"  class="form-control" placeholder="Enter email" id="email" name="email" value="${sessionScope.dto.email}" readonly>
                 <div id="error-email" class="error"></div>
                 <div><span style="color:red">${failedEmailMsg}</span></div>
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Phone Number</label>
-                <input type="text" class="form-control" placeholder="Enter Phone Number" id="phoneNumber" name="phoneNumber" value="${dto.phoneNumber}" required>
+                <input type="text" class="form-control" placeholder="Enter Phone Number" id="phoneNumber" name="phoneNumber" value="${sessionScope.dto.phoneNumber}" required>
                 <div id="error-phoneNumber" class="error"></div>
             </div>
             <div class="form-group">

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -45,4 +47,58 @@ public class ProfileRepoImplementation implements ProfileRepository {
         }
         return Optional.empty();
     }
+
+    @Override
+    public boolean updateProfileDetails(ProfileDTO profileDTO) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(profileDTO);
+            entityManager.getTransaction().commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean updateStatus(  ProfileDTO profileDTO) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+           /*Query query=  entityManager.createNamedQuery("updateStatus");
+            query.setParameter("id",userId);*/
+            entityManager.merge(profileDTO);
+            entityManager.getTransaction().commit();
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
+        }
+        return false;
+    }
+
+    @Override
+    public List<ProfileDTO> findDatasById(int userId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("findDatasByUserId");
+            query.setParameter("userId", userId);
+            List<ProfileDTO> list=   query.getResultList();
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally{
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
+
 }

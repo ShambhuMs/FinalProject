@@ -1,7 +1,9 @@
 package com.xworkz.finalProject.controller;
 
+import com.xworkz.finalProject.dto.ProfileDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.dto.PasswordResetDTO;
+import com.xworkz.finalProject.model.service.interfaces.ProfileService;
 import com.xworkz.finalProject.model.service.interfaces.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -24,7 +27,8 @@ import java.util.Optional;
 public class SignInController {
     @Autowired
     private SignUpService signUpService;
-
+    @Autowired
+    private ProfileService profileService;
 
     public SignInController() {
         System.out.println("created no-arg constructor in SignInController...");
@@ -47,9 +51,20 @@ public class SignInController {
                     int num=count+1;
                     signupDTOOptional.get().setLogin_count(num);
                     this.signUpService.update(signupDTOOptional.get());
-                    model.addAttribute("dto",signupDTOOptional);
+                    /*model.addAttribute("dto",signupDTOOptional);*/
                    HttpSession httpSession= request.getSession();
-                   httpSession.setAttribute("email",email);
+                  List<ProfileDTO> profileDTO= profileService.findDatasById(signupDTOOptional.get().getId());
+                    httpSession.setAttribute("dto", signupDTOOptional.get());
+                  if (!profileDTO.isEmpty()) {
+                      profileDTO.forEach(data->{
+                          if (data.getStatus()=="Active"){
+                              String ref = "/profile/" + data.getImageName();
+                              httpSession.setAttribute("profileDTO", ref);
+                          }
+                      });
+                  } else{
+                      httpSession.removeAttribute("profileDTO");
+                  }
                     return "UserHomePage";
                 }
             }
@@ -116,20 +131,7 @@ public class SignInController {
        }
 
    }
-    @GetMapping("/findByEmail")
-    public  String  findByEmail(@RequestParam String email,Model model){
-        Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(email);
-        if (optionalSignupDTO.isPresent()){
-            model.addAttribute("mail","Enter password sent by email..");
-            model.addAttribute("dto", optionalSignupDTO.get());
-            model.addAttribute("readOnly","disable");
-            return "EditProfile";
-        }else {
-            model.addAttribute("msg","Enter valid email..");
-            return "UserHomePage";
-        }
 
-    }
     @PostMapping("/resetPasswordAnyTime")
     public String resetUserPassword2(@Valid PasswordResetDTO passwordResetDTO, Model model){
         System.out.println("newPassword : "+ passwordResetDTO.getPassword());
