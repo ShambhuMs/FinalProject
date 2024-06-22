@@ -97,51 +97,27 @@
      <a href="Signup.jsp">Sign up here</a>
      </p>
 </div>
-
-<!-- <script>
+<script>
     const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
     const submitBtn = document.getElementById('submitBtn');
+    const errorEmail = document.getElementById('error-email');
 
     emailInput.addEventListener('input', function() {
-        const inputValue = this.value.trim();
-        const errorEmail = document.getElementById('error-email');
-
-         if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue) || inputValue.length<=8 || inputValue.length>=28 ) {
-            errorEmail.textContent = 'Mail must be @, special characters, digits';
-        } else {
+        const email = emailInput.value;
+        if (validateEmail(email)) {
             errorEmail.textContent = '';
+            submitBtn.disabled = false;
+        } else {
+            errorEmail.textContent = 'Please enter a valid email address.';
+            submitBtn.disabled = true;
         }
-        validateForm();
     });
 
-   passwordInput.addEventListener('input', function() {
-       const inputValue = this.value.trim();
-       const errorPassword = document.getElementById('error-password');
-
-       const hasAlphabet = /[a-zA-Z]/.test(inputValue);
-       const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(inputValue);
-       const isValidLength = inputValue.length > 6 && inputValue.length < 18;
-
-       if (!isValidLength) {
-           errorPassword.textContent = 'Password length should be greater than 6 and less than 18';
-       } else if (!hasAlphabet || !hasSpecialChar) {
-           errorPassword.textContent = 'Password must contain alphabets and special characters';
-       } else {
-           errorPassword.textContent = '';
-       }
-       validateForm();
-   });
-
-    function validateForm() {
-        const errorEmail = document.getElementById('error-email').textContent;
-        const errorPassword = document.getElementById('error-password').textContent;
-        if (errorEmail === '' && errorPassword === '') {
-            submitBtn.removeAttribute('disabled');
-        } else {
-            submitBtn.setAttribute('disabled', 'disabled');
-        }
+    function validateEmail(email) {
+        // Basic email regex pattern
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
     }
-</script> -->
+</script>
 </body>
 </html>

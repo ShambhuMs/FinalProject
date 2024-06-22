@@ -54,6 +54,9 @@
                   <li class="nav-item" id="SignIn.jsp">
                        <a class="nav-link text-light" href="EditProfile.jsp">EditProfile</a>
                  </li>
+                 <li class="nav-item" id="RaiseComplaint">
+                       <a class="nav-link text-light" href="RaiseComplaint.jsp">RaiseComplaint</a>
+                 </li>
                  <li>
              <img src="${pageContext.request.contextPath}${sessionScope.profileDTO}" width="70" height="70" value="" class="rounded-circle profile-image id=profileImage">
             </li>

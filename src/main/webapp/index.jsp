@@ -61,8 +61,14 @@
                  <li class="nav-item" id="SignIn.jsp">
                        <a class="nav-link text-light" href="ResetPasswordAnyTime.jsp">ResetPasswordAnyTime</a>
                  </li>
-                 <li class="nav-item" id="SignIn.jsp">
+                 <li class="nav-item" id="EditProfile">
                        <a class="nav-link text-light" href="EditProfile.jsp">EditProfile</a>
+                 </li>
+                 <li class="nav-item" id=" FindByEmail">
+                       <a class="nav-link text-light" href="FindByEmail.jsp">FindByEmail</a>
+                 </li>
+                 <li class="nav-item" id=" FindByEmail">
+                       <a class="nav-link text-light" href="RaiseComplaint.jsp">RaiseComplaint</a>
                  </li>
             </ul>
         </div>
