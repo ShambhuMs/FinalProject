@@ -37,58 +37,63 @@ public class SignInController {
     @PostMapping("/signIn")
     public String checkSignIn(@RequestParam String email, @RequestParam String password, Model model,
                               HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
-        Optional<SignupDTO> signupDTOOptional= this.signUpService.findByEmailAndPassword(email, password);
+        Optional<SignupDTO> signupDTOOptional= this.signUpService.findByemail(email);
              if (signupDTOOptional.isPresent()) {
-                model.addAttribute("dto", signupDTOOptional.get());
-                model.addAttribute("readOnly", "disable");
-              int  count = signupDTOOptional.get().getLogin_count();
-              signupDTOOptional.get().setLock_account(0);
-                if (count==0) {
-                    signupDTOOptional.get().setLogin_count(1);
-                    this.signUpService.update(signupDTOOptional.get());
-                    return "PasswordReset";
-                }else {
-                    int num=count+1;
-                    signupDTOOptional.get().setLogin_count(num);
-                    this.signUpService.update(signupDTOOptional.get());
-                    /*model.addAttribute("dto",signupDTOOptional);*/
-                   HttpSession httpSession= request.getSession();
-                  List<ProfileDTO> profileDTO= profileService.findDatasById(signupDTOOptional.get().getId());
-                    httpSession.setAttribute("dto", signupDTOOptional.get());
-                  if (!profileDTO.isEmpty()) {
-                      profileDTO.forEach(data->{
-                          if (data.getStatus()=="Active"){
-                              String ref = "/profile/" + data.getImageName();
-                              httpSession.setAttribute("profileDTO", ref);
-                          }
-                      });
-                  } else{
-                      httpSession.removeAttribute("profileDTO");
-                  }
-                    return "UserHomePage";
-                }
-            }
-            else  {
-                Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(email);
-                  int lockAccount=optionalSignupDTO.get().getLock_account();
+                 if (signupDTOOptional.get().getPassword().equals(password) ||
+                         signupDTOOptional.get().getUserPassword().equals(password)) {
+                     model.addAttribute("dto", signupDTOOptional.get());
+                     model.addAttribute("readOnly", "disable");
+                     HttpSession httpSession = request.getSession();
+                     List<ProfileDTO> profileDTO = profileService.findDatasById(signupDTOOptional.get().getId());
+                     httpSession.setAttribute("dto", signupDTOOptional.get());
+                     if (!profileDTO.isEmpty()) {
+                         profileDTO.forEach(data -> {
+                             if (data.getStatus() == "Active" || data.getStatus().equals("Active")) {
+                                 String ref = "/profile/" + data.getImageName();
+                                 httpSession.setAttribute("profileDTO", ref);
+                             }
+                         });
+                     }
+                     else {
+                         httpSession.removeAttribute("profileDTO");
+                     }
+                     int count = signupDTOOptional.get().getLogin_count();
+                     signupDTOOptional.get().setLock_account(0);
+                     if (count == 0) {
+                         signupDTOOptional.get().setLogin_count(1);
+                         this.signUpService.update(signupDTOOptional.get());
+                         return "PasswordReset";
+                     } else {
+                         int num = count + 1;
+                         signupDTOOptional.get().setLogin_count(num);
+                         this.signUpService.update(signupDTOOptional.get());
+                         /*model.addAttribute("dto",signupDTOOptional);*/
+
+                         return "UserHomePage";
+                     }
+                 }else {
+                     model.addAttribute("msg","Enter valid email or password..");
+                       int lockAccount=signupDTOOptional.get().getLock_account();
                   if (lockAccount<2){
-                      if (optionalSignupDTO.isPresent()){
                           int lockAc= lockAccount+1;
-                          optionalSignupDTO.get().setLock_account(lockAc);
-                          this.signUpService.update(optionalSignupDTO.get());
+                          signupDTOOptional.get().setLock_account(lockAc);
+                          this.signUpService.update(signupDTOOptional.get());
                           int chance=3-lockAc;
                               model.addAttribute("msg","You have only "+chance+" attempts"+
                                       "\"Enter Valid Email or Password..");
                           return "SignIn";
-                      }
                   }else {
-                      optionalSignupDTO.get().setPassword(null);
-                      optionalSignupDTO.get().setUserPassword(null);
-                      optionalSignupDTO.get().setUpdatedDate(LocalDateTime.now());
-                      this.signUpService.update(optionalSignupDTO.get());
+                      signupDTOOptional.get().setPassword(null);
+                      signupDTOOptional.get().setUserPassword(null);
+                      signupDTOOptional.get().setUpdatedDate(LocalDateTime.now());
+                      this.signUpService.update(signupDTOOptional.get());
                       model.addAttribute("msg","Your account is locked...please reset password");
                       return "FindByEmail";
                   }
+                 }
+            }
+            else  {
+                 model.addAttribute("msg","Enter valid email or password..");
                   return "SignIn";
             }
     }

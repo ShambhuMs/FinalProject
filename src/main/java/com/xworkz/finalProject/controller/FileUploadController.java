@@ -55,15 +55,12 @@ public class FileUploadController {
                 model.addAttribute("message", "User not found.");
                 return "ProfileEdit";
             }
-
-            Optional<ProfileDTO> optionalProfileDTO = profileService.findByUserId(optionalSignupDTO.get().getId());
             List<ProfileDTO> profileDTOList=this.profileService.findDatasById(optionalSignupDTO.get().getId());
-            if (optionalProfileDTO.isPresent()){
+            if (!profileDTOList.isEmpty()){
                 profileDTOList.forEach(profileDTO -> {
                     profileDTO.setStatus("InActive");
                   boolean  value= this.profileService.updateStatus(profileDTO);
-                    System.err.println(value);
-                        });
+                });
 
                  ProfileDTO profileDTO = new ProfileDTO();
                  profileDTO.setImageName(newFilename);
@@ -81,15 +78,15 @@ public class FileUploadController {
                  if (saved || updateDetails) {
                      model.addAttribute("successMessage", "Profile saved successfully!");
                  }
-                 if (!profileDTOList.isEmpty()){
-                     profileDTOList.forEach(data->{
+                List<ProfileDTO> profileDTOList0=this.profileService.findDatasById(optionalSignupDTO.get().getId());
+                 if (!profileDTOList0.isEmpty()){
+                     profileDTOList0.forEach(data->{
                          if (data.getStatus()=="Active" || data.getStatus().equals("Active")){
                              String ref = "/profile/" + data.getImageName();
+                             System.err.println(data.getImageName());
                              httpSession.setAttribute("profileDTO", ref);
                          }
                      });
-                 }else {
-                     httpSession.removeAttribute("profileDTO");
                  }
             }else {
                   ProfileDTO profileDTO = new ProfileDTO();
@@ -109,15 +106,14 @@ public class FileUploadController {
                   if (saved || updateDetails) {
                       model.addAttribute("successMessage", "Profile saved successfully!");
                   }
-                if (!profileDTOList.isEmpty()){
-                    profileDTOList.forEach(data->{
+                List<ProfileDTO> profileDTOList1=this.profileService.findDatasById(profileDTO.getUserId());
+                if (!profileDTOList1.isEmpty()){
+                    profileDTOList1.forEach(data->{
                         if (data.getStatus()=="Active" || data.getStatus().equals("Active")){
                             String ref = "/profile/" + data.getImageName();
                             httpSession.setAttribute("profileDTO", ref);
                         }
                     });
-                }else {
-                    httpSession.removeAttribute("profileDTO");
                 }
             }
         } catch (IOException e) {
