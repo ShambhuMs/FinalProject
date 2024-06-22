@@ -26,5 +26,7 @@ public class ResourceMappConfig implements WebMvcConfigurer {
              .addResourceLocations("/images/");
         registry.addResourceHandler("/profile/**")
                 .addResourceLocations("file:///C:/Users/shamb/Desktop/ImageUpload/");
+        registry.addResourceHandler("/script/**")
+                .addResourceLocations("/javascript/");
     }
 }

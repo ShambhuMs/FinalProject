@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="/FinalProject/script/Signup.js"></script>
     <style>
         body {
             background-color: #f0f2f5;
@@ -91,7 +92,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" value="${atmDTO.email}" required>
+                <input type="email" class="form-control" placeholder="Enter email" id="email" name="email"  value="${atmDTO.email}" required>
                 <div id="error-email" class="error"> </div>
               <div>  <span style="color:red">${failedEmailMsg}</span> </div>
 
@@ -113,100 +114,5 @@
             </div>
         </form>
     </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const firstNameInput = document.getElementById('firstName');
-        const lastNameInput = document.getElementById('lastName');
-        const emailInput = document.getElementById('email');
-        const phoneNumberInput = document.getElementById('phoneNumber');
-        const signUpCheck = document.getElementById('signUpCheck');
-        const submitBtn = document.getElementById('submitBtn');
-
-        const errorFirstName = document.getElementById('error-firstName');
-        const errorLastName = document.getElementById('error-lastName');
-        const errorEmail = document.getElementById('error-email');
-        const errorPhoneNumber = document.getElementById('error-phoneNumber');
-        const errorSignUpCheck = document.getElementById('error-signUpCheck');
-
-        function validateFirstName() {
-            const firstName = firstNameInput.value;
-            if (firstName.length < 3 || firstName.length > 15 || /\d/.test(firstName)) {
-                errorFirstName.textContent = "First name must be between 3 and 15 characters and not contain numbers.";
-                errorFirstName.style.display = 'block';
-            } else {
-                errorFirstName.textContent = "";
-                errorFirstName.style.display = 'none';
-            }
-            validateForm();
-        }
-
-        function validateLastName() {
-            const lastName = lastNameInput.value;
-            if (lastName.length < 3 || lastName.length > 15 || /\d/.test(lastName)) {
-                errorLastName.textContent = "Last name must be between 3 and 15 characters and not contain numbers.";
-                errorLastName.style.display = 'block';
-            } else {
-                errorLastName.textContent = "";
-                errorLastName.style.display = 'none';
-            }
-            validateForm();
-        }
-
-        function validateEmail() {
-            const email = emailInput.value;
-            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            if (!emailPattern.test(email)) {
-                errorEmail.textContent = "Please enter a valid email address.";
-                errorEmail.style.display = 'block';
-            } else {
-                errorEmail.textContent = "";
-                errorEmail.style.display = 'none';
-            }
-            validateForm();
-        }
-
-        function validatePhoneNumber() {
-            const phoneNumber = phoneNumberInput.value;
-            if (!/^\d{10}$/.test(phoneNumber)) {
-                errorPhoneNumber.textContent = "Phone number must be 10 digits.";
-                errorPhoneNumber.style.display = 'block';
-            } else {
-                errorPhoneNumber.textContent = "";
-                errorPhoneNumber.style.display = 'none';
-            }
-            validateForm();
-        }
-
-        function validateCheckbox() {
-            if (!signUpCheck.checked) {
-                errorSignUpCheck.textContent = "You must agree to sign up for the newsletter.";
-                errorSignUpCheck.style.display = 'block';
-            } else {
-                errorSignUpCheck.textContent = "";
-                errorSignUpCheck.style.display = 'none';
-            }
-            validateForm();
-        }
-
-        function validateForm() {
-            const isFirstNameValid = errorFirstName.textContent === "";
-            const isLastNameValid = errorLastName.textContent === "";
-            const isEmailValid = errorEmail.textContent === "";
-            const isPhoneNumberValid = errorPhoneNumber.textContent === "";
-            const isCheckboxValid = signUpCheck.checked;
-
-            submitBtn.disabled = !(isFirstNameValid && isLastNameValid && isEmailValid && isPhoneNumberValid && isCheckboxValid);
-        }
-
-        firstNameInput.addEventListener('input', validateFirstName);
-        lastNameInput.addEventListener('input', validateLastName);
-        emailInput.addEventListener('input', validateEmail);
-        phoneNumberInput.addEventListener('input', validatePhoneNumber);
-        signUpCheck.addEventListener('change', validateCheckbox);
-
-        validateForm();
-    });
-</script>
 </body>
 </html>
