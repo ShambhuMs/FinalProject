@@ -32,12 +32,14 @@ public class ComplaintController {
         if (bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError));
             model.addAttribute("errorMessage",bindingResult.getAllErrors());
+            model.addAttribute("complaintDto",complaintDTO);
         }  else {
             SignupDTO signupDTO1=(SignupDTO)  session.getAttribute("dto");
             System.err.println(signupDTO1);
             complaintDTO.setCreatedBy(signupDTO1.getFirstName()+" "+signupDTO1.getLastName());
             complaintDTO.setCreatedDate(LocalDateTime.now());
             complaintDTO.setUserId(signupDTO1.getId());
+            complaintDTO.setComplaintStatus("unResolved");
             boolean saved=this.complaintService.saveComplaintDetails(complaintDTO);
             if (saved){
                 model.addAttribute("successMessage","Your complaint Submitted...");
@@ -54,7 +56,13 @@ public class ComplaintController {
       Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(signupDTO.getEmail());
       List<ComplaintDTO> complaintDTOList=this.complaintService.findByUserId(optionalSignupDTO.get().getId());
       if (!complaintDTOList.isEmpty()){
-          model.addAttribute("dto",complaintDTOList);
+          complaintDTOList.forEach(complaintDTO -> {
+              if (complaintDTO.getComplaintStatus()=="unResolved"){
+                  model.addAttribute("dto",complaintDTOList);
+              }else {
+                  model.addAttribute("msg","0 Records found");
+              }
+          });
       }else {
           model.addAttribute("msg","0 Records found");
       }

@@ -42,4 +42,6 @@ public class ComplaintDTO {
     private LocalDateTime updatedDate;
     @Column(name = "user_id")
     private int userId;
+    @Column(name = "complaint_status")
+    private String complaintStatus;
 }
