@@ -22,8 +22,8 @@ public class ComplaintServiceImplementation implements ComplaintService {
     }
 
     @Override
-    public List<SignupDTO> findByUserId(int userId) {
-        List<SignupDTO> list=  this.complaintRepository.findByUserId(userId);
+    public List<ComplaintDTO> findByUserId(int userId) {
+        List<ComplaintDTO> list=  this.complaintRepository.findByUserId(userId);
         if (!list.isEmpty()){
             return list;
         }else {

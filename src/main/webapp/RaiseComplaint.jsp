@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raise Complaint</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<h2 class="text-center mb-4">Raise Your Complaints Here<svg fill="#000000" width="64px" height="64px"
+<svg fill="#000000" width="64px" height="64px"
 viewBox="-14.08 -14.08 92.16 92.16" id="Layer_1_1_" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier"
 stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g>
@@ -15,7 +15,7 @@ stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
 <path d="M54,7h-9.184C44.402,5.839,43.302,5,42,5h-3.383C37.321,2.529,34.799,1,32,1c-2.799,0-5.321,1.528-6.617,4H22 c-1.302,0-2.402,0.839-2.816,2H10c-1.654,0-3,1.346-3,3v50c0,1.654,1.346,3,3,3h44c1.654,0,3-1.346,3-3V10C57,8.346,55.654,7,54,7z M51,49h-8v8H13V13h6v2h26v-2h6V49z M49.586,51L45,55.586V51H49.586z M21,8c0-0.551,0.449-1,1-1h4.618l0.487-0.975 C28.039,4.159,29.914,3,32,3s3.961,1.159,4.895,3.024L37.382,7H42c0.551,0,1,0.449,1,1v5H21V8z M55,60c0,0.551-0.449,1-1,1H10 c-0.551,0-1-0.449-1-1V10c0-0.551,0.449-1,1-1h9v2h-8v48h33.414L53,50.414V11h-8V9h9c0.551,0,1,0.449,1,1V60z"></path>
 <rect height="2" width="2" x="39" y="49"></rect> <rect height="2" width="22" x="15" y="49"></rect> <rect height="2" width="22" x="15" y="53"></rect> <rect height="2" width="2" x="39" y="53"></rect>
  <path d="M32,5c-1.654,0-3,1.346-3,3s1.346,3,3,3s3-1.346,3-3S33.654,5,32,5z M32,9c-0.551,0-1-0.449-1-1s0.449-1,1-1s1,0.449,1,1 S32.551,9,32,9z"></path>
-<rect height="2" width="2" x="24" y="9"></rect> <rect height="2" width="2" x="38" y="9"></rect> </g> </g></svg></h2>
+<rect height="2" width="2" x="24" y="9"></rect> <rect height="2" width="2" x="38" y="9"></rect> </g> </g></svg>
  <style>
         body {
             background-color: #f0f2f5;
@@ -71,6 +71,10 @@ stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
            left:1100px;
            margin-top:10px;
         }
+         #profileImage{
+          position:relative;
+          left:1120px;
+        }
     </style>
 </head>
 <body>
@@ -83,6 +87,9 @@ stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
             <li class="nav-item" id="UserHomePage">
                 <a class="nav-link text-light" href="UserHomePage.jsp">UserHomePage</a>
             </li>
+              <li>
+                   <img src="${pageContext.request.contextPath}${sessionScope.profileDTO}" width="70" height="70" value="" class="rounded-circle profile-image" id="profileImage">
+              </li>
         </ul>
     </div>
 </nav>

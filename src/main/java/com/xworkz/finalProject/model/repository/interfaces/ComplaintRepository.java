@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface ComplaintRepository {
  boolean saveComplaintDetails(ComplaintDTO complaintDTO);
- List<SignupDTO> findByUserId(int userId);
+ List<ComplaintDTO> findByUserId(int userId);
 }

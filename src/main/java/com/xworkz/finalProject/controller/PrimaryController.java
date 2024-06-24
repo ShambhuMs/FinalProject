@@ -34,7 +34,6 @@ public class PrimaryController {
            boolean result= this.signUpService.save(signupDTO);
            if (result){
                model.addAttribute("msg",signupDTO.getFirstName()+", Your application submitted..");
-               /*model.addAttribute("password","Your password is : "+signupDTO.getPassword());*/
                System.out.println("dto in controller"+signupDTO.getPassword());
            }
             else {

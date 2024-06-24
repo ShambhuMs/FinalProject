@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ComplaintService {
  boolean saveComplaintDetails(ComplaintDTO complaintDTO);
- List<SignupDTO> findByUserId(int userId);
+ List<ComplaintDTO> findByUserId(int userId);
 }

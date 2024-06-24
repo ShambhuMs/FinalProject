@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdminHome</title>
+    <title>viewComplaint</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <base href="http://localhost:8080/FinalProject/" />
     <style>
@@ -69,53 +69,32 @@
             </ul>
         </div>
     </nav>
-    <h2 style="color:green">${success} </h2>
-    <div class="signup-form form-container">
-        <form id="contactForm" action="viewDetails" method="post">
-                    <div class="mb-1 mt-3">
-                        <p class="fw-bold">
-                            <h4>View Login details:</h4>
-                        </p>
-                    </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block" id="submitBtn"  name="submit">View</button>
-        </div>
-        </form>
+    <h2>ViewComplaint details:</h2>
         <span style="color:red">${msg} </span>
-    </div>
 <c:if test="${dto.isEmpty()==false}">
 <div class="tableOut">
             <table class="table">
               <thead class="thead-light">
                 <tr>
                  <th scope="col">Id</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Phone number</th>
-                  <th scope="col">Login count</th>
-                  <th scope="col">Created By</th>
-                  <th scope="col">Created Date</th>
-                  <th scope="col">Updated By</th>
-                  <th scope="col">Updated Date</th>
-
+                  <th scope="col">ComplaintType</th>
+                  <th scope="col">Country</th>
+                  <th scope="col">State</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Description</th>
                 </tr>
               </thead>
               <tbody>
               <c:forEach items="${dto}" var="signup">
                 <tr>
                   <td scope="row">${signup.getId()}</td>
-                  <td>${signup.getFirstName()}</td>
-                  <td>${signup.getLastName()}</td>
-                  <td>${signup.getEmail()}</td>
-                  <td>${signup.getPhoneNumber()}</td>
-                  <td>${signup.getLogin_count()}</td>
-                  <td>${signup.getCreatedBy()}</td>
-                  <td>${signup.getCreatedDate()}</td>
-                  <td>${signup.getUpdatedBy()}</td>
-                  <td>${signup.getUpdatedDate()}</td>
-
-
+                  <td>${signup.getComplaintType()}</td>
+                  <td>${signup.getCountry()}</td>
+                  <td>${signup.getCity()}</td>
+                  <td>${signup.getState()}</td>
+                  <td>${signup.getAddress()}</td>
+                  <td>${signup.getDescription()}</td>
                 </tr>
                 </c:forEach>
               </tbody>

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -47,4 +48,16 @@ public class ComplaintController {
         return "RaiseComplaint";
     }
 
+    @PostMapping("/viewComplaintDetails")
+    public String viewAllComplaints(HttpSession session,Model model){
+      SignupDTO signupDTO=(SignupDTO)  session.getAttribute("dto");
+      Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(signupDTO.getEmail());
+      List<ComplaintDTO> complaintDTOList=this.complaintService.findByUserId(optionalSignupDTO.get().getId());
+      if (!complaintDTOList.isEmpty()){
+          model.addAttribute("dto",complaintDTOList);
+      }else {
+          model.addAttribute("msg","0 Records found");
+      }
+      return "ViewComplaint";
+    }
 }

@@ -37,12 +37,12 @@ public class ComplaintRepositoryImplementation implements ComplaintRepository {
     }
 
     @Override
-    public List<SignupDTO> findByUserId(int userId) {
+    public List<ComplaintDTO> findByUserId(int userId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             Query query = entityManager.createNamedQuery("findByUserId");
             query.setParameter("userId", userId);
-            List<SignupDTO> list=   query.getResultList();
+            List<ComplaintDTO> list=   query.getResultList();
             return list;
         }catch (Exception e){
             e.printStackTrace();
