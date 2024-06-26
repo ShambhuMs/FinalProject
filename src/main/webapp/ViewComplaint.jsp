@@ -47,7 +47,7 @@
         }
         .tableOut{
         position:relative;
-        top:-70px;
+        top:180px;
           margin-left: 60px;
           margin-right:100px;
           width: 90%;
@@ -63,7 +63,7 @@
                     <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
                 </li>
 
-                <li class="nav-item" id="SignIn.jsp">
+              <li class="nav-item" id="SignIn.jsp">
                        <a class="nav-link text-light" href="index.jsp">Home</a>
                 </li>
             </ul>
@@ -71,7 +71,7 @@
     </nav>
     <h2>ViewComplaint details:</h2>
         <span style="color:red">${msg} </span>
-<c:if test="${dto.isEmpty()==false}">
+<c:if test="${complaintDto.isEmpty()==false}">
 <div class="tableOut">
             <table class="table">
               <thead class="thead-light">
@@ -83,18 +83,21 @@
                   <th scope="col">City</th>
                   <th scope="col">Address</th>
                   <th scope="col">Description</th>
+                  <th scope="col">Edit</th>
                 </tr>
               </thead>
               <tbody>
-              <c:forEach items="${dto}" var="signup">
+              <c:forEach items="${complaintDto}" var="complaintDto">
                 <tr>
-                  <td scope="row">${signup.getId()}</td>
-                  <td>${signup.getComplaintType()}</td>
-                  <td>${signup.getCountry()}</td>
-                  <td>${signup.getCity()}</td>
-                  <td>${signup.getState()}</td>
-                  <td>${signup.getAddress()}</td>
-                  <td>${signup.getDescription()}</td>
+                  <td scope="row">${complaintDto.getId()} </td>
+                  <td>${complaintDto.getComplaintType()} </td>
+                  <td>${complaintDto.getCountry()} </td>
+                  <td>${complaintDto.getCity()}</td>
+                  <td>${complaintDto.getState()}</td>
+                  <td>${complaintDto.getAddress()}</td>
+                  <td>${complaintDto.getDescription()}</td>
+                  <td><a href="findByComplaintId?id=${complaintDto.id}&edit=edit">Edit</a></td>
+
                 </tr>
                 </c:forEach>
               </tbody>

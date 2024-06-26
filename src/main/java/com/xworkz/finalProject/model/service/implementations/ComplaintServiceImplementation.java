@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ComplaintServiceImplementation implements ComplaintService {
@@ -29,5 +30,21 @@ public class ComplaintServiceImplementation implements ComplaintService {
         }else {
             return Collections.emptyList();
         }
+    }
+
+    @Override
+    public Optional<ComplaintDTO> findById(long id) {
+        Optional<ComplaintDTO> optionalComplaintDTO=  this.complaintRepository.findById(id);
+        if (optionalComplaintDTO.isPresent()){
+            return optionalComplaintDTO;
+        }else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public boolean updateComplaint(ComplaintDTO complaintDTO) {
+       boolean update= this.complaintRepository.updateComplaint(complaintDTO);
+        return update;
     }
 }

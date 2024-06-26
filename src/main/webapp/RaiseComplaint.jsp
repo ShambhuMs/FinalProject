@@ -96,56 +96,67 @@
         <h2>Raise Complaint</h2>
         <div class="form-group">
             <label for="complaintType">Complaint Type</label>
-            <select class="form-control" id="complaintType" name="complaintType" onblur="setComplaintType()" required>
-                        <option value="0" ${complaintDto.complaintType == null ? 'selected' :''}>Choose...</option>
-                        <option value="Drainage Problem" ${complaintDto.complaintType eq 'Drainage Problem' ? 'selected' :''}>Drainage Problem</option>
-                        <option value="Electric Problem" ${complaintDto.complaintType eq 'Electric Problem' ? 'selected' :''}>Electric Problem</option>
-                        <option value="Plumber Problem" ${complaintDto.complaintType eq 'Plumber Problem' ? 'selected' :''}>Plumber Problem</option>
-                        <option value="Wastage Problem" ${complaintDto.complaintType eq 'Wastage Problem' ? 'selected' :''}>Wastage Problem</option>
-                        <option value="Water Problem" ${complaintDto.complaintType eq 'Water Problem' ? 'selected' :''}>Water Problem</option>
+            <select class="form-control" id="complaintType" ${readOnly=="disable"? 'readonly' : ''} name="complaintType" onblur="setComplaintType()" required>
+                        <option value="0"  ${complaintDto.complaintType == null ? 'selected' :''}>Choose...</option>
+                        <option  value="Drainage Problem" ${complaintDto.complaintType eq 'Drainage Problem' ? 'selected' :''}>Drainage Problem</option>
+                        <option  value="Electric Problem" ${complaintDto.complaintType eq 'Electric Problem' ? 'selected' :''}>Electric Problem</option>
+                        <option  value="Plumber Problem" ${complaintDto.complaintType eq 'Plumber Problem' ? 'selected' :''}>Plumber Problem</option>
+                        <option  value="Wastage Problem" ${complaintDto.complaintType eq 'Wastage Problem' ? 'selected' :''}>Wastage Problem</option>
+                        <option  value="Water Problem" ${complaintDto.complaintType eq 'Water Problem' ? 'selected' :''}>Water Problem</option>
                  </select>
             <div id="error-complaintType" class="error"></div>
         </div>
        <div class="form-group">
            <label for="country">Country</label>
-           <select class="form-control" id="country" name="country" onchange="fetchStates(); validateCountry();" required>
-               <option value="">Select Country</option>
+           <select class="form-control" ${readOnly=="disable"? 'readonly' : ''} id="country" name="country" value="" onchange="fetchStates(); validateCountry();" required>
+            <c:if test="${action=='edit'}">   <option value="" >${complaintDto.country}</option> </c:if>
+              <c:if test="${action!='edit'}"> <option value="" >Select Country</option></c:if>
            </select>
            <div id="error-country" class="error"></div>
        </div>
         <div class="form-group">
             <label for="state">State</label>
-            <select class="form-control" id="state" name="state" onblur="fetchCities(); validateState();" required >
-                <option value="">Select State</option>
+            <select class="form-control" ${readOnly=="disable"? 'readonly' : ''} id="state" name="state" value="" onblur="fetchCities(); validateState();" required >
+            <c:if test="${action=='edit'}">     <option value="">${complaintDto.state}</option> </c:if>
+             <c:if test="${action!='edit'}">  <option value="">Select State</option> </c:if>
             </select>
             <div id="error-state" class="error"></div>
         </div>
         <div class="form-group">
             <label for="city">City</label>
-            <select class="form-control" id="city" name="city" onblur="validateCity()" required >
-                <option value="" >Select City</option>
+            <select class="form-control" id="city" ${readOnly=="disable"? 'readonly' : ''} name="city" onblur="validateCity()" required >
+             <c:if test="${action=='edit'}">   <option value="${complaintDto.city}"> ${complaintDto.city}  </option> </c:if>
+             <c:if test="${action!='edit'}">  <option value="0"  >Select City </option> </c:if>
             </select>
             <div id="error-city" class="error"></div>
         </div>
         <div class="form-group">
             <label for="address">Address</label>
             <input type="text" class="form-control" placeholder="Enter Address" id="address" name="address"
-            ${complaintDto.address} onblur="setAddress()" required>
+           value="${complaintDto.address}"  onblur="setAddress()" required/>
             <div id="error-address" class="error"></div>
         </div>
       <div class="mb-3">
                         <div class="form-floating">
+                        <label for="description">Description</label>
                             <textarea class="form-control" placeholder="Leave a comment here" name="description"
                             id="description" oninput="updateDescriptionCount()" maxlength="300"
                             onblur="validateDescription()">${complaintDto.description}</textarea>
-                            <label for="description">Description</label>
                         </div>
                         <span id="descriptionError" class="text-danger"></span>
                         <small id="descriptionCount" class="form-text text-muted">300 characters remaining</small>
                     </div>
+                      <c:if test="${action == 'edit'}">
+                             <div class="form-group">
+                                        <input type="submit" class="btn btn-primary btn-block" id="submitBtn" value="Update" name="submit" >
+                              </div>
+                              </c:if>
+        <c:if test="${action != 'edit'}">
         <div class="form-group">
             <input type="submit" class="btn btn-primary btn-block" id="submitBtn" value="Submit" name="submit" disabled>
         </div>
+        </c:if>
+
     </form>
 </div>
 

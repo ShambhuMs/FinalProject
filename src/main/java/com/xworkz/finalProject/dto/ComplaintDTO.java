@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "system_complaint")
+@NamedQuery(name = "findComplaintDTOByUserId",query = "select complaint from ComplaintDTO complaint where complaint.userId = :userId")
+@NamedQuery(name = "findComplaintDTOById",query = "select complaint from ComplaintDTO complaint where complaint.id = :id")
 public class ComplaintDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +33,6 @@ public class ComplaintDTO {
     private String address;
     @NotNull(message = "description not be null")
     private String description;
-
     @Column(name = "created_by")
     private String createdBy;
     @Column(name = "modified_by")
@@ -44,4 +45,6 @@ public class ComplaintDTO {
     private int userId;
     @Column(name = "complaint_status")
     private String complaintStatus;
+
+
 }

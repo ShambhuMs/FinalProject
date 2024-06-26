@@ -9,4 +9,8 @@ import java.util.Optional;
 public interface ComplaintRepository {
  boolean saveComplaintDetails(ComplaintDTO complaintDTO);
  List<ComplaintDTO> findByUserId(int userId);
+ default Optional<ComplaintDTO> findById(long id){
+       return Optional.empty();
+ }
+ boolean updateComplaint(ComplaintDTO complaintDTO);
 }
