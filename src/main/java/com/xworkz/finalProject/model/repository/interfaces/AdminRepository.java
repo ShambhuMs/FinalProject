@@ -1,6 +1,7 @@
 package com.xworkz.finalProject.model.repository.interfaces;
 
 import com.xworkz.finalProject.dto.AdminDTO;
+import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface AdminRepository {
     }
 
     List<SignupDTO> fetchAllClientRecords();
+    List<ComplaintDTO> fetchAllCompliant();
+    List<ComplaintDTO> fetchByComplaintTypeOrCity(String complaintType,String city);
+    List<ComplaintDTO> getAllComplaintDetailsByTypeAndCity(String complaintType,String city);
 }

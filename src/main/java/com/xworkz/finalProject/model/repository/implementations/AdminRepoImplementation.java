@@ -1,6 +1,7 @@
 package com.xworkz.finalProject.model.repository.implementations;
 
 import com.xworkz.finalProject.dto.AdminDTO;
+import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,55 @@ public class AdminRepoImplementation implements AdminRepository {
         }catch (Exception e){
             System.out.println(e);
         }finally {
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<ComplaintDTO> fetchAllCompliant() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("getAllComplaintDetails");
+            List<ComplaintDTO> list=   query.getResultList();
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally{
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<ComplaintDTO> fetchByComplaintTypeOrCity(String complaintType,String city) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("getAllComplaintDetailsByTypeOrCity");
+            query.setParameter("complaintType",complaintType);
+            query.setParameter("city",city);
+            List<ComplaintDTO> list=   query.getResultList();
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally{
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<ComplaintDTO> getAllComplaintDetailsByTypeAndCity(String complaintType,String city) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("getAllComplaintDetailsByTypeAndCity");
+            query.setParameter("complaintType",complaintType);
+            query.setParameter("city",city);
+            List<ComplaintDTO> list=   query.getResultList();
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally{
             entityManager.close();
         }
         return Collections.emptyList();

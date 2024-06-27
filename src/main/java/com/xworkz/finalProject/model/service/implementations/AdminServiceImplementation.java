@@ -1,6 +1,7 @@
 package com.xworkz.finalProject.model.service.implementations;
 
 import com.xworkz.finalProject.dto.AdminDTO;
+import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
@@ -32,6 +33,37 @@ public class AdminServiceImplementation implements AdminService {
         List<SignupDTO> signupDTOS=this.adminRepository.fetchAllClientRecords();
         if (!signupDTOS.isEmpty()){
             return signupDTOS;
+        }else {
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<ComplaintDTO> fetchAllCompliant() {
+        List<ComplaintDTO> complaintDTOS=this.adminRepository.fetchAllCompliant();
+        if (!complaintDTOS.isEmpty()){
+            return complaintDTOS;
+        }else {
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<ComplaintDTO> fetchByComplaintTypeOrCity(String complaintType,String city) {
+        List<ComplaintDTO> complaintDTOS=this.adminRepository.fetchByComplaintTypeOrCity(complaintType,city);
+        System.err.println(complaintDTOS);
+        if (!complaintDTOS.isEmpty()){
+            return complaintDTOS;
+        }else {
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<ComplaintDTO> getAllComplaintDetailsByTypeAndCity(String complaintType,String city) {
+        List<ComplaintDTO> complaintDTOS=this.adminRepository.getAllComplaintDetailsByTypeAndCity(complaintType, city);
+        if (!complaintDTOS.isEmpty()){
+            return complaintDTOS;
         }else {
             return Collections.emptyList();
         }

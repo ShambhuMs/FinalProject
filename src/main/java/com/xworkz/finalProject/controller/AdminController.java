@@ -1,16 +1,14 @@
 package com.xworkz.finalProject.controller;
 
 import com.xworkz.finalProject.dto.AdminDTO;
+import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -36,8 +34,8 @@ public class AdminController {
        }
     }
 
-    @PostMapping("/viewDetails")
-    public String fetchAllClientDetails(Model model){
+@RequestMapping(value = "/viewDetails",method = {RequestMethod.GET,RequestMethod.POST})
+public String fetchAllClientDetails(Model model){
         List<SignupDTO> list= this.adminService.fetchAllClientRecords();
         if (!list.isEmpty()){
             model.addAttribute("dto",list);
@@ -45,5 +43,38 @@ public class AdminController {
             model.addAttribute("msg","No Records found");
         }
         return "AdminHomePage";
+    }
+
+    @GetMapping("/viewComplaintDetails")
+    public String fetchAllComplaintDetails(Model model){
+        List<ComplaintDTO> list= this.adminService.fetchAllCompliant();
+        if (!list.isEmpty()){
+            model.addAttribute("dto",list);
+        }else {
+            model.addAttribute("msg","No Records found");
+        }
+        return "AdminHomePage";
+    }
+
+    @PostMapping("/findByTypeOrAddress")
+    public String findByTypeAddress(@RequestParam String complaintType,@RequestParam String city,Model model){
+        if (complaintType!="" && city!=""){
+            //findByBoth
+         List<ComplaintDTO> complaintDTOList= this.adminService.getAllComplaintDetailsByTypeAndCity(complaintType,city);
+         if (!complaintDTOList.isEmpty()){
+             model.addAttribute("dto",complaintDTOList);
+         }else {
+             model.addAttribute("msg","0 Records found");
+         }
+        }else {
+            //findByCity or complaintType
+            List<ComplaintDTO> complaintDTOList= this.adminService.fetchByComplaintTypeOrCity(complaintType, city);
+            if (!complaintDTOList.isEmpty()){
+                model.addAttribute("dto",complaintDTOList);
+            }else {
+                model.addAttribute("msg","0 Records found");
+            }
+        }
+        return "ViewComplaintDetails";
     }
 }

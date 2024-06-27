@@ -36,9 +36,8 @@ public class ComplaintController {
             model.addAttribute("errorMessage",bindingResult.getAllErrors());
             model.addAttribute("complaintDto",complaintDTO);
         }  else {
+            SignupDTO signupDTO1 = (SignupDTO) session.getAttribute("dto");
             if (!edit) {
-                SignupDTO signupDTO1 = (SignupDTO) session.getAttribute("dto");
-                System.err.println(signupDTO1);
                 complaintDTO.setCreatedBy(signupDTO1.getFirstName() + " " + signupDTO1.getLastName());
                 complaintDTO.setCreatedDate(LocalDateTime.now());
                 complaintDTO.setUserId(signupDTO1.getId());
@@ -50,6 +49,8 @@ public class ComplaintController {
                     model.addAttribute("failedMessage", "Enter valid details..");
                 }
             }else {
+                complaintDTO.setUpdatedBy(signupDTO1.getFirstName()+" "+signupDTO1.getLastName());
+                complaintDTO.setUpdatedDate(LocalDateTime.now());
               boolean update=this.complaintService.updateComplaint(complaintDTO);
                 if (update) {
                     model.addAttribute("successMessage", "Your complaint Updated...");
@@ -65,9 +66,7 @@ public class ComplaintController {
     public String viewAllComplaints(HttpSession session,Model model){
       SignupDTO signupDTO=(SignupDTO)  session.getAttribute("dto");
       Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(signupDTO.getEmail());
-        System.err.println(optionalSignupDTO);
       List<ComplaintDTO> complaintDTOList=this.complaintService.findByUserId(optionalSignupDTO.get().getId());
-        System.err.println(complaintDTOList);
       if (!complaintDTOList.isEmpty()){
           model.addAttribute("complaintDto",complaintDTOList);
       }else {

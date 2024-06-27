@@ -64,8 +64,8 @@
                  <li class="nav-item" id="EditProfile">
                        <a class="nav-link text-light" href="EditProfile.jsp">EditProfile</a>
                  </li>
-                 <li class="nav-item" id=" FindByEmail">
-                       <a class="nav-link text-light" href="FindByEmail.jsp">FindByEmail</a>
+                 <li class="nav-item" id=" AdminHomePage">
+                       <a class="nav-link text-light" href="AdminHomePage.jsp">AdminHomePage</a>
                  </li>
                  <li class="nav-item" id=" FindByEmail">
                        <a class="nav-link text-light" href="UserHomePage.jsp">UserHomePage.jsp</a>

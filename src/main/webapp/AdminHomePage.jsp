@@ -41,13 +41,14 @@
         }
         h2{
         position:relative;
-        left:400px;
+        left:500px;
         top:150px;
+        margin-bottom:30px;
         width:700px;
         }
         .tableOut{
         position:relative;
-        top:-70px;
+        top:150px;
           margin-left: 60px;
           margin-right:100px;
           width: 90%;
@@ -66,25 +67,20 @@
                 <li class="nav-item" id="SignIn.jsp">
                        <a class="nav-link text-light" href="index.jsp">Home</a>
                 </li>
+                <li>
+                <a class="nav-link active text-light fs-5 fw-bold" aria-current="page" href="viewDetails">userDetails</a>
+                </li>
+                <li>
+                <a class="nav-link active text-light fs-5 fw-bold" aria-current="page" href="ViewComplaintDetails.jsp">ComplaintDetailsDetails</a>
+                </li>
             </ul>
         </div>
     </nav>
-    <h2 style="color:green">${success} </h2>
-    <div class="signup-form form-container">
-        <form id="contactForm" action="viewDetails" method="post">
-                    <div class="mb-1 mt-3">
-                        <p class="fw-bold">
-                            <h4>View Login details:</h4>
-                        </p>
-                    </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block" id="submitBtn"  name="submit">View</button>
-        </div>
-        </form>
-        <span style="color:red">${msg} </span>
-    </div>
+
 <c:if test="${dto.isEmpty()==false}">
+<h2> View All User Details.. </h2>
 <div class="tableOut">
+        <span style="color:red">${msg} </span>
             <table class="table">
               <thead class="thead-light">
                 <tr>
@@ -114,8 +110,6 @@
                   <td>${signup.getCreatedDate()}</td>
                   <td>${signup.getUpdatedBy()}</td>
                   <td>${signup.getUpdatedDate()}</td>
-
-
                 </tr>
                 </c:forEach>
               </tbody>
