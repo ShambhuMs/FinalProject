@@ -76,7 +76,6 @@
             </ul>
         </div>
     </nav>
-
 <c:if test="${dto.isEmpty()==false}">
 <h2> View All User Details.. </h2>
 <div class="tableOut">

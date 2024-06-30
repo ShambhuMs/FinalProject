@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdminHome</title>
+    <title>ViewComplaintDetails</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <base href="http://localhost:8080/FinalProject/" />
     <style>
@@ -98,8 +98,6 @@
             </ul>
         </div>
     </nav>
-
-  <!--  <div class="complaint-form-wrapper">   -->
         <div class="complaint-form">
             <form action="findByTypeOrAddress" method="post">
                 <h2>Fetch</h2>
@@ -160,6 +158,5 @@
                 </table>
             </div>
         </c:if>
-
 </body>
 </html>
