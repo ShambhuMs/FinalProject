@@ -164,11 +164,11 @@
                            Assign
                           </button>
                           <ul class="dropdown-menu">
-                          <li><button class="dropdown-item" type="submit" name="assign" value="resolved">Drainage Department</button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="pending">Electric Department</button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="pending">Plumber Department </button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="pending">Wastage Department</button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="pending">Water Department</button></li>
+                          <li><button class="dropdown-item" type="submit" name="assign" value="Drainage Department">Drainage Department</button></li>
+                           <li><button class="dropdown-item" type="submit" name="assign" value="Electric Department">Electric Department</button></li>
+                           <li><button class="dropdown-item" type="submit" name="assign" value="Plumber Department">Plumber Department </button></li>
+                           <li><button class="dropdown-item" type="submit" name="assign" value="Wastage Department">Wastage Department</button></li>
+                           <li><button class="dropdown-item" type="submit" name="assign" value="Water Department">Water Department</button></li>
                            </ul>
                          </div>
                          </form>  </td>

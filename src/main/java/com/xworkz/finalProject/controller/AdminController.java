@@ -2,6 +2,7 @@ package com.xworkz.finalProject.controller;
 
 import com.xworkz.finalProject.dto.AdminDTO;
 import com.xworkz.finalProject.dto.ComplaintDTO;
+import com.xworkz.finalProject.dto.DepartmentDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
@@ -84,8 +85,12 @@ public String fetchAllClientDetails(Model model){
     @PostMapping("/complaintAssign")
     public String setAssign(@RequestParam int id,@RequestParam String assign){
       Optional<ComplaintDTO> complaintDTOOptional=  this.complaintService.findById(id);
-
-      complaintDTOOptional.get().setDepartmentId(1);
-        return "ViewComplaintDetails";
+      if (assign!=null){
+          Optional<DepartmentDTO> departmentDTO= this.adminService.findByDepartmentType(assign);
+          complaintDTOOptional.get().setDepartmentId(departmentDTO.get().getDepartment_id());
+      }else {
+          System.err.println("Assign is empty....");
+      }
+      return "ViewComplaintDetails";
     }
 }

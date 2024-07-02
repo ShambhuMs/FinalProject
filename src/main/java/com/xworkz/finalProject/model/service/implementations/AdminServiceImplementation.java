@@ -2,6 +2,7 @@ package com.xworkz.finalProject.model.service.implementations;
 
 import com.xworkz.finalProject.dto.AdminDTO;
 import com.xworkz.finalProject.dto.ComplaintDTO;
+import com.xworkz.finalProject.dto.DepartmentDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
@@ -66,6 +67,16 @@ public class AdminServiceImplementation implements AdminService {
             return complaintDTOS;
         }else {
             return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public Optional<DepartmentDTO> findByDepartmentType(String departmentType) {
+        Optional<DepartmentDTO> departmentDTO= this.adminRepository.findByDepartmentType(departmentType);
+        if (departmentDTO.isPresent()){
+            return departmentDTO;
+        }else {
+            return Optional.empty();
         }
     }
 }

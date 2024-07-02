@@ -2,6 +2,7 @@ package com.xworkz.finalProject.model.repository.implementations;
 
 import com.xworkz.finalProject.dto.AdminDTO;
 import com.xworkz.finalProject.dto.ComplaintDTO;
+import com.xworkz.finalProject.dto.DepartmentDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,5 +99,22 @@ public class AdminRepoImplementation implements AdminRepository {
             entityManager.close();
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Optional<DepartmentDTO> findByDepartmentType(String departmentType) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            Query query= entityManager.createNamedQuery("findByDepartmentType");
+            query.setParameter("departmentType",departmentType);
+            Object object=  query.getSingleResult();
+            DepartmentDTO departmentDTO=(DepartmentDTO) object;
+            return Optional.ofNullable(departmentDTO);
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            entityManager.close();
+        }
+        return Optional.empty();
     }
 }

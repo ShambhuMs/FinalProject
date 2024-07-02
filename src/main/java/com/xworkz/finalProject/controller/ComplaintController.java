@@ -41,6 +41,7 @@ public class ComplaintController {
                 complaintDTO.setCreatedBy(signupDTO1.getFirstName() + " " + signupDTO1.getLastName());
                 complaintDTO.setCreatedDate(LocalDateTime.now());
                 complaintDTO.setUserId(signupDTO1.getId());
+                complaintDTO.setDepartmentId(0);
                 complaintDTO.setComplaintStatus("unResolved");
                 boolean saved = this.complaintService.saveComplaintDetails(complaintDTO);
                 if (saved) {
