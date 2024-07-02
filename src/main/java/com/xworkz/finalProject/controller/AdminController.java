@@ -5,6 +5,7 @@ import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
+import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,8 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private ComplaintService complaintService;
 
     @PostMapping("/adminLogin")
     public String adminLoginCheck(@Valid AdminDTO adminDTO, Model model){
@@ -75,6 +78,14 @@ public String fetchAllClientDetails(Model model){
                 model.addAttribute("msg","0 Records found");
             }
         }
+        return "ViewComplaintDetails";
+    }
+
+    @PostMapping("/complaintAssign")
+    public String setAssign(@RequestParam int id,@RequestParam String assign){
+      Optional<ComplaintDTO> complaintDTOOptional=  this.complaintService.findById(id);
+
+      complaintDTOOptional.get().setDepartmentId(1);
         return "ViewComplaintDetails";
     }
 }

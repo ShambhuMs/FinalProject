@@ -41,6 +41,8 @@ public class ComplaintDTO {
     @NotNull(message = "description not be null")
     @Size(min = 3,max = 300,message = "Address should be between 3 and 300 characters")
     private String description;
+    @Column(name = "department_id")
+    private int departmentId;
     @Column(name = "created_by")
     private String createdBy;
     @Column(name = "modified_by")
@@ -53,6 +55,7 @@ public class ComplaintDTO {
     private int userId;
     @Column(name = "complaint_status")
     private String complaintStatus;
+
 
 
 }

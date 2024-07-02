@@ -138,6 +138,9 @@
                             <th scope="col">Description</th>
                             <th scope="col">UserId</th>
                             <th scope="col">ComplaintStatus</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Action</th>
+                            <th scope="col">Update</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -152,11 +155,52 @@
                                 <td>${complaint.getDescription()}</td>
                                 <td>${complaint.getUserId()}</td>
                                 <td>${complaint.getComplaintStatus()}</td>
-                            </tr>
-                        </c:forEach>
+                                <td class="d-none d-md-table-cell">
+                    <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
+                        <form action="complaintAssign" method="post"> <!-- Action form -->
+                         <input type="hidden" name="id" value="${complaint.getId()}">
+                          <div class="btn-group">
+                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                           Assign
+                          </button>
+                          <ul class="dropdown-menu">
+                          <li><button class="dropdown-item" type="submit" name="assign" value="resolved">Drainage Department</button></li>
+                           <li><button class="dropdown-item" type="submit" name="assign" value="pending">Electric Department</button></li>
+                           <li><button class="dropdown-item" type="submit" name="assign" value="pending">Plumber Department </button></li>
+                           <li><button class="dropdown-item" type="submit" name="assign" value="pending">Wastage Department</button></li>
+                           <li><button class="dropdown-item" type="submit" name="assign" value="pending">Water Department</button></li>
+                           </ul>
+                         </div>
+                         </form>  </td>
+                    </c:if>
+                          <td class="d-none d-md-table-cell">
+                        <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
+                                <form action="admin/updateComplaintStatus" method="post"> <!-- Status form -->
+                                <input type="hidden" name="id" value="${complaint.id}">
+                                  <div class="input-group">
+                                <select class="form-select" id="status" name="status">
+                                    <option value="0" ${selectedType == null ? 'selected' : ''}>Choose...</option>
+                                    <option value="active" ${selectedType == 'active' ? 'selected' : ''}>Active</option>
+                                    <option value="resolved" ${selectedType == 'resolved' ? 'selected' : ''}>Resolved</option>
+                                    <option value="pending" ${selectedType == 'pending' ? 'selected' : ''}>Pending</option>
+                                </select>
+                                <td>
+                                   <button type="submit" class="btn btn-primary">Update</button>
+                                </td>
+                                 </div>
+                               </form>
+                        </td>
+
+                         </c:if>
+                    </tr>
+
+                           </c:forEach>
                     </tbody>
                 </table>
             </div>
         </c:if>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>
