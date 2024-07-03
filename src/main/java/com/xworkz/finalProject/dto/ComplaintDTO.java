@@ -16,11 +16,12 @@ import java.time.LocalDateTime;
 @Table(name = "system_complaint")
 @NamedQuery(name = "findComplaintDTOByUserId",query = "select complaint from ComplaintDTO complaint where complaint.userId = :userId")
 @NamedQuery(name = "findComplaintDTOById",query = "select complaint from ComplaintDTO complaint where complaint.id = :id")
-@NamedQuery(name = "getAllComplaintDetails",query = "select complaint from ComplaintDTO complaint")
+@NamedQuery(name = "getAllComplaintDetails",query = "select complaint from ComplaintDTO complaint ORDER BY complaint.createdDate DESC")
 @NamedQuery(name = "getAllComplaintDetailsByTypeOrCity",query = "select complaint from ComplaintDTO complaint where " +
         "complaint.complaintType=:complaintType or complaint.city=:city")
 @NamedQuery(name = "getAllComplaintDetailsByTypeAndCity",query = "select complaint from ComplaintDTO complaint where " +
         "complaint.complaintType=:complaintType and complaint.city=:city")
+@NamedQuery(name = "statusUpdate",query = "update ComplaintDTO set complaintStatus=:status where id=:id")
 public class ComplaintDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -57,10 +57,11 @@ public String fetchAllClientDetails(Model model){
         }else {
             model.addAttribute("msg","No Records found");
         }
-        return "AdminHomePage";
+        return "ViewComplaintDetails";
     }
 
-    @PostMapping("/findByTypeOrAddress")
+
+    @PostMapping(value = "/findByTypeOrAddress")
     public String findByTypeAddress(@RequestParam String complaintType,@RequestParam String city,Model model){
         if (complaintType!="" && city!=""){
             //findByBoth
@@ -82,15 +83,22 @@ public String fetchAllClientDetails(Model model){
         return "ViewComplaintDetails";
     }
 
-    @PostMapping("/complaintAssign")
-    public String setAssign(@RequestParam int id,@RequestParam String assign){
+    @PostMapping(value = "/complaintAssign")
+    public String assign(@RequestParam long id,@RequestParam String assign,Model model){
       Optional<ComplaintDTO> complaintDTOOptional=  this.complaintService.findById(id);
       if (assign!=null){
           Optional<DepartmentDTO> departmentDTO= this.adminService.findByDepartmentType(assign);
           complaintDTOOptional.get().setDepartmentId(departmentDTO.get().getDepartment_id());
-      }else {
-          System.err.println("Assign is empty....");
+          this.complaintService.updateComplaint(complaintDTOOptional.get());
       }
-      return "ViewComplaintDetails";
+      return "redirect:/viewComplaintDetails";
+    }
+
+    @PostMapping(value = "/updateComplaintStatus")
+    public String updateComplaintStatus(@RequestParam long id,@RequestParam String status,Model model){
+        Optional<ComplaintDTO> optionalComplaintDTO = this.complaintService.findById(id);
+        optionalComplaintDTO.get().setComplaintStatus(status);
+        this.complaintService.updateComplaint(optionalComplaintDTO.get());
+        return "redirect:/viewComplaintDetails";
     }
 }

@@ -76,7 +76,7 @@
             </ul>
         </div>
     </nav>
-<c:if test="${dto.isEmpty()==false}">
+    <c:if test="${dto.isEmpty()==false}">
 <h2> View All User Details.. </h2>
 <div class="tableOut">
         <span style="color:red">${msg} </span>
@@ -94,7 +94,7 @@
                   <th scope="col">Updated By</th>
                   <th scope="col">Updated Date</th>
 
-                </tr>
+              </tr>
               </thead>
               <tbody>
               <c:forEach items="${dto}" var="signup">

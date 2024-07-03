@@ -76,6 +76,9 @@ public class ComplaintRepositoryImplementation implements ComplaintRepository {
         EntityTransaction entityTransaction= entityManager.getTransaction();
         try {
             entityTransaction.begin();
+          /* ComplaintDTO complaintDTO1= entityManager.find(ComplaintDTO.class,complaintDTO.getId());
+           complaintDTO1.setDescription(complaintDTO.getDescription());
+           complaintDTO1.setComplaintStatus(complaintDTO.getComplaintStatus());*/
             entityManager.merge(complaintDTO);
             entityTransaction.commit();
             return true;
@@ -87,7 +90,5 @@ public class ComplaintRepositoryImplementation implements ComplaintRepository {
         }
         return false;
     }
-
-
 }
 

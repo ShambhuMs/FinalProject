@@ -54,9 +54,9 @@ public class SignInController {
                              }
                          });
                      }
-                     else {
+                    /* else {
                          httpSession.removeAttribute("profileDTO");
-                     }
+                     }*/
                      int count = signupDTOOptional.get().getLogin_count();
                      signupDTOOptional.get().setLock_account(0);
                      if (count == 0) {

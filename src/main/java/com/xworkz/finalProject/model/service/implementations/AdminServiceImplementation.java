@@ -79,4 +79,10 @@ public class AdminServiceImplementation implements AdminService {
             return Optional.empty();
         }
     }
+
+    @Override
+    public boolean updateStatus(long id, String status) {
+      boolean updateStatus=  this.adminRepository.updateStatus(id, status);
+        return updateStatus;
+    }
 }

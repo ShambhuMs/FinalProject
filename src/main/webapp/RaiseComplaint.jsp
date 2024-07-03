@@ -94,6 +94,7 @@
         </span>
         <span class="text-green">${successMessage}</span>
         <h2>Raise Complaint</h2>
+      <c:if test="${action=='edit'}">  <input type="hidden" name="id" value="${complaintDto.id}"> </c:if>
         <div class="form-group">
             <label for="complaintType">Complaint Type</label>
             <select class="form-control" id="complaintType" ${readOnly=="disable"? 'readonly' : ''} name="complaintType" onblur="setComplaintType()" required>
@@ -148,7 +149,7 @@
                     </div>
                       <c:if test="${action == 'edit'}">
                              <div class="form-group">
-                                        <input type="submit" class="btn btn-primary btn-block" id="submitBtn" value="Update" name="submit" >
+                                        <input type="submit" class="btn btn-primary btn-block" id="updateBtn" value="Update" name="submit" >
                               </div>
                               </c:if>
         <c:if test="${action != 'edit'}">

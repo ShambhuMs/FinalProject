@@ -63,8 +63,8 @@
                     <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
                 </li>
 
-              <li class="nav-item" id="SignIn.jsp">
-                       <a class="nav-link text-light" href="index.jsp">Home</a>
+              <li class="nav-item" id="UserHomePage">
+                       <a class="nav-link text-light" href="UserHomePage.jsp">Home</a>
                 </li>
             </ul>
         </div>
@@ -92,8 +92,8 @@
                   <td scope="row">${complaintDto.getId()} </td>
                   <td>${complaintDto.getComplaintType()} </td>
                   <td>${complaintDto.getCountry()} </td>
-                  <td>${complaintDto.getCity()}</td>
                   <td>${complaintDto.getState()}</td>
+                  <td>${complaintDto.getCity()}</td>
                   <td>${complaintDto.getAddress()}</td>
                   <td>${complaintDto.getDescription()}</td>
                   <td><a href="findByComplaintId?id=${complaintDto.id}&edit=edit">Edit</a></td>

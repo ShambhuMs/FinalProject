@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.Collections;
 import java.util.List;
@@ -116,5 +117,25 @@ public class AdminRepoImplementation implements AdminRepository {
             entityManager.close();
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean updateStatus(long id,String status) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction=entityManager.getTransaction();
+        try {
+            entityTransaction.begin();
+            Query query= entityManager.createNamedQuery("statusUpdate");
+            query.setParameter("status",status);
+            query.setParameter("id",id);
+            entityTransaction.commit();
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            entityTransaction.rollback();
+        }finally {
+            entityManager.close();
+        }
+        return false;
     }
 }

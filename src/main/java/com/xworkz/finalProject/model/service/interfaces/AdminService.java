@@ -19,4 +19,5 @@ public interface AdminService {
     default Optional<DepartmentDTO> findByDepartmentType(String departmentType){
         return Optional.empty();
     }
+    boolean updateStatus(long id,String status);
 }

@@ -37,12 +37,11 @@ public class ComplaintController {
             model.addAttribute("complaintDto",complaintDTO);
         }  else {
             SignupDTO signupDTO1 = (SignupDTO) session.getAttribute("dto");
+            complaintDTO.setCreatedBy(signupDTO1.getFirstName() + " " + signupDTO1.getLastName());
+            complaintDTO.setCreatedDate(LocalDateTime.now());
+            complaintDTO.setUserId(signupDTO1.getId());
+            complaintDTO.setComplaintStatus("unResolved");
             if (!edit) {
-                complaintDTO.setCreatedBy(signupDTO1.getFirstName() + " " + signupDTO1.getLastName());
-                complaintDTO.setCreatedDate(LocalDateTime.now());
-                complaintDTO.setUserId(signupDTO1.getId());
-                complaintDTO.setDepartmentId(0);
-                complaintDTO.setComplaintStatus("unResolved");
                 boolean saved = this.complaintService.saveComplaintDetails(complaintDTO);
                 if (saved) {
                     model.addAttribute("successMessage", "Your complaint Submitted...");
@@ -50,8 +49,6 @@ public class ComplaintController {
                     model.addAttribute("failedMessage", "Enter valid details..");
                 }
             }else {
-                complaintDTO.setUpdatedBy(signupDTO1.getFirstName()+" "+signupDTO1.getLastName());
-                complaintDTO.setUpdatedDate(LocalDateTime.now());
               boolean update=this.complaintService.updateComplaint(complaintDTO);
                 if (update) {
                     model.addAttribute("successMessage", "Your complaint Updated...");

@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ViewComplaintDetails</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <base href="http://localhost:8080/FinalProject/" />
     <style>
         body {
             background-color: #f0f2f5;
@@ -157,7 +156,7 @@
                                 <td>${complaint.getComplaintStatus()}</td>
                                 <td class="d-none d-md-table-cell">
                     <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
-                        <form action="complaintAssign" method="post"> <!-- Action form -->
+                        <form action="complaintAssign" method="post">
                          <input type="hidden" name="id" value="${complaint.getId()}">
                           <div class="btn-group">
                          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -175,14 +174,14 @@
                     </c:if>
                           <td class="d-none d-md-table-cell">
                         <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
-                                <form action="admin/updateComplaintStatus" method="post"> <!-- Status form -->
+                                <form action="updateComplaintStatus" method="post">
                                 <input type="hidden" name="id" value="${complaint.id}">
                                   <div class="input-group">
                                 <select class="form-select" id="status" name="status">
                                     <option value="0" ${selectedType == null ? 'selected' : ''}>Choose...</option>
-                                    <option value="active" ${selectedType == 'active' ? 'selected' : ''}>Active</option>
-                                    <option value="resolved" ${selectedType == 'resolved' ? 'selected' : ''}>Resolved</option>
-                                    <option value="pending" ${selectedType == 'pending' ? 'selected' : ''}>Pending</option>
+                                    <option value="UnResolved" ${selectedType == 'UnResolved' ? 'selected' : ''}>UnResolved</option>
+                                    <option value="Resolved" ${selectedType == 'Resolved' ? 'selected' : ''}>Resolved</option>
+                                    <option value="Pending" ${selectedType == 'Pending' ? 'selected' : ''}>Pending</option>
                                 </select>
                                 <td>
                                    <button type="submit" class="btn btn-primary">Update</button>
