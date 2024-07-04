@@ -110,7 +110,7 @@
        <div class="form-group">
            <label for="country">Country</label>
            <select class="form-control" ${readOnly=="disable"? 'readonly' : ''} id="country" name="country" value="" onchange="fetchStates(); validateCountry();" required>
-            <c:if test="${action=='edit'}">   <option value="" >${complaintDto.country}</option> </c:if>
+            <c:if test="${action=='edit'}">   <option value="${complaintDto.country}" >${complaintDto.country}</option> </c:if>
               <c:if test="${action!='edit'}"> <option value="" >Select Country</option></c:if>
            </select>
            <div id="error-country" class="error"></div>
@@ -118,7 +118,7 @@
         <div class="form-group">
             <label for="state">State</label>
             <select class="form-control" ${readOnly=="disable"? 'readonly' : ''} id="state" name="state" value="" onblur="fetchCities(); validateState();" required >
-            <c:if test="${action=='edit'}">     <option value="">${complaintDto.state}</option> </c:if>
+            <c:if test="${action=='edit'}">     <option value="${complaintDto.state}">${complaintDto.state}</option> </c:if>
              <c:if test="${action!='edit'}">  <option value="">Select State</option> </c:if>
             </select>
             <div id="error-state" class="error"></div>

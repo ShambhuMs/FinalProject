@@ -38,6 +38,10 @@ public class SignInController {
     public String checkSignIn(@RequestParam String email, @RequestParam String password, Model model,
                               HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
         Optional<SignupDTO> signupDTOOptional= this.signUpService.findByemail(email);
+        if(password==null || password==""){
+            model.addAttribute("msg","Enter email or password");
+            return  "SignIn";
+        }
              if (signupDTOOptional.isPresent()) {
                  if (signupDTOOptional.get().getPassword().equals(password) ||
                          signupDTOOptional.get().getUserPassword().equals(password)) {
