@@ -83,7 +83,12 @@
     </nav>
 <div class="login-form">
     <form action="adminLogin" method="post">
-        <h2 class="text-center">Admin Login</h2>
+        <h2 class="text-center">
+       <c:choose>
+        <c:when test="${!departmentAdmin}"> Admin Login </c:when>
+        <c:when test="${departmentAdmin}">Department Admin Login </c:when>
+       </c:choose>
+        </h2>
        <span style="color:red">  ${msg} </span>
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Enter email " value="${dto.email}" id="email" name="email" required>
