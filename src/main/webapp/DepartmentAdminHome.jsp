@@ -96,36 +96,14 @@
                     <a class="nav-link text-light" href="AdminHomePage.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="ViewComplaintsForDepAdmin.jsp">ViewAllComplaintDetails</a>
+                    <a class="nav-link text-light" href="departmentAdmin/viewComplaintsForDepAdmin">ViewAllComplaintDetails</a>
                  </li>
+                 <li class="nav-item" id="AddEmployee">
+                      <a class="nav-link text-light" href="AddEmployee.jsp">AddEmployee</a>
+                  </li>
             </ul>
         </div>
     </nav>
-        <div class="complaint-form">
-            <form action="findByTypeOrAddress" method="post">
-                <h2>Fetch</h2>
-                <span style="color:red">${msg}</span>
-                <div class="form-group">
-                    <label for="complaintType">Complaint Type</label>
-                    <select class="form-control" id="complaintType" name="complaintType">
-                        <option value=""  >Choose...</option>
-                        <option value="Drainage Problem" >Drainage Problem</option>
-                        <option value="Electric Problem" >Electric Problem</option>
-                        <option value="Plumber Problem"  >Plumber Problem</option>
-                        <option value="Wastage Problem"  >Wastage Problem</option>
-                        <option value="Water Problem"    >Water Problem</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="complaintType">City</label>
-                    <input type="text" class="form-control" placeholder="Enter city" id="city" name="city">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="Submit" name="submit">Submit</button>
-                </div>
-            </form>
-        </div>
-</div>
         <c:if test="${dto.isEmpty() == false}">
             <div class="tableOut">
                 <span style="color:red">${msg}</span>

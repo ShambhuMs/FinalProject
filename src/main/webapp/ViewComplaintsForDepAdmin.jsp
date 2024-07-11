@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ViewComplaintDetails</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <base href="http://localhost:8080/FinalProject/">
     <style>
         body {
             background-color: #f0f2f5;
@@ -92,7 +93,7 @@
                     <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
                 </li>
                 <li class="nav-item" id="AdminHomePage">
-                    <a class="nav-link text-light" href="AdminHomePage.jsp">Home</a>
+                    <a class="nav-link text-light" href="DepartmentAdminHome.jsp">Home</a>
                 </li>
             </ul>
         </div>
@@ -111,10 +112,6 @@
                         <option value="Wastage Problem"  >Wastage Problem</option>
                         <option value="Water Problem"    >Water Problem</option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label for="complaintType">City</label>
-                    <input type="text" class="form-control" placeholder="Enter city" id="city" name="city">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="Submit" name="submit">Submit</button>

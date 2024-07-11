@@ -2,6 +2,7 @@ package com.xworkz.finalProject.model.service.implementations;
 
 import com.xworkz.finalProject.dto.DepartmentAdminDTO;
 import com.xworkz.finalProject.dto.DepartmentDTO;
+import com.xworkz.finalProject.dto.EmployeeDTO;
 import com.xworkz.finalProject.model.repository.interfaces.DepartmentAdminRepository;
 import com.xworkz.finalProject.model.service.interfaces.DepartmentAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +18,11 @@ public class DepartmentAdminServiceImplementation implements DepartmentAdminServ
     public Optional<DepartmentAdminDTO> findByAdminEmailAndPassword(String email, String password) {
         Optional<DepartmentAdminDTO> optionalDepartmentDTO= this.departmentAdminRepository.findByAdminEmailAndPassword(email, password);
         return Optional.ofNullable(optionalDepartmentDTO.get());
+    }
+
+    @Override
+    public boolean addEmployee(EmployeeDTO employeeDTO) {
+      boolean saved= this.departmentAdminRepository.addEmployee(employeeDTO);
+      return saved;
     }
 }
