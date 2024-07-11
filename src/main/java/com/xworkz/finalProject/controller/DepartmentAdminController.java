@@ -24,12 +24,12 @@ public class DepartmentAdminController {
        model.addAttribute("departmentAdmin",true);
        return "AdminSignIn";
     }
-    @PostMapping("/departmentAdmin")
+    @PostMapping("/adminLogin")
     public String departmentLogin(@Valid DepartmentAdminDTO departmentAdminDTO, Model model){
-        Optional<DepartmentAdminDTO> departmentAdminResult = this.departmentAdminService.findByAdminEmailAndPassword(departmentAdminDTO.getDepartmenAdmintEmail(), departmentAdminDTO.getDepartmenAdmintpassword());
+        Optional<DepartmentAdminDTO> departmentAdminResult = this.departmentAdminService.findByAdminEmailAndPassword(departmentAdminDTO.getEmail(), departmentAdminDTO.getPassword());
         if (departmentAdminResult.isPresent()){
             model.addAttribute("success","Welcome to Department Admin Home");
-            return "AdminHomePage";
+            return "DepartmentAdminHome";
         }else {
             model.addAttribute("msg","Enter valid email and password");
             model.addAttribute("dto", departmentAdminResult);

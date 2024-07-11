@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdminLogin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <base href="http://localhost:8080/FinalProject/">
     <style>
         body {
             background-color: #f0f2f5;
@@ -75,14 +76,19 @@
                 <li class="nav-item" id="home">
                     <a class="nav-link text-light" href="index.jsp">Home</a>
                 </li>
-                <li class="nav-item" id="pass">
-                    <a class="nav-link text-light" href="PasswordReset.jsp">Password</a>
-                </li>
+
             </ul>
         </div>
     </nav>
 <div class="login-form">
-    <form action="adminLogin" method="post">
+<c:choose>
+     <c:when test="${!departmentAdmin}">
+         <form action="adminLogin" method="post">
+     </c:when>
+     <c:when test="${departmentAdmin}">
+         <form action="departmentAdmin/adminLogin" method="post">
+     </c:when>
+ </c:choose>
         <h2 class="text-center">
        <c:choose>
         <c:when test="${!departmentAdmin}"> Admin Login </c:when>
@@ -101,14 +107,6 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="" name="submit">Login</button>
         </div>
-        <div class="clearfix">
-<!--       <label class="float-left form-check-label"><input type="checkbox"> Remember me</label> -->
-           <a href="#" class="float-right">Forgot Password?</a>
-        </div>
-    </form>
-    <p class="login-link">Don't have an account?
-     <a href="Signup.jsp">Sign up here</a>
-     </p>
 </div>
  <script>
     const emailInput = document.getElementById('email');
@@ -137,9 +135,11 @@
 
        if (!isValidLength) {
            errorPassword.textContent = 'Password length should be greater than 6 and less than 18';
-       } else if (!hasAlphabet || !hasSpecialChar) {
+       }
+       <!-- else if (!hasAlphabet || !hasSpecialChar) {
            errorPassword.textContent = 'Password must contain alphabets and special characters';
-       } else {
+       } -->
+       else {
            errorPassword.textContent = '';
        }
        validateForm();

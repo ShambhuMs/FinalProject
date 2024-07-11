@@ -13,15 +13,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "department_admin")
+@NamedQuery(name = "findByDepartmentAdminEmailAndPassword",query = "select admin from DepartmentAdminDTO admin where " +
+        "admin.email=:email and admin.password=:password")
 public class DepartmentAdminDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dep_admin_id")
     private long departmentAdminId;
-    @Column(name = "  dep_admin_email")
-    private String departmenAdmintEmail;
+    @Column(name = "dep_admin_email")
+    private String email;
     @Column(name = "dep_admin_password")
-    private String departmenAdmintpassword;
+    private String password;
     @Column(name = "created_by")
     private String createdBy;
     @Column(name = "modified_by")
@@ -30,4 +32,5 @@ public class DepartmentAdminDTO {
     private LocalDateTime createdDate;
     @Column(name = "modified_date")
     private LocalDateTime updatedDate;
+
 }

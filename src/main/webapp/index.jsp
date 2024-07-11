@@ -56,13 +56,13 @@
                        <a class="nav-link text-light" href="SignIn.jsp">SignIn</a>
                 </li>
                 <li class="nav-item" id="SignIn.jsp">
-                       <a class="nav-link text-light" href="PasswordReset.jsp">PasswordReset</a>
+                       <a class="nav-link text-light" href="departmentAdmin/adminLogin">DepartmentAdminSignIn</a>
                  </li>
                  <li class="nav-item" id="SignIn.jsp">
                        <a class="nav-link text-light" href="ResetPasswordAnyTime.jsp">ResetPasswordAnyTime</a>
                  </li>
                  <li class="nav-item" id="EditProfile">
-                       <a class="nav-link text-light" href="EditProfile.jsp">EditProfile</a>
+                       <a class="nav-link text-light" href="DepartmentAdminHome.jsp">DepartmentAdminHome</a>
                  </li>
                  <li class="nav-item" id=" AdminHomePage">
                        <a class="nav-link text-light" href="AdminHomePage.jsp">AdminHomePage</a>

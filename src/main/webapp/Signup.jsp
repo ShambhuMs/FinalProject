@@ -95,7 +95,6 @@
                 <input type="email" class="form-control" placeholder="Enter email" id="email" name="email"  value="${atmDTO.email}" required>
                 <div id="error-email" class="error"> </div>
               <div>  <span style="color:red">${failedEmailMsg}</span> </div>
-
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Phone Number</label>

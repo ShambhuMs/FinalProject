@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', function() {
         const firstNameInput = document.getElementById('firstName');
         const lastNameInput = document.getElementById('lastName');
