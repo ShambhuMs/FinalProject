@@ -59,6 +59,9 @@
                        <a class="nav-link text-light" href="departmentAdmin/adminLogin">DepartmentAdminSignIn</a>
                  </li>
                  <li class="nav-item" id="SignIn.jsp">
+                     <a class="nav-link text-light" href="employee/adminLogin">EmployeeSignIn</a>
+                  </li>
+                 <li class="nav-item" id="SignIn.jsp">
                        <a class="nav-link text-light" href="ResetPasswordAnyTime.jsp">ResetPasswordAnyTime</a>
                  </li>
                  <li class="nav-item" id="EditProfile">
@@ -78,7 +81,7 @@
                     <div class="mb-1 mt-3">
                         <p class="fw-bold">
                             <h4>Tech Stack:</h4>
-                            <span>JSP, Bootstrap CSS, JavaScript, Java, Spring, Spring JPA/Hibernate.</span>
+                            <span>JSP, Bootstrap CSS, JavaScript, Java, Spring, Spring JPA/Hibernate, Ajax, MYSQL.</span>
                         </p>
                     </div>
                     <div class="mb-1 mt-3">
@@ -97,7 +100,9 @@
                     <div class="mb-1 mt-3">
                         <p class="fw-bold">
                             <h4>Description:</h4>
-                            <span>Currently working on designing Landing Page and Sign Up page. Saving data to the database.</span>
+                            <span>Currently working on designing for accepting the complaints and department Admin will
+                            handling the complaints and assigning complaint to Particular department employees. Saving
+                             All details in database.</span>
                         </p>
                     </div>
 

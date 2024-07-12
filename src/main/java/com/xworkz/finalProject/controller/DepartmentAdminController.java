@@ -1,9 +1,6 @@
 package com.xworkz.finalProject.controller;
 
-import com.xworkz.finalProject.dto.ComplaintDTO;
-import com.xworkz.finalProject.dto.DepartmentAdminDTO;
-import com.xworkz.finalProject.dto.DepartmentDTO;
-import com.xworkz.finalProject.dto.EmployeeDTO;
+import com.xworkz.finalProject.dto.*;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
 import com.xworkz.finalProject.model.service.interfaces.DepartmentAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -33,13 +31,15 @@ public class DepartmentAdminController {
     }
     @PostMapping("/adminLogin")
     public String departmentLogin(@Valid DepartmentAdminDTO departmentAdminDTO, Model model){
-        Optional<DepartmentAdminDTO> departmentAdminResult = this.departmentAdminService.findByAdminEmailAndPassword(departmentAdminDTO.getEmail(), departmentAdminDTO.getPassword());
+        Optional<DepartmentAdminDTO> departmentAdminResult = this.departmentAdminService.findByAdminEmailAndPassword
+                (departmentAdminDTO.getEmail(), departmentAdminDTO.getPassword());
         if (departmentAdminResult.isPresent()){
             model.addAttribute("success","Welcome to Department Admin Home");
             return "DepartmentAdminHome";
         }else {
             model.addAttribute("msg","Enter valid email and password");
-            model.addAttribute("dto", departmentAdminResult);
+            model.addAttribute("dto", departmentAdminDTO);
+            model.addAttribute("departmentAdmin", true);
             return "AdminSignIn";
         }
     }
@@ -54,6 +54,19 @@ public class DepartmentAdminController {
         }
         return "ViewComplaintsForDepAdmin";
     }
+
+    @GetMapping("/addEmployee")
+    public String getAllDepartmentType(Model model){
+        List<DepartmentDTO> departmentDTOList=this.departmentAdminService.fetchAllDepartments();
+        if (!departmentDTOList.isEmpty()){
+            model.addAttribute("department",departmentDTOList);
+            model.addAttribute("selectedType","select");
+        }else {
+            model.addAttribute("errorMessage","department Not found");
+        }
+        return "AddEmployee";
+    }
+
 
     @PostMapping("/addEmployee")
     public String addEmployee(@Valid EmployeeDTO employeeDTO, BindingResult bindingResult,Model model){

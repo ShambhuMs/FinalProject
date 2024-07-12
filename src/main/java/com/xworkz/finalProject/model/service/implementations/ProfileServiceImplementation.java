@@ -26,11 +26,7 @@ public class ProfileServiceImplementation implements ProfileService {
     @Override
     public Optional<ProfileDTO> findByUserId(int userId) {
        Optional<ProfileDTO> optionalProfileDTO=this.profileRepository.findByUserId(userId);
-       if (optionalProfileDTO.isPresent()){
-           return optionalProfileDTO;
-       }else {
-          return Optional.empty();
-       }
+        return optionalProfileDTO;
     }
 
     @Override

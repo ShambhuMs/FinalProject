@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "department")
-@NamedQuery(name = "findByDepartmentType",query = "select department from DepartmentDTO department where department_type=:departmentType")
+@NamedQuery(name = "findByDepartmentType",query = "select department from DepartmentDTO department where " +
+        "department_type=:departmentType")
+@NamedQuery(name = "fetchAllDepartments",query = "select department from DepartmentDTO department")
 public class DepartmentDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

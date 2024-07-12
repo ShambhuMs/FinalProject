@@ -21,11 +21,7 @@ public class AdminServiceImplementation implements AdminService {
     @Override
     public Optional<AdminDTO> findByEmailAndPassword(String email, String password) {
       Optional<AdminDTO> loginData= this.adminRepository.findByEmailAndPassword(email,password);
-      if (loginData.isPresent()){
-          return loginData;
-      }else {
-          return Optional.empty();
-      }
+        return loginData;
 
     }
 
@@ -73,11 +69,7 @@ public class AdminServiceImplementation implements AdminService {
     @Override
     public Optional<DepartmentDTO> findByDepartmentType(String departmentType) {
         Optional<DepartmentDTO> departmentDTO= this.adminRepository.findByDepartmentType(departmentType);
-        if (departmentDTO.isPresent()){
-            return departmentDTO;
-        }else {
-            return Optional.empty();
-        }
+        return departmentDTO;
     }
 
     @Override

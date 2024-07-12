@@ -11,6 +11,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "employee_table")
+@NamedQuery(name = "findByEmployeeEmail",query = "select employee from EmployeeDTO employee where " +
+        "employee.email=:email")
+@NamedQuery(name = "findByEmployeePhoneNumber",query = "select employee from EmployeeDTO employee where " +
+        "employee.employeePhoneNumber=:phoneNumber")
+@NamedQuery(name = "findByEmployeeEmailAndPassword",query = "select employee from EmployeeDTO employee where " +
+        "employee.email=:email and employee.password=:password")
 public class EmployeeDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +27,9 @@ public class EmployeeDTO {
     @Column(name = "department_id")
     private int departmentId;
     @Column(name = "employee_email")
-    private String employeeEmail;
+    private String email;
     @Column(name = "employee_password")
-    private String employeePassword;
+    private String password;
     @Column(name = "employee_phone_number")
     private long employeePhoneNumber;
 }

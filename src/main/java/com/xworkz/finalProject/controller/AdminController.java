@@ -27,7 +27,6 @@ public class AdminController {
     @PostMapping("/adminLogin")
     public String adminLoginCheck(@Valid AdminDTO adminDTO, Model model){
        Optional<AdminDTO> adminResult= this.adminService.findByEmailAndPassword(adminDTO.getEmail(), adminDTO.getPassword());
-        System.out.println("Admin DTO from controller..."+adminResult);
        if (adminResult.isPresent()){
            model.addAttribute("success","Hello "+adminResult.get().getCreatedBy()+", Welcome to Admin Home");
            return "AdminHomePage";

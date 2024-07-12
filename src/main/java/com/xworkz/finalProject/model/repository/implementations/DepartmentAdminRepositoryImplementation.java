@@ -1,6 +1,6 @@
 package com.xworkz.finalProject.model.repository.implementations;
 
-import com.xworkz.finalProject.dto.AdminDTO;
+
 import com.xworkz.finalProject.dto.DepartmentAdminDTO;
 import com.xworkz.finalProject.dto.DepartmentDTO;
 import com.xworkz.finalProject.dto.EmployeeDTO;
@@ -12,7 +12,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+
 
 @Repository
 public class DepartmentAdminRepositoryImplementation implements DepartmentAdminRepository {
@@ -53,5 +56,54 @@ public class DepartmentAdminRepositoryImplementation implements DepartmentAdminR
             entityManager.close();
         }
         return false;
+    }
+
+    @Override
+    public List<DepartmentDTO> fetchAllDepartments() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+          Query query=  entityManager.createNamedQuery("fetchAllDepartments");
+          List<DepartmentDTO> list= query.getResultList();
+          return list;
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Optional<EmployeeDTO> findByEmployeeEmail(String email) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("findByEmployeeEmail");
+            query.setParameter("email", email);
+            Object object = query.getSingleResult();
+            EmployeeDTO employeeDTO = (EmployeeDTO) object;
+            return Optional.ofNullable(employeeDTO);
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            entityManager.close();
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<EmployeeDTO> findByEmployeePhoneNumber(long phoneNumber) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("findByEmployeePhoneNumber");
+            query.setParameter("phoneNumber", phoneNumber);
+            Object object = query.getSingleResult();
+            EmployeeDTO employeeDTO = (EmployeeDTO) object;
+            return Optional.ofNullable(employeeDTO);
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            entityManager.close();
+        }
+        return Optional.empty();
     }
 }

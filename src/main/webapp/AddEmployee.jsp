@@ -5,9 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Employee Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="/FinalProject/script/AddEmployee.js"></script>
+    <base href="http://localhost:8080/FinalProject/">
     <style>
         body {
             background-color: #f0f2f5;
@@ -27,9 +28,12 @@
             margin: 0 0 15px;
             text-align: center;
         }
-        .form-control, .btn {
+        .form-control, .form-select, .btn {
             min-height: 38px;
             border-radius: 2px;
+        }
+        .form-select {
+            width: 100%;
         }
         .btn {
             font-size: 15px;
@@ -75,32 +79,36 @@
                     ${error.defaultMessage}
                 </c:forEach>
             </span>
-            <span style="color:green">${msg}</span
-            <span style="color:red">${errorMsg}</span>
             <h2>Employee Register Form</h2>
+            <span style="color:green">${msg}</span>
+            <span style="color:red">${errorMsg}</span>
             <div class="form-group">
                 <label for="employeeName">Name</label>
-                <input type="text" class="form-control" placeholder="Enter Name" id="employeeName" name="employeeName" value="${atmDTO.employeeName}" required>
+                <input type="text" class="form-control" placeholder="Enter Name" id="employeeName" name="employeeName" value="${employeeDTO.employeeName}" required>
                 <div id="error-employeeName" class="error"></div>
             </div>
             <div class="form-group">
                 <label for="employeeEmail">Email</label>
-                <input type="email" class="form-control" placeholder="Enter email" id="employeeEmail" name="employeeEmail" value="${atmDTO.employeeEmail}" required>
+                <input type="email" class="form-control" placeholder="Enter email" id="employeeEmail" name="employeeEmail" value="${employeeDTO.employeeEmail}" required>
                 <div id="error-employeeEmail" class="error"></div>
                 <div><span style="color:red"></span></div>
             </div>
             <div class="form-group">
-                <label for="employeePassword">Password</label>
-                <input type="password" class="form-control" placeholder="Enter Password" id="employeePassword" name="employeePassword" required>
-                <div id="error-employeePassword" class="error"></div>
-            </div>
-            <div class="form-group">
                 <label for="employeePhoneNumber">Phone Number</label>
-                <input type="text" class="form-control" placeholder="Enter Phone Number" id="employeePhoneNumber" name="employeePhoneNumber" value="${atmDTO.employeePhoneNumber}" required>
+                <input type="text" class="form-control" placeholder="Enter Phone Number" id="employeePhoneNumber" name="employeePhoneNumber" value="${employeeDTO.employeePhoneNumber}" required>
                 <div id="error-employeePhoneNumber" class="error"></div>
                 <div><span style="color:red"></span></div>
             </div>
-
+            <div class="form-group">
+                <label for="employeeDepartment">Employee Department</label>
+                <select class="form-select" id="departmentType" name="departmentId" required>
+                    <option value="" ${selectedType == null ? 'selected' : ''}>Choose...</option>
+                    <c:forEach items="${department}" var="dep">
+                        <option value="${dep.department_id}" ${selectedType == 'dep.department_id' ? 'selected' : ''}>${dep.department_type}</option>
+                    </c:forEach>
+                </select>
+                <div id="error-departmentType" class="error"></div>
+            </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary btn-block" id="submitBtn" value="Submit" name="submit" disabled/>
             </div>

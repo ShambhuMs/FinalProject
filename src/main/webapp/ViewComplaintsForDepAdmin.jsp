@@ -134,7 +134,7 @@
                             <th scope="col">Description</th>
                             <th scope="col">UserId</th>
                             <th scope="col">ComplaintStatus</th>
-                            <th scope="col">Department</th>
+                            <th scope="col">AssignEmployee</th>
                             <th scope="col">Action</th>
                             <th scope="col">Update</th>
                         </tr>
@@ -161,10 +161,7 @@
                           </button>
                           <ul class="dropdown-menu">
                           <li><button class="dropdown-item" type="submit" name="assign" value="Drainage Department">Drainage Department</button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="Electric Department">Electric Department</button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="Plumber Department">Plumber Department </button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="Wastage Department">Wastage Department</button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="Water Department">Water Department</button></li>
+
                            </ul>
                          </div>
                          </form>  </td>

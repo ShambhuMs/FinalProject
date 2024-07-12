@@ -35,11 +35,7 @@ public class ComplaintServiceImplementation implements ComplaintService {
     @Override
     public Optional<ComplaintDTO> findById(long id) {
         Optional<ComplaintDTO> optionalComplaintDTO=  this.complaintRepository.findById(id);
-        if (optionalComplaintDTO.isPresent()){
-            return optionalComplaintDTO;
-        }else {
-            return Optional.empty();
-        }
+        return optionalComplaintDTO;
     }
 
     @Override

@@ -1,5 +1,5 @@
 <%@ page isELIgnored="false" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,22 +45,22 @@
             color: red;
             font-size: 12px;
         }
-          .navbar {
-                    margin-bottom: 20px;
-                }
-                .logo-img {
-                    margin-right: 15px;
-                }
-                .form-container {
-                    padding-top: 80px;
-                }
-         .navbar-nav {
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .logo-img {
+            margin-right: 15px;
+        }
+        .form-container {
+            padding-top: 80px;
+        }
+        .navbar-nav {
             align-items: center;
             display: flex;
             justify-content: center;
             height: 100%;
         }
-         #home {
+        #home {
             position: relative;
             left: 1200px;
         }
@@ -68,36 +68,39 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item" id="img">
-                    <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
-                </li>
-                <li class="nav-item" id="home">
-                    <a class="nav-link text-light" href="index.jsp">Home</a>
-                </li>
-
-            </ul>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item" id="img">
+                <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
+            </li>
+            <li class="nav-item" id="home">
+                <a class="nav-link text-light" href="index.jsp">Home</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <div class="login-form">
-<c:choose>
-     <c:when test="${!departmentAdmin}">
-         <form action="adminLogin" method="post">
-     </c:when>
-     <c:when test="${departmentAdmin}">
-         <form action="departmentAdmin/adminLogin" method="post">
-     </c:when>
- </c:choose>
+    <c:choose>
+        <c:when test="${!departmentAdmin && !employee}">
+            <form action="adminLogin" method="post">
+        </c:when>
+        <c:when test="${employee}">
+            <form action="employee/adminLogin" method="post">
+        </c:when>
+        <c:when test="${departmentAdmin}">
+            <form action="departmentAdmin/adminLogin" method="post">
+        </c:when>
+    </c:choose>
         <h2 class="text-center">
-       <c:choose>
-        <c:when test="${!departmentAdmin}"> Admin Login </c:when>
-        <c:when test="${departmentAdmin}">Department Admin Login </c:when>
-       </c:choose>
+            <c:choose>
+                <c:when test="${employee}">Employee Login</c:when>
+                <c:when test="${!departmentAdmin && !employee}">Admin Login</c:when>
+                <c:when test="${departmentAdmin}">Department Admin Login</c:when>
+            </c:choose>
         </h2>
-       <span style="color:red">  ${msg} </span>
+        <span class="error">${msg}</span>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Enter email " value="${dto.email}" id="email" name="email" required>
+            <input type="text" class="form-control" placeholder="Enter email" value="${dto.email}" name="email" id="email" required>
             <div id="error-email" class="error"></div>
         </div>
         <div class="form-group">
@@ -108,7 +111,7 @@
             <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="" name="submit">Login</button>
         </div>
 </div>
- <script>
+<script>
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const submitBtn = document.getElementById('submitBtn');
@@ -117,7 +120,7 @@
         const inputValue = this.value.trim();
         const errorEmail = document.getElementById('error-email');
 
-         if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue) || inputValue.length<=8 || inputValue.length>=28 ) {
+        if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue) || inputValue.length <= 8 || inputValue.length >= 38) {
             errorEmail.textContent = 'Mail must be @, special characters, digits';
         } else {
             errorEmail.textContent = '';
@@ -125,25 +128,21 @@
         validateForm();
     });
 
-   passwordInput.addEventListener('input', function() {
-       const inputValue = this.value.trim();
-       const errorPassword = document.getElementById('error-password');
+    passwordInput.addEventListener('input', function() {
+        const inputValue = this.value.trim();
+        const errorPassword = document.getElementById('error-password');
 
-       const hasAlphabet = /[a-zA-Z]/.test(inputValue);
-       const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(inputValue);
-       const isValidLength = inputValue.length > 6 && inputValue.length < 18;
+        const hasAlphabet = /[a-zA-Z]/.test(inputValue);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(inputValue);
+        const isValidLength = inputValue.length > 6 && inputValue.length < 18;
 
-       if (!isValidLength) {
-           errorPassword.textContent = 'Password length should be greater than 6 and less than 18';
-       }
-       <!-- else if (!hasAlphabet || !hasSpecialChar) {
-           errorPassword.textContent = 'Password must contain alphabets and special characters';
-       } -->
-       else {
-           errorPassword.textContent = '';
-       }
-       validateForm();
-   });
+        if (!isValidLength) {
+            errorPassword.textContent = 'Password length should be greater than 6 and less than 18';
+        } else {
+            errorPassword.textContent = '';
+        }
+        validateForm();
+    });
 
     function validateForm() {
         const errorEmail = document.getElementById('error-email').textContent;
