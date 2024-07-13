@@ -8,4 +8,5 @@ public interface EmployeeRepository {
     default Optional<EmployeeDTO> findByEmailAndPassword(String email,String password){
         return Optional.empty();
     }
+    boolean updateEmployee(EmployeeDTO employeeDTO);
 }

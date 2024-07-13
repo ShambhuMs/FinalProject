@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.Optional;
 
@@ -32,5 +33,23 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
             entityManager.close();
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean updateEmployee(EmployeeDTO employeeDTO) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction= entityManager.getTransaction();
+        try {
+            entityTransaction.begin();
+            entityManager.merge(employeeDTO);
+            entityTransaction.commit();
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            entityTransaction.rollback();
+        }finally {
+            entityManager.close();
+        }
+        return false;
     }
 }

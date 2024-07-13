@@ -96,92 +96,15 @@
                     <a class="nav-link text-light" href="index.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="departmentAdmin/viewComplaintsForDepAdmin">ViewAllComplaintDetails</a>
+                    <a class="nav-link text-light" href="employee/viewAssignedComplaints">ViewComplaints</a>
                  </li>
-                 <li class="nav-item" id="AddEmployee">
-                      <a class="nav-link text-light" href="departmentAdmin/addEmployee">AddEmployee</a>
+                 <li class="nav-item" id="ResetPasswordAnyTime">
+                      <a class="nav-link text-light" href="employee/resetPasswordAnyTime">ResetPassword</a>
                   </li>
             </ul>
         </div>
     </nav>
-        <c:if test="${dto.isEmpty() == false}">
-            <div class="tableOut">
-                <span style="color:red">${msg}</span>
-                <table class="table">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">ComplaintType</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">State</th>
-                            <th scope="col">City</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">UserId</th>
-                            <th scope="col">ComplaintStatus</th>
-                            <th scope="col">Department</th>
-                            <th scope="col">Action</th>
-                            <th scope="col">Update</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${dto}" var="complaint">
-                            <tr>
-                                <td scope="row">${complaint.getId()}</td>
-                                <td>${complaint.getComplaintType()}</td>
-                                <td>${complaint.getCountry()}</td>
-                                <td>${complaint.getState()}</td>
-                                <td>${complaint.getCity()}</td>
-                                <td>${complaint.getAddress()}</td>
-                                <td>${complaint.getDescription()}</td>
-                                <td>${complaint.getUserId()}</td>
-                                <td>${complaint.getComplaintStatus()}</td>
-                                <td class="d-none d-md-table-cell">
-                    <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
-                        <form action="complaintAssign" method="post">
-                         <input type="hidden" name="id" value="${complaint.getId()}">
-                          <div class="btn-group">
-                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           Assign
-                          </button>
-                          <ul class="dropdown-menu">
-                          <li><button class="dropdown-item" type="submit" name="assign" value="Drainage Department">Drainage Department</button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="Electric Department">Electric Department</button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="Plumber Department">Plumber Department </button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="Wastage Department">Wastage Department</button></li>
-                           <li><button class="dropdown-item" type="submit" name="assign" value="Water Department">Water Department</button></li>
-                           </ul>
-                         </div>
-                         </form>  </td>
-                    </c:if>
-                          <td class="d-none d-md-table-cell">
-                        <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
-                                <form action="updateComplaintStatus" method="post">
-                                <input type="hidden" name="id" value="${complaint.id}">
-                                  <div class="input-group">
-                                <select class="form-select" id="status" name="status">
-                                    <option value="0" ${selectedType == null ? 'selected' : ''}>Choose...</option>
-                                    <option value="UnResolved" ${selectedType == 'UnResolved' ? 'selected' : ''}>UnResolved</option>
-                                    <option value="Resolved" ${selectedType == 'Resolved' ? 'selected' : ''}>Resolved</option>
-                                    <option value="Pending" ${selectedType == 'Pending' ? 'selected' : ''}>Pending</option>
-                                </select>
-                                <td>
-                                   <button type="submit" class="btn btn-primary">Update</button>
-                                </td>
-                                 </div>
-                               </form>
-                        </td>
 
-                         </c:if>
-                    </tr>
-
-                           </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </c:if>
-
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>
+

@@ -17,4 +17,10 @@ public class EmployeeServiceImplementation implements EmployeeService {
         Optional<EmployeeDTO> optionalEmployeeDTO=this.employeeRepository.findByEmailAndPassword(email, password);
         return optionalEmployeeDTO;
     }
+
+    @Override
+    public boolean updateEmployee(EmployeeDTO employeeDTO) {
+         boolean update=  this.employeeRepository.updateEmployee(employeeDTO);
+         return update;
+    }
 }

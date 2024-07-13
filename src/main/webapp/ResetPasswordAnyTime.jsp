@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PasswordReset</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <base href="http://localhost:8080/FinalProject/">
     <style>
         body {
             background-color: #f0f2f5;
@@ -71,19 +72,29 @@
         </div>
     </nav>
     <div class="signup-form">
-        <form id="contactForm" action="resetPasswordAnyTime" method="post">
+    <c:choose>
+        <c:when test="${!employee}">
+            <form action="resetPasswordAnyTime" method="post">
+        </c:when>
+        <c:when test="${employee}">
+            <form action="employee/resetPasswordAnyTime" method="post">
+         </c:when>
+     </c:choose>
             <h2>Password Set</h2>
         <span style="color:green">${msg}</span>
         <span style="color:red">${errorMsg}</span>
-        <span style="color:green">${mail}</span>
-
             <div class="form-group">
-                <input type="text" ${readOnly=='disable' ? 'readonly': 'hidden'} class="form-control" placeholder="Enter email" id="email" name="email" value="${dto.email}" required>
+          <c:choose>
+             <c:when test="${!employee}">
+                <input type="text" ${readOnly=='disable' ? 'readonly': 'hidden'} class="form-control"
+                     placeholder="Enter email" id="email" name="email" value="${dto.email}"  required>
+             </c:when>
+           </c:choose>
                 <div id="error-email" class="error"> </div>
             </div>
              <div class="form-group">
                <label for="password">Password</label>
-                <input type="password"   class="form-control" placeholder="Enter password" id="password" name="password" value="" required>
+                <input type="password"   class="form-control" placeholder="Enter old password" id="password" name="password" value="" required>
                 <div id="error-password" class="error"></div>
             </div>
             <div class="form-group">

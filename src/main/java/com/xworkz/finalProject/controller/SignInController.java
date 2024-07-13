@@ -38,7 +38,7 @@ public class SignInController {
     public String checkSignIn(@RequestParam String email, @RequestParam String password, Model model,
                               HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
         Optional<SignupDTO> signupDTOOptional= this.signUpService.findByemail(email);
-        if(password==null || password==""){
+        if(password==null || password.isEmpty()){
             model.addAttribute("msg","Enter email or password");
             return  "SignIn";
         }
@@ -108,7 +108,6 @@ public class SignInController {
         System.out.println("confirmNewPassword : "+ passwordResetDTO.getConfirmNewPassword());
         Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmailAndPassword(passwordResetDTO.getEmail(),
                 passwordResetDTO.getPassword());
-
         if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
             optionalSignupDTO.get().setUserPassword(passwordResetDTO.getNewPassword());
             System.out.println("optionalSignupDTO in controller...: "+optionalSignupDTO);
@@ -143,8 +142,6 @@ public class SignInController {
 
     @PostMapping("/resetPasswordAnyTime")
     public String resetUserPassword2(@Valid PasswordResetDTO passwordResetDTO, Model model){
-        System.out.println("newPassword : "+ passwordResetDTO.getPassword());
-        System.out.println("confirmNewPassword : "+ passwordResetDTO.getConfirmNewPassword());
         Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmailAndPassword(passwordResetDTO.getEmail(),
                 passwordResetDTO.getPassword());
 
