@@ -70,7 +70,7 @@
         </div>
     </nav>
     <h2>ViewComplaint details:</h2>
-        <span style="color:red">${msg} </span>
+        <h3 style="color:red">${msg} </h3>
 <c:if test="${complaintDto.isEmpty()==false}">
 <div class="tableOut">
             <table class="table">

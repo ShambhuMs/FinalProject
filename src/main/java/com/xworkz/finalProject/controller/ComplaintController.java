@@ -1,5 +1,6 @@
 package com.xworkz.finalProject.controller;
 
+import com.xworkz.finalProject.defaultValue.DefaultValues;
 import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,11 +39,12 @@ public class ComplaintController {
             model.addAttribute("complaintDto",complaintDTO);
         }  else {
             SignupDTO signupDTO1 = (SignupDTO) session.getAttribute("dto");
-            complaintDTO.setCreatedBy(signupDTO1.getFirstName() + " " + signupDTO1.getLastName());
-            complaintDTO.setCreatedDate(LocalDateTime.now());
-            complaintDTO.setUserId(signupDTO1.getId());
-            complaintDTO.setComplaintStatus("unResolved");
             if (!edit) {
+                complaintDTO.setCreatedBy(signupDTO1.getFirstName() + " " + signupDTO1.getLastName());
+                complaintDTO.setCreatedDate(LocalDateTime.now());
+                complaintDTO.setUserId(signupDTO1.getId());
+                complaintDTO.setComplaintStatus(DefaultValues.STATUS.getDefaultStatus());
+                complaintDTO.setEmployeeId(DefaultValues.ZERO.getLongValue());
                 boolean saved = this.complaintService.saveComplaintDetails(complaintDTO);
                 if (saved) {
                     model.addAttribute("successMessage", "Your complaint Submitted...");
@@ -49,7 +52,11 @@ public class ComplaintController {
                     model.addAttribute("failedMessage", "Enter valid details..");
                 }
             }else {
-              boolean update=this.complaintService.updateComplaint(complaintDTO);
+             Optional<ComplaintDTO> optionalComplaintDTO=  this.complaintService.findById(complaintDTO.getId());
+             optionalComplaintDTO.get().setDescription(complaintDTO.getDescription());
+             optionalComplaintDTO.get().setUpdatedBy(signupDTO1.getFirstName() + " " + signupDTO1.getLastName());
+             optionalComplaintDTO.get().setUpdatedDate(LocalDateTime.now());
+              boolean update=this.complaintService.updateComplaint(optionalComplaintDTO.get());
                 if (update) {
                     model.addAttribute("successMessage", "Your complaint Updated...");
                 } else {
@@ -66,7 +73,18 @@ public class ComplaintController {
       Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(signupDTO.getEmail());
       List<ComplaintDTO> complaintDTOList=this.complaintService.findByUserId(optionalSignupDTO.get().getId());
       if (!complaintDTOList.isEmpty()){
-          model.addAttribute("complaintDto",complaintDTOList);
+          List<ComplaintDTO> activeComplaints =new ArrayList<>();
+          complaintDTOList.forEach(complaintDTO -> {
+              if (complaintDTO.getComplaintStatus().equals(DefaultValues.STATUS.getDefaultStatus())){
+                  activeComplaints.add(complaintDTO);
+              }
+          });
+          if (!activeComplaints.isEmpty()){
+              model.addAttribute("complaintDto",activeComplaints);
+          }
+          else {
+              model.addAttribute("msg","0 Records found");
+          }
       }else {
           model.addAttribute("msg","0 Records found");
       }

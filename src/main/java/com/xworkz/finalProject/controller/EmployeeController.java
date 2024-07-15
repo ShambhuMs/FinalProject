@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,10 +77,21 @@ public class EmployeeController {
     }
 
     @GetMapping("/viewAssignedComplaints")
-    public String fetchAssignedComplaints(Model model){
-        List<ComplaintDTO> list= this.adminService.fetchAllCompliant();
-        if (!list.isEmpty()){
-            model.addAttribute("empDTO",list);
+    public String fetchAssignedComplaints(Model model,HttpSession session){
+        List<ComplaintDTO> complaintDTOListlist= this.adminService.fetchAllCompliant();
+        EmployeeDTO employeeDTO=(EmployeeDTO) session.getAttribute("dto");
+        if (!complaintDTOListlist.isEmpty()){
+            List<ComplaintDTO> assignedComplaints=new ArrayList<>();
+            complaintDTOListlist.forEach(complaintDTO -> {
+                if (complaintDTO.getEmployeeId()==employeeDTO.getEmployeeId()){
+                    assignedComplaints.add(complaintDTO);
+                }
+            });
+            if (!assignedComplaints.isEmpty()){
+                model.addAttribute("empDTO",assignedComplaints);
+            }else {
+                model.addAttribute("msg","No Records found");
+            }
         }else {
             model.addAttribute("msg","No Records found");
         }

@@ -41,5 +41,6 @@ public class AjaxValidationForUserController {
         Optional<EmployeeDTO> existingPhone = this.departmentAdminService.findByEmployeePhoneNumber(phoneNumber);
         return existingPhone.isPresent() ? "Phone is already Exist": ""; // Return true if phone number already exists
     }
+    
 }
 
