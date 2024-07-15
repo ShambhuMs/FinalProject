@@ -1,5 +1,6 @@
 package com.xworkz.finalProject.controller;
 
+import com.xworkz.finalProject.defaultValue.DefaultValues;
 import com.xworkz.finalProject.dto.ProfileDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.dto.PasswordResetDTO;
@@ -62,9 +63,9 @@ public class SignInController {
                          httpSession.removeAttribute("profileDTO");
                      }*/
                      int count = signupDTOOptional.get().getLogin_count();
-                     signupDTOOptional.get().setLock_account(0);
-                     if (count == 0) {
-                         signupDTOOptional.get().setLogin_count(1);
+                     signupDTOOptional.get().setLock_account(DefaultValues.ZERO.getIntValue());
+                     if (count == DefaultValues.ZERO.getIntValue()) {
+                         signupDTOOptional.get().setLogin_count(DefaultValues.ONE.getIntValue());
                          this.signUpService.update(signupDTOOptional.get());
                          return "PasswordReset";
                      } else {
@@ -72,13 +73,12 @@ public class SignInController {
                          signupDTOOptional.get().setLogin_count(num);
                          this.signUpService.update(signupDTOOptional.get());
                          /*model.addAttribute("dto",signupDTOOptional);*/
-
                          return "UserHomePage";
                      }
                  }else {
                      model.addAttribute("msg","Enter valid email or password..");
                        int lockAccount=signupDTOOptional.get().getLock_account();
-                  if (lockAccount<2){
+                  if (lockAccount<DefaultValues.LOCK_ACCOUNT.getIntValue()){
                           int lockAc= lockAccount+1;
                           signupDTOOptional.get().setLock_account(lockAc);
                           this.signUpService.update(signupDTOOptional.get());
