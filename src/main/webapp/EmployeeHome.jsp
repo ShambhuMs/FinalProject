@@ -104,7 +104,68 @@
             </ul>
         </div>
     </nav>
+    <div>
+      <c:if test="${empDTO.isEmpty() == false}">
+                  <div class="tableOut">
+                      <span style="color:red">${msg}</span>
+                      <table class="table">
+                          <thead class="thead-light">
+                              <tr>
+                                  <th scope="col">Id</th>
+                                  <th scope="col">ComplaintType</th>
+                                  <th scope="col">Country</th>
+                                  <th scope="col">State</th>
+                                  <th scope="col">City</th>
+                                  <th scope="col">Address</th>
+                                  <th scope="col">Description</th>
+                                  <th scope="col">UserId</th>
+                                  <th scope="col">ComplaintStatus</th>
+                                  <th scope="col">Action</th>
+                                  <th scope="col">Update</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <c:forEach items="${empDTO}" var="complaint">
+                                  <tr>
+                                      <td scope="row">${complaint.getId()}</td>
+                                      <td>${complaint.getComplaintType()}</td>
+                                      <td>${complaint.getCountry()}</td>
+                                      <td>${complaint.getState()}</td>
+                                      <td>${complaint.getCity()}</td>
+                                      <td>${complaint.getAddress()}</td>
+                                      <td>${complaint.getDescription()}</td>
+                                      <td>${complaint.getUserId()}</td>
+                                      <td>${complaint.getComplaintStatus()}</td>
+                                      <td class="d-none d-md-table-cell">
+                              <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
+                                      <form action="updateComplaintStatus" method="post">
+                                      <input type="hidden" name="id" value="${complaint.id}">
+                                        <div class="input-group">
+                                      <select class="form-select" id="status" name="status">
+                                          <option value="0" ${selectedType == null ? 'selected' : ''}>Choose...</option>
+                                          <option value="UnResolved" ${selectedType == 'UnResolved' ? 'selected' : ''}>UnResolved</option>
+                                          <option value="Resolved" ${selectedType == 'Resolved' ? 'selected' : ''}>Resolved</option>
+                                          <option value="Pending" ${selectedType == 'Pending' ? 'selected' : ''}>Pending</option>
+                                      </select>
+                                      </td>
+                                      <td>
+                                         <button type="submit" class="btn btn-primary">Update</button>
+                                      </td>
+                                       </div>
+                                     </form>
+                              </td>
+                               </c:if>
+                          </tr>
 
+                                 </c:forEach>
+                          </tbody>
+                      </table>
+                  </div>
+              </c:if>
+
+              <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+     </div>
 </body>
 </html>
 

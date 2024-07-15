@@ -62,11 +62,16 @@
                 <li class="nav-item" id="img">
                     <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
                 </li>
-                <li class="nav-item" id="SignIn">
-                    <a class="nav-link text-light" href="SignIn.jsp">SignIn</a>
-                </li>
+
                 <li class="nav-item" id="home">
-                    <a class="nav-link text-light" href="index.jsp">Home</a>
+                <c:choose>
+                        <c:when test="${!employee}">
+                            <a class="nav-link text-light" href="UserHomePage.jsp">Home</a>
+                        </c:when>
+                        <c:when test="${employee}">
+                             <a class="nav-link text-light" href="EmployeeHome.jsp">Home</a>
+                        </c:when>
+                  </c:choose>
                 </li>
             </ul>
         </div>

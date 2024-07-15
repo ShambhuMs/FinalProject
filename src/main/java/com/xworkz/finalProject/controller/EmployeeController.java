@@ -74,11 +74,11 @@ public class EmployeeController {
         return "ResetPasswordAnyTime";
     }
 
-    @PostMapping("/viewAssignedComplaints")
-    public String fetchAssignedComplaints(@Valid ComplaintDTO complaintDTO,Model model){
+    @GetMapping("/viewAssignedComplaints")
+    public String fetchAssignedComplaints(Model model){
         List<ComplaintDTO> list= this.adminService.fetchAllCompliant();
         if (!list.isEmpty()){
-            model.addAttribute("employeeDTO",list);
+            model.addAttribute("empDTO",list);
         }else {
             model.addAttribute("msg","No Records found");
         }

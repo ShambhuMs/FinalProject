@@ -100,7 +100,7 @@
         </h2>
         <span class="error">${msg}</span>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Enter email" value="${dto.email}" name="email" id="email" required>
+            <input type="text" class="form-control" placeholder="Enter email" value="" name="email" id="email" required>
             <div id="error-email" class="error"></div>
         </div>
         <div class="form-group">
