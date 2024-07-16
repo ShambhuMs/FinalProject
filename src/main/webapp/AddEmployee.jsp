@@ -73,7 +73,7 @@
         </div>
     </nav>
     <div class="employee-form">
-        <form action="addEmployee" method="post">
+        <form action="departmentAdmin/addEmployee" method="post">
             <span style="color:red">
                 <c:forEach items="${errorMessage}" var="error">
                     ${error.defaultMessage}
@@ -89,7 +89,7 @@
             </div>
             <div class="form-group">
                 <label for="employeeEmail">Email</label>
-                <input type="email" class="form-control" placeholder="Enter email" id="employeeEmail" name="employeeEmail" value="${employeeDTO.employeeEmail}" required>
+                <input type="text" class="form-control" placeholder="Enter email" id="employeeEmail" name="email" value="${employeeDTO.employeeEmail}" required>
                 <div id="error-employeeEmail" class="error"></div>
                 <div><span style="color:red"></span></div>
             </div>

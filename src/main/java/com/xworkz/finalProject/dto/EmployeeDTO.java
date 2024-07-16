@@ -1,8 +1,10 @@
 package com.xworkz.finalProject.dto;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -28,6 +30,8 @@ public class EmployeeDTO {
     private String employeeName;
     @Column(name = "department_id")
     private int departmentId;
+    @Email
+    @NotNull(message = "Enter valid mail")
     @Column(name = "employee_email")
     private String email;
     @Column(name = "employee_password")

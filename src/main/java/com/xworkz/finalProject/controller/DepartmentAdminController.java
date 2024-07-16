@@ -38,6 +38,7 @@ public class DepartmentAdminController {
                 (departmentAdminDTO.getEmail(), departmentAdminDTO.getPassword());
         if (departmentAdminResult.isPresent()){
             model.addAttribute("success","Welcome to Department Admin Home");
+            model.addAttribute("departmentAdmin", true);
             return "DepartmentAdminHome";
         }else {
             model.addAttribute("msg","Enter valid email and password");
@@ -63,6 +64,7 @@ public class DepartmentAdminController {
         }else {
             model.addAttribute("msg","No Records found");
         }
+        model.addAttribute("departmentAdmin", true);
         return "ViewComplaintsForDepAdmin";
     }
 
@@ -118,7 +120,7 @@ public class DepartmentAdminController {
         return "ViewComplaintsForDepAdmin";
     }
 
-   @RequestMapping( value = "/updateStatusOrAssign",method = {RequestMethod.GET,RequestMethod.POST})
+   @GetMapping( value = "/updateStatusOrAssign")
    public String updateStatusOrAssign(@RequestParam(required = false,defaultValue = "0") long employeeId,@RequestParam(required = false,defaultValue ="")
    String complaintStatus,@RequestParam(required = false,defaultValue = "0") long id,Model model){ // id=complaintId
          if ( id != 0){

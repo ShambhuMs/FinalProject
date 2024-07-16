@@ -83,17 +83,21 @@ public class EmployeeController {
         if (!complaintDTOListlist.isEmpty()){
             List<ComplaintDTO> assignedComplaints=new ArrayList<>();
             complaintDTOListlist.forEach(complaintDTO -> {
-                if (complaintDTO.getEmployeeId()==employeeDTO.getEmployeeId()){
-                    assignedComplaints.add(complaintDTO);
+                if (complaintDTO.getEmployeeId() != null) {
+                    if (complaintDTO.getEmployeeId() == employeeDTO.getEmployeeId()) {
+                        assignedComplaints.add(complaintDTO);
+                    } else {
+                        model.addAttribute("msg", "No complaints have been assigned..");
+                    }
                 }
             });
             if (!assignedComplaints.isEmpty()){
                 model.addAttribute("empDTO",assignedComplaints);
             }else {
-                model.addAttribute("msg","No Records found");
+                model.addAttribute("msg","No complaints have been assigned..");
             }
         }else {
-            model.addAttribute("msg","No Records found");
+            model.addAttribute("msg","No complaints have been assigned..");
         }
         return "EmployeeHome";
     }

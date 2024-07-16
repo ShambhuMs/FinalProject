@@ -83,6 +83,11 @@
             width: 80%;
             margin: 40px auto;
         }
+        h2{
+          position:relative;
+          left:550px;
+          margin-top:100px;
+        }
     </style>
 </head>
 <body>
@@ -105,6 +110,7 @@
         </div>
     </nav>
     <div>
+      <h2 style="color:red">${msg}</h2>
       <c:if test="${empDTO.isEmpty() == false}">
                   <div class="tableOut">
                       <span style="color:red">${msg}</span>

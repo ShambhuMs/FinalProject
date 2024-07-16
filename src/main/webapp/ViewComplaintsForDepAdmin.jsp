@@ -162,7 +162,7 @@
                                 <td>${complaint.getComplaintStatus()}</td>
                                 <td class="d-none d-md-table-cell">
                    <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
-                        <form action="departmentAdmin/updateStatusOrAssign" method="post">
+                        <form action="departmentAdmin/updateStatusOrAssign" >
                             <input type="hidden" name="id" value="${complaint.id}" >
                             <div class="input-group">
                             <select class="form-select" name="employeeId">
