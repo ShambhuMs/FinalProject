@@ -1,5 +1,6 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,7 +100,7 @@
         </div>
     </nav>
         <div class="complaint-form">
-            <form action="findByTypeOrAddress" method="post">
+            <form action="departmentAdmin/findByComplaintType" method="post">
                 <h2>Fetch</h2>
                 <span style="color:red">${msg}</span>
                 <div class="form-group">
@@ -152,20 +153,24 @@
                                 <td>${complaint.getUserId()}</td>
                                 <td>${complaint.getComplaintStatus()}</td>
                                 <td class="d-none d-md-table-cell">
-                    <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
-                        <form action="complaintAssign" method="post">
-                         <input type="hidden" name="id" value="${complaint.getId()}">
-                          <div class="btn-group">
-                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           Assign
-                          </button>
-                          <ul class="dropdown-menu">
-                          <li><button class="dropdown-item" type="submit" name="assign" value="Drainage Department">Drainage Department</button></li>
-
-                           </ul>
-                         </div>
-                         </form>  </td>
-                    </c:if>
+                   <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
+                        <form action="departmentAdmin/viewComplaintsForDepAdmin" method="post">
+                            <input type="hidden" name="id" value="${complaint.id}">
+                            <div class="input-group">
+                            <select class="form-select" name="employeeId">
+                                  <c:choose>
+                                      <c:when test="${fn:length(employeesByDepartment[complaint.id]) > 0}">
+                                          <option value="">Choose...</option>
+                                          <c:forEach items="${employeesByDepartment[complaint.id]}" var="employee">
+                                              <option value="${employee.employeeId}">${employee.employeeName}</option>
+                                          </c:forEach>
+                                      </c:when>
+                                      <c:otherwise>
+                                          <option value="">No employee, please add employee</option>
+                                      </c:otherwise>
+                                  </c:choose>
+                              </select>
+                         </c:if>
                           <td class="d-none d-md-table-cell">
                         <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
                                 <form action="updateComplaintStatus" method="post">
@@ -183,11 +188,9 @@
                                  </div>
                                </form>
                         </td>
-
-                         </c:if>
+                    </c:if>
                     </tr>
-
-                           </c:forEach>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>

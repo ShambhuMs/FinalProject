@@ -70,4 +70,14 @@ public class DepartmentAdminServiceImplementation implements DepartmentAdminServ
         Optional<EmployeeDTO> optionalEmployeeDTO=   this.departmentAdminRepository.findByEmployeePhoneNumber(phoneNumber);
         return optionalEmployeeDTO;
     }
+
+    @Override
+    public List<EmployeeDTO> getEmployeesByDepartmentId(int departmentId) {
+        List<EmployeeDTO> employeeDTOS=this.departmentAdminRepository.getEmployeesByDepartmentId(departmentId);
+        if (!employeeDTOS.isEmpty()){
+            return employeeDTOS;
+        }else {
+            return Collections.emptyList();
+        }
+    }
 }

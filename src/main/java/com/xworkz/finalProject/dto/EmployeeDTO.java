@@ -17,6 +17,8 @@ import javax.persistence.*;
         "employee.employeePhoneNumber=:phoneNumber")
 @NamedQuery(name = "findByEmployeeEmailAndPassword",query = "select employee from EmployeeDTO employee where " +
         "employee.email=:email and employee.password=:password")
+@NamedQuery(name = "findEmployeeByDepartmentId",query ="select employee from EmployeeDTO employee where " +
+        "employee.departmentId=:departmentId")
 public class EmployeeDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

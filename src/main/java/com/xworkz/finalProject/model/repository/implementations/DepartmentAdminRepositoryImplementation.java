@@ -106,4 +106,20 @@ public class DepartmentAdminRepositoryImplementation implements DepartmentAdminR
         }
         return Optional.empty();
     }
+
+    @Override
+    public List<EmployeeDTO> getEmployeesByDepartmentId(int departmentId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("findEmployeeByDepartmentId");
+            query.setParameter("departmentId", departmentId);
+            List<EmployeeDTO> employeeDTOS=query.getResultList();
+            return employeeDTOS;
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
 }

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -48,7 +50,15 @@ public class DepartmentAdminController {
     public String fetchAllRecords(Model model){
         List<ComplaintDTO> list= this.adminService.fetchAllCompliant();
         if (!list.isEmpty()){
+            Map<Long, List<EmployeeDTO>> employeesByDepartment = new HashMap<>();
+            for (ComplaintDTO complaint : list) {
+                Integer departmentId = complaint.getDepartmentId();
+                List<EmployeeDTO> departmentEmployees = this.departmentAdminService.getEmployeesByDepartmentId(departmentId);
+                employeesByDepartment.put(complaint.getId(), departmentEmployees);
+            }
+            // Add complaints and employees by department to the model
             model.addAttribute("dto",list);
+            model.addAttribute("employeesByDepartment", employeesByDepartment);
         }else {
             model.addAttribute("msg","No Records found");
         }
@@ -84,5 +94,9 @@ public class DepartmentAdminController {
         return "AddEmployee";
     }
 
+    @PostMapping("/findByComplaintType")
+    public String findByType(@RequestParam String complaintType,Model model){
 
+        return "";
+    }
 }

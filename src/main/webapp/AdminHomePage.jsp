@@ -71,7 +71,7 @@
                 <a class="nav-link active text-light fs-5 fw-bold" aria-current="page" href="viewDetails">userDetails</a>
                 </li>
                 <li>
-                <a class="nav-link active text-light fs-5 fw-bold" aria-current="page" href="ViewComplaintDetails.jsp">ComplaintDetailsDetails</a>
+                <a class="nav-link active text-light fs-5 fw-bold" aria-current="page" href="viewComplaintDetails">ComplaintDetailsDetails</a>
                 </li>
             </ul>
         </div>

@@ -22,4 +22,7 @@ public interface DepartmentAdminService {
     default   Optional<EmployeeDTO> findByEmployeePhoneNumber(long phoneNumber){
         return Optional.empty();
     }
+    default List<EmployeeDTO> getEmployeesByDepartmentId(int departmentId){
+        return Collections.emptyList();
+    }
 }
