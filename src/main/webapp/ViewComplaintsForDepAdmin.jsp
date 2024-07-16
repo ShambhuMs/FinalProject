@@ -84,6 +84,11 @@
             width: 80%;
             margin: 40px auto;
         }
+        h3{
+        position:relative;
+         left:550px;
+         margin-top:50px;
+        }
     </style>
 </head>
 <body>
@@ -120,9 +125,11 @@
             </form>
         </div>
 </div>
+   <h3 style="color:red">${errorMsg}</h3>
+   <h3 style="color:green">${updateMsg}</h3>
         <c:if test="${dto.isEmpty() == false}">
             <div class="tableOut">
-                <span style="color:red">${msg}</span>
+                <span style="color:green">${updateMsg}</span>
                 <table class="table">
                     <thead class="thead-light">
                         <tr>
@@ -142,6 +149,7 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${dto}" var="complaint">
+                        <span style="color:red">${errorMsg}</span>
                             <tr>
                                 <td scope="row">${complaint.getId()}</td>
                                 <td>${complaint.getComplaintType()}</td>
@@ -154,8 +162,8 @@
                                 <td>${complaint.getComplaintStatus()}</td>
                                 <td class="d-none d-md-table-cell">
                    <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
-                        <form action="departmentAdmin/viewComplaintsForDepAdmin" method="post">
-                            <input type="hidden" name="id" value="${complaint.id}">
+                        <form action="departmentAdmin/updateStatusOrAssign" method="post">
+                            <input type="hidden" name="id" value="${complaint.id}" >
                             <div class="input-group">
                             <select class="form-select" name="employeeId">
                                   <c:choose>
@@ -166,21 +174,16 @@
                                           </c:forEach>
                                       </c:when>
                                       <c:otherwise>
-                                          <option value="">No employee, please add employee</option>
+                                          <option value="">No employee</option>
                                       </c:otherwise>
                                   </c:choose>
                               </select>
-                         </c:if>
                           <td class="d-none d-md-table-cell">
-                        <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
-                                <form action="updateComplaintStatus" method="post">
-                                <input type="hidden" name="id" value="${complaint.id}">
-                                  <div class="input-group">
-                                <select class="form-select" id="status" name="status">
-                                    <option value="0" ${selectedType == null ? 'selected' : ''}>Choose...</option>
-                                    <option value="UnResolved" ${selectedType == 'UnResolved' ? 'selected' : ''}>UnResolved</option>
-                                    <option value="Resolved" ${selectedType == 'Resolved' ? 'selected' : ''}>Resolved</option>
+                                <div class="input-group">
+                                <select class="form-select" id="status" name="complaintStatus">
+                                    <option value="" ${selectedType == null ? 'selected' : ''}>Choose...</option>
                                     <option value="Pending" ${selectedType == 'Pending' ? 'selected' : ''}>Pending</option>
+                                    <option value="InProgress" ${selectedType == 'InProgress' ? 'selected' : ''}>InProgress</option>
                                 </select>
                                 <td>
                                    <button type="submit" class="btn btn-primary">Update</button>

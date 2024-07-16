@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 @NamedQuery(name = "getAllComplaintDetailsByTypeAndCity",query = "select complaint from ComplaintDTO complaint where " +
         "complaint.complaintType=:complaintType and complaint.city=:city")
 @NamedQuery(name = "statusUpdate",query = "update ComplaintDTO set complaintStatus=:status where id=:id")
+@NamedQuery(name = "findByComplaintType",query = "select complaint from ComplaintDTO complaint where " +
+        "complaint.complaintType=:complaintType")
 public class ComplaintDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

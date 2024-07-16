@@ -1,5 +1,6 @@
 package com.xworkz.finalProject.model.service.implementations;
 
+import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.DepartmentAdminDTO;
 import com.xworkz.finalProject.dto.DepartmentDTO;
 import com.xworkz.finalProject.dto.EmployeeDTO;
@@ -76,6 +77,16 @@ public class DepartmentAdminServiceImplementation implements DepartmentAdminServ
         List<EmployeeDTO> employeeDTOS=this.departmentAdminRepository.getEmployeesByDepartmentId(departmentId);
         if (!employeeDTOS.isEmpty()){
             return employeeDTOS;
+        }else {
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<ComplaintDTO> fetchByComplaintType(String complaintType) {
+        List<ComplaintDTO> complaintDTOList=this.departmentAdminRepository.fetchByComplaintType(complaintType);
+        if (!complaintDTOList.isEmpty()){
+            return complaintDTOList;
         }else {
             return Collections.emptyList();
         }

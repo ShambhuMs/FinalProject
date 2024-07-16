@@ -1,6 +1,7 @@
 package com.xworkz.finalProject.model.repository.implementations;
 
 
+import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.DepartmentAdminDTO;
 import com.xworkz.finalProject.dto.DepartmentDTO;
 import com.xworkz.finalProject.dto.EmployeeDTO;
@@ -115,6 +116,22 @@ public class DepartmentAdminRepositoryImplementation implements DepartmentAdminR
             query.setParameter("departmentId", departmentId);
             List<EmployeeDTO> employeeDTOS=query.getResultList();
             return employeeDTOS;
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<ComplaintDTO> fetchByComplaintType(String complaintType) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("findByComplaintType");
+            query.setParameter("complaintType", complaintType);
+            List<ComplaintDTO> complaintDTOList=query.getResultList();
+            return complaintDTOList;
         } catch (Exception e) {
             System.out.println(e);
         } finally {

@@ -1,5 +1,6 @@
 package com.xworkz.finalProject.model.repository.interfaces;
 
+import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.DepartmentAdminDTO;
 import com.xworkz.finalProject.dto.DepartmentDTO;
 import com.xworkz.finalProject.dto.EmployeeDTO;
@@ -23,6 +24,9 @@ public interface DepartmentAdminRepository {
         return Optional.empty();
     }
     default List<EmployeeDTO> getEmployeesByDepartmentId(int departmentId){
+        return Collections.emptyList();
+    }
+    default List<ComplaintDTO> fetchByComplaintType(String complaintType){
         return Collections.emptyList();
     }
 }

@@ -2,16 +2,15 @@ package com.xworkz.finalProject.controller;
 
 import com.xworkz.finalProject.dto.*;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
+import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
 import com.xworkz.finalProject.model.service.interfaces.DepartmentAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +24,8 @@ public class DepartmentAdminController {
     private DepartmentAdminService departmentAdminService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private ComplaintService complaintService;
 
     @GetMapping("/adminLogin")
     private String checkForm(Model model){
@@ -96,7 +97,50 @@ public class DepartmentAdminController {
 
     @PostMapping("/findByComplaintType")
     public String findByType(@RequestParam String complaintType,Model model){
-
-        return "";
+         if(!complaintType.equals("")){
+             List<ComplaintDTO> complaintDTOList=this.departmentAdminService.fetchByComplaintType(complaintType);
+             if (!complaintDTOList.isEmpty()){
+                 Map<Long, List<EmployeeDTO>> employeesByDepartment = new HashMap<>();
+                 for (ComplaintDTO complaint : complaintDTOList) {
+                     int departmentId = complaint.getDepartmentId();
+                     List<EmployeeDTO> departmentEmployees = this.departmentAdminService.getEmployeesByDepartmentId(departmentId);
+                     employeesByDepartment.put(complaint.getId(), departmentEmployees);
+                 }
+                 // Add complaints and employees by department to the model
+                 model.addAttribute("employeesByDepartment", employeesByDepartment);
+                 model.addAttribute("dto",complaintDTOList);
+             }else {
+                 model.addAttribute("msg","No Records found");
+             }
+         }else {
+             model.addAttribute("msg","choose department...");
+         }
+        return "ViewComplaintsForDepAdmin";
     }
+
+   @RequestMapping( value = "/updateStatusOrAssign",method = {RequestMethod.GET,RequestMethod.POST})
+   public String updateStatusOrAssign(@RequestParam(required = false,defaultValue = "0") long employeeId,@RequestParam(required = false,defaultValue ="")
+   String complaintStatus,@RequestParam(required = false,defaultValue = "0") long id,Model model){ // id=complaintId
+         if ( id != 0){
+         Optional<ComplaintDTO> complaintDTOOptional= this.complaintService.findById(id);
+           if (!complaintStatus.equals("")) {
+                 complaintDTOOptional.get().setComplaintStatus(complaintStatus);
+           } else if (employeeId!=0) {
+               complaintDTOOptional.get().setEmployeeId(employeeId);
+           }else {
+               model.addAttribute("errorMsg","Enter valid details....");
+           }
+           if (employeeId!=0 || !complaintStatus.equals("")) {
+               boolean update = this.complaintService.updateComplaint(complaintDTOOptional.get());
+               if (update) {
+                   model.addAttribute("updateMsg", "updated successfully");
+               } else {
+                   model.addAttribute("errorMsg", "update failed");
+               }
+           }
+         }else {
+             model.addAttribute("errorMsg","Enter valid data..");
+         }
+         return "redirect:/departmentAdmin/viewComplaintsForDepAdmin";
+   }
 }
