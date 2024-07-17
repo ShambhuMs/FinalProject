@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.jws.WebParam;
 import javax.validation.Valid;
@@ -120,29 +121,37 @@ public class DepartmentAdminController {
         return "ViewComplaintsForDepAdmin";
     }
 
-   @GetMapping( value = "/updateStatusOrAssign")
-   public String updateStatusOrAssign(@RequestParam(required = false,defaultValue = "0") long employeeId,@RequestParam(required = false,defaultValue ="")
-   String complaintStatus,@RequestParam(required = false,defaultValue = "0") long id,Model model){ // id=complaintId
-         if ( id != 0){
-         Optional<ComplaintDTO> complaintDTOOptional= this.complaintService.findById(id);
-           if (!complaintStatus.equals("")) {
-                 complaintDTOOptional.get().setComplaintStatus(complaintStatus);
-           } else if (employeeId!=0) {
-               complaintDTOOptional.get().setEmployeeId(employeeId);
-           }else {
-               model.addAttribute("errorMsg","Enter valid details....");
-           }
-           if (employeeId!=0 || !complaintStatus.equals("")) {
-               boolean update = this.complaintService.updateComplaint(complaintDTOOptional.get());
-               if (update) {
-                   model.addAttribute("updateMsg", "updated successfully");
-               } else {
-                   model.addAttribute("errorMsg", "update failed");
-               }
-           }
-         }else {
-             model.addAttribute("errorMsg","Enter valid data..");
-         }
-         return "redirect:/departmentAdmin/viewComplaintsForDepAdmin";
-   }
+    @GetMapping(value = "/updateStatusOrAssign")
+    public String updateStatusOrAssign(@RequestParam(required = false, defaultValue = "0") long employeeId,
+                                       @RequestParam(required = false, defaultValue = "") String complaintStatus,
+                                       @RequestParam(required = false, defaultValue = "0") long id,
+                                       Model model, RedirectAttributes redirectAttributes) { // Added RedirectAttributes
+        if (id != 0) {
+            Optional<ComplaintDTO> complaintDTOOptional = this.complaintService.findById(id);
+            if (complaintDTOOptional.isPresent()) {
+                if (!complaintStatus.equals("")) {
+                    complaintDTOOptional.get().setComplaintStatus(complaintStatus);
+                } else if (employeeId != 0) {
+                    complaintDTOOptional.get().setEmployeeId(employeeId);
+                } else {
+                    redirectAttributes.addFlashAttribute("errorMsg", "Enter valid details....");
+                    return "redirect:/departmentAdmin/viewComplaintsForDepAdmin";
+                }
+                if (employeeId != 0 || !complaintStatus.equals("")) {
+                    boolean update = this.complaintService.updateComplaint(complaintDTOOptional.get());
+                    if (update) {
+                        redirectAttributes.addFlashAttribute("updateMsg", "Updated successfully");
+                    } else {
+                        redirectAttributes.addFlashAttribute("errorMsg", "Update failed");
+                    }
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("errorMsg", "Complaint not found");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("errorMsg", "Enter valid data..");
+        }
+        return "redirect:/departmentAdmin/viewComplaintsForDepAdmin";
+    }
+
 }

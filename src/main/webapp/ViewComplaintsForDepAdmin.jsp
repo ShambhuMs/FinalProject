@@ -149,7 +149,6 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${dto}" var="complaint">
-                        <span style="color:red">${errorMsg}</span>
                             <tr>
                                 <td scope="row">${complaint.getId()}</td>
                                 <td>${complaint.getComplaintType()}</td>

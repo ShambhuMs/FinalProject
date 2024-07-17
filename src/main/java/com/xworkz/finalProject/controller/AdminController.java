@@ -1,15 +1,14 @@
 package com.xworkz.finalProject.controller;
 
-import com.xworkz.finalProject.dto.AdminDTO;
-import com.xworkz.finalProject.dto.ComplaintDTO;
-import com.xworkz.finalProject.dto.DepartmentDTO;
-import com.xworkz.finalProject.dto.SignupDTO;
+import com.xworkz.finalProject.dto.*;
 import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
 import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
+import com.xworkz.finalProject.model.service.interfaces.DepartmentAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +22,8 @@ public class AdminController {
     private AdminService adminService;
     @Autowired
     private ComplaintService complaintService;
+    @Autowired
+    private DepartmentAdminService departmentAdminService;
 
     @PostMapping("/adminLogin")
     public String adminLoginCheck(@Valid AdminDTO adminDTO, Model model){
@@ -100,4 +101,32 @@ public String fetchAllClientDetails(Model model){
         this.complaintService.updateComplaint(optionalComplaintDTO.get());
         return "redirect:/viewComplaintDetails";
     }
+    @GetMapping("/addDepartmentAdmin")
+    public String getAllDepartmentType(Model model){
+        List<DepartmentDTO> departmentDTOList=this.departmentAdminService.fetchAllDepartments();
+        if (!departmentDTOList.isEmpty()){
+            model.addAttribute("department",departmentDTOList);
+            model.addAttribute("selectedType","select");
+        }else {
+            model.addAttribute("errorMessage","department Not found");
+        }
+        return "AddDepartmentAdmin";
+    }
+
+    @PostMapping("/addDepartmentAdmin")
+    public String saveDepartmentAdmin(@Valid DepartmentAdminDTO departmentAdminDTO, BindingResult bindingResult,
+                                      Model model){
+            if (bindingResult.hasErrors()){
+                model.addAttribute("errorMsg",bindingResult.getAllErrors());
+                model.addAttribute("employeeDTO",departmentAdminDTO);
+            }else {
+                boolean saved=this.adminService.updateDepartmentAdminDTO(departmentAdminDTO);
+                if (saved){
+                    model.addAttribute("msg","DepartmentAdmin details saved...");
+                }else {
+                    model.addAttribute("errorMsg","Enter valid details..");
+                }
+            }
+            return "AddDepartmentAdmin";
+        }
 }

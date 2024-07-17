@@ -32,6 +32,7 @@ public class DepartmentAdminServiceImplementation implements DepartmentAdminServ
                 "Thanks and Regards,\n" + "X-workz Team");
         javaMailSender.send(simpleMailMessage);
     }
+
     @Override
     public Optional<DepartmentAdminDTO> findByAdminEmailAndPassword(String email, String password) {
         Optional<DepartmentAdminDTO> optionalDepartmentDTO= this.departmentAdminRepository.findByAdminEmailAndPassword(email, password);

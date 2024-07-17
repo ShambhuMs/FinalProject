@@ -1,9 +1,6 @@
 package com.xworkz.finalProject.model.repository.interfaces;
 
-import com.xworkz.finalProject.dto.AdminDTO;
-import com.xworkz.finalProject.dto.ComplaintDTO;
-import com.xworkz.finalProject.dto.DepartmentDTO;
-import com.xworkz.finalProject.dto.SignupDTO;
+import com.xworkz.finalProject.dto.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,4 +18,11 @@ public interface AdminRepository {
        return Optional.empty();
    }
    boolean updateStatus(long id,String status);
+   default Optional<DepartmentAdminDTO> fetchByDepAdminPhone(long phoneNumber){
+       return Optional.empty();
+   }
+    default Optional<DepartmentAdminDTO> fetchByDepAdminEmail(String email){
+        return Optional.empty();
+    }
+    boolean updateDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO);
 }

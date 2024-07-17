@@ -1,6 +1,7 @@
 package com.xworkz.finalProject.controller.Ajax;
 
 
+import com.xworkz.finalProject.dto.DepartmentAdminDTO;
 import com.xworkz.finalProject.dto.EmployeeDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
@@ -17,6 +18,8 @@ public class AjaxValidationForUserController {
     private SignUpService signUpService;
     @Autowired
     private DepartmentAdminService departmentAdminService;
+    @Autowired
+    private AdminService adminService;
 
     @GetMapping("/validateEmail")
     public String validateUserEmail(@RequestParam String email) {
@@ -41,6 +44,17 @@ public class AjaxValidationForUserController {
         Optional<EmployeeDTO> existingPhone = this.departmentAdminService.findByEmployeePhoneNumber(phoneNumber);
         return existingPhone.isPresent() ? "Phone is already Exist": ""; // Return true if phone number already exists
     }
-    
+
+    @GetMapping("/validateDepartmentAdminEmail")
+    public String validateDepartmentAdminEmail(@RequestParam String email) {
+        Optional<DepartmentAdminDTO> optional = this.adminService.fetchByDepAdminEmail(email);
+        return optional.isPresent() ? "Email is already Exist" : "";
+    }
+
+    @GetMapping("/validateDepartmentAdminPhone")
+    public String validateDepartmentAdminPhone(@RequestParam long phoneNumber) {
+        Optional<DepartmentAdminDTO> existingPhone = this.adminService.fetchByDepAdminPhone(phoneNumber);
+        return existingPhone.isPresent() ? "Phone is already Exist": ""; // Return true if phone number already exists
+    }
 }
 

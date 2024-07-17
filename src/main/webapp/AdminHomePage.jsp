@@ -73,6 +73,9 @@
                 <li>
                 <a class="nav-link active text-light fs-5 fw-bold" aria-current="page" href="viewComplaintDetails">ComplaintDetailsDetails</a>
                 </li>
+                  <li>
+                <a class="nav-link active text-light fs-5 fw-bold" aria-current="page" href="addDepartmentAdmin">AddDepartmentAdmin</a>
+                </li>
             </ul>
         </div>
     </nav>

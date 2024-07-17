@@ -1,9 +1,6 @@
 package com.xworkz.finalProject.model.repository.implementations;
 
-import com.xworkz.finalProject.dto.AdminDTO;
-import com.xworkz.finalProject.dto.ComplaintDTO;
-import com.xworkz.finalProject.dto.DepartmentDTO;
-import com.xworkz.finalProject.dto.SignupDTO;
+import com.xworkz.finalProject.dto.*;
 import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -128,6 +125,58 @@ public class AdminRepoImplementation implements AdminRepository {
             Query query= entityManager.createNamedQuery("statusUpdate");
             query.setParameter("status",status);
             query.setParameter("id",id);
+            entityTransaction.commit();
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            entityTransaction.rollback();
+        }finally {
+            entityManager.close();
+        }
+        return false;
+    }
+
+    @Override
+    public Optional<DepartmentAdminDTO> fetchByDepAdminPhone(long phoneNumber) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            Query query= entityManager.createNamedQuery("findByDepartmentAdminPhoneNumber");
+            query.setParameter("phoneNumber",phoneNumber);
+            Object object=  query.getSingleResult();
+            DepartmentAdminDTO departmentAdminDTO=(DepartmentAdminDTO) object;
+            return Optional.ofNullable(departmentAdminDTO);
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            entityManager.close();
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<DepartmentAdminDTO> fetchByDepAdminEmail(String email) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            Query query= entityManager.createNamedQuery("findByDepartmentAdminEmail");
+            query.setParameter("email",email);
+            Object object=  query.getSingleResult();
+            DepartmentAdminDTO departmentAdminDTO=(DepartmentAdminDTO) object;
+            return Optional.ofNullable(departmentAdminDTO);
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            entityManager.close();
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean updateDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction= entityManager.getTransaction();
+        try {
+            entityTransaction.begin();
+            entityManager.merge(departmentAdminDTO);
             entityTransaction.commit();
             return true;
         }catch (Exception e){
