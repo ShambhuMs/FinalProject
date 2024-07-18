@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.jws.WebParam;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -34,12 +35,13 @@ public class DepartmentAdminController {
        return "AdminSignIn";
     }
     @PostMapping("/adminLogin")
-    public String departmentLogin(@Valid DepartmentAdminDTO departmentAdminDTO, Model model){
+    public String departmentLogin(@Valid DepartmentAdminDTO departmentAdminDTO, Model model, HttpSession session){
         Optional<DepartmentAdminDTO> departmentAdminResult = this.departmentAdminService.findByAdminEmailAndPassword
                 (departmentAdminDTO.getEmail(), departmentAdminDTO.getPassword());
         if (departmentAdminResult.isPresent()){
             model.addAttribute("success","Welcome to Department Admin Home");
             model.addAttribute("departmentAdmin", true);
+            session.setAttribute("dto",departmentAdminResult.get());
             return "DepartmentAdminHome";
         }else {
             model.addAttribute("msg","Enter valid email and password");
@@ -50,22 +52,30 @@ public class DepartmentAdminController {
     }
 
     @GetMapping("/viewComplaintsForDepAdmin")
-    public String fetchAllRecords(Model model){
-        List<ComplaintDTO> list= this.adminService.fetchAllCompliant();
-        if (!list.isEmpty()){
-            Map<Long, List<EmployeeDTO>> employeesByDepartment = new HashMap<>();
-            for (ComplaintDTO complaint : list) {
-                Integer departmentId = complaint.getDepartmentId();
-                List<EmployeeDTO> departmentEmployees = this.departmentAdminService.getEmployeesByDepartmentId(departmentId);
-                employeesByDepartment.put(complaint.getId(), departmentEmployees);
-            }
-            // Add complaints and employees by department to the model
-            model.addAttribute("dto",list);
-            model.addAttribute("employeesByDepartment", employeesByDepartment);
-        }else {
-            model.addAttribute("msg","No Records found");
-        }
-        model.addAttribute("departmentAdmin", true);
+    public String fetchAllRecords(Model model,HttpSession session){
+        DepartmentAdminDTO departmentAdminDTO=(DepartmentAdminDTO) session.getAttribute("dto");
+        Optional<DepartmentAdminDTO> departmentAdminDTOOptional= this.adminService.fetchByDepAdminEmail(departmentAdminDTO.getEmail());
+      List<ComplaintDTO> complaintDTOList=this.departmentAdminService.getComplaintsByDepartmentId
+              (departmentAdminDTOOptional.get().getDepartmentId());
+      if (!complaintDTOList.isEmpty()){
+          model.addAttribute("complaintDTO",complaintDTOList);
+          List<ComplaintDTO> list= this.adminService.fetchAllCompliant();
+          if (!list.isEmpty()){
+              Map<Long, List<EmployeeDTO>> employeesByDepartment = new HashMap<>();
+              for (ComplaintDTO complaint : list) {
+                  Integer departmentId = complaint.getDepartmentId();
+                  List<EmployeeDTO> departmentEmployees = this.departmentAdminService.getEmployeesByDepartmentId(departmentId);
+                  employeesByDepartment.put(complaint.getId(), departmentEmployees);
+              }
+              // Add complaints and employees by department to the model
+              model.addAttribute("employeesByDepartment", employeesByDepartment);
+          }else {
+              model.addAttribute("msg","No Records found");
+          }
+      }else {
+          model.addAttribute("msg","No Records found");
+      }
+      model.addAttribute("departmentAdmin", true);
         return "ViewComplaintsForDepAdmin";
     }
 

@@ -24,6 +24,8 @@ import java.time.LocalDateTime;
 @NamedQuery(name = "statusUpdate",query = "update ComplaintDTO set complaintStatus=:status where id=:id")
 @NamedQuery(name = "findByComplaintType",query = "select complaint from ComplaintDTO complaint where " +
         "complaint.complaintType=:complaintType")
+@NamedQuery(name = "findComplaintsByDepartmentId",query = "select complaint from ComplaintDTO complaint where " +
+        "complaint.departmentId = :departmentId")
 public class ComplaintDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

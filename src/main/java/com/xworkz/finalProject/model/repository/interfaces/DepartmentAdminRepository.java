@@ -29,4 +29,8 @@ public interface DepartmentAdminRepository {
     default List<ComplaintDTO> fetchByComplaintType(String complaintType){
         return Collections.emptyList();
     }
+    default List<ComplaintDTO> getComplaintsByDepartmentId(int departmentId){
+        return Collections.emptyList();
+    }
+
 }

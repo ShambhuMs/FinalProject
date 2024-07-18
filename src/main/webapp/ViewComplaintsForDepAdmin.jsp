@@ -127,7 +127,7 @@
 </div>
    <h3 style="color:red">${errorMsg}</h3>
    <h3 style="color:green">${updateMsg}</h3>
-        <c:if test="${dto.isEmpty() == false}">
+        <c:if test="${complaintDTO.isEmpty() == false}">
             <div class="tableOut">
                 <span style="color:green">${updateMsg}</span>
                 <table class="table">
@@ -148,7 +148,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${dto}" var="complaint">
+                        <c:forEach items="${complaintDTO}" var="complaint">
                             <tr>
                                 <td scope="row">${complaint.getId()}</td>
                                 <td>${complaint.getComplaintType()}</td>

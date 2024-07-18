@@ -92,4 +92,14 @@ public class DepartmentAdminServiceImplementation implements DepartmentAdminServ
             return Collections.emptyList();
         }
     }
+
+    @Override
+    public List<ComplaintDTO> getComplaintsByDepartmentId(int departmentId) {
+        List<ComplaintDTO> complaintDTOList=this.departmentAdminRepository.getComplaintsByDepartmentId(departmentId);
+        if (!complaintDTOList.isEmpty()){
+            return complaintDTOList;
+        }else {
+            return Collections.emptyList();
+        }
+    }
 }

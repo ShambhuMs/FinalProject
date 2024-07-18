@@ -42,7 +42,7 @@ public class AdminController {
 public String fetchAllClientDetails(Model model){
         List<SignupDTO> list= this.adminService.fetchAllClientRecords();
         if (!list.isEmpty()){
-            model.addAttribute("dto",list);
+            model.addAttribute("usersDTO",list);
         }else {
             model.addAttribute("msg","No Records found");
         }
