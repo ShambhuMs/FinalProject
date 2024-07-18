@@ -6,7 +6,9 @@ import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.dto.PasswordResetDTO;
 import com.xworkz.finalProject.model.service.interfaces.ProfileService;
 import com.xworkz.finalProject.model.service.interfaces.SignUpService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,14 +27,17 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class SignInController {
     @Autowired
     private SignUpService signUpService;
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public SignInController() {
-        System.out.println("created no-arg constructor in SignInController...");
+        log.info("created no-arg constructor in SignInController...");
     }
 
     @PostMapping("/signIn")
@@ -44,8 +49,8 @@ public class SignInController {
             return  "SignIn";
         }
              if (signupDTOOptional.isPresent()) {
-                 if (signupDTOOptional.get().getPassword().equals(password) ||
-                         signupDTOOptional.get().getUserPassword().equals(password)) {
+                 if (passwordEncoder.matches(signupDTOOptional.get().getPassword(),password) ||
+                         passwordEncoder.matches(signupDTOOptional.get().getUserPassword(),password)) {
                      model.addAttribute("dto", signupDTOOptional.get());
                      model.addAttribute("readOnly", "disable");
                      HttpSession httpSession = request.getSession();

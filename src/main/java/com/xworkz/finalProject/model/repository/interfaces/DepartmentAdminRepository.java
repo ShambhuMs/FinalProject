@@ -32,5 +32,5 @@ public interface DepartmentAdminRepository {
     default List<ComplaintDTO> getComplaintsByDepartmentId(int departmentId){
         return Collections.emptyList();
     }
-
+    boolean updateDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO);
 }

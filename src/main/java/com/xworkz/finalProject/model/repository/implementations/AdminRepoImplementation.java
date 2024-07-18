@@ -171,7 +171,7 @@ public class AdminRepoImplementation implements AdminRepository {
     }
 
     @Override
-    public boolean updateDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO) {
+    public boolean addDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO) {
         EntityManager entityManager= entityManagerFactory.createEntityManager();
         EntityTransaction entityTransaction= entityManager.getTransaction();
         try {

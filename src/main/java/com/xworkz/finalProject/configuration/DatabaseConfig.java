@@ -1,5 +1,6 @@
 package com.xworkz.finalProject.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:Application.properties")
+@Slf4j
 public class DatabaseConfig {
     @Value("${Jdbc.driver}")
     private String driver;
@@ -23,7 +25,7 @@ public class DatabaseConfig {
     private String password;
 
     public DatabaseConfig(){
-        System.out.println("Created no-arg constructor in DatabaseConfig...");
+        log.info("Created no-arg constructor in DatabaseConfig...");
     }
     @Bean
     public DataSource dataSource(){

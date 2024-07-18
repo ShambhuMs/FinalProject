@@ -56,7 +56,7 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping(value = "/resetPasswordAnyTime")
+    @PostMapping("/resetPasswordAnyTime")
     public String resetEmployeePassword(@Valid PasswordResetDTO passwordResetDTO, Model model,HttpSession session){
         EmployeeDTO employeeDTO=(EmployeeDTO) session.getAttribute("dto");
         Optional<EmployeeDTO> optionalEmployeeDTO=  this.employeeService.findByEmailAndPassword(employeeDTO.getEmail(),

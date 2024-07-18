@@ -101,6 +101,9 @@
                  <li class="nav-item" id="AddEmployee">
                       <a class="nav-link text-light" href="departmentAdmin/addEmployee">AddEmployee</a>
                   </li>
+                   <li class="nav-item" id="ResetPasswordAnyTime">
+                      <a class="nav-link text-light" href="departmentAdmin/resetPasswordAnyTime">ResetPassword</a>
+                  </li>
             </ul>
         </div>
     </nav>

@@ -155,4 +155,22 @@ public class DepartmentAdminRepositoryImplementation implements DepartmentAdminR
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public boolean updateDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO) {
+         EntityManager entityManager= entityManagerFactory.createEntityManager();
+         EntityTransaction entityTransaction= entityManager.getTransaction();
+        try {
+            entityTransaction.begin();
+            entityManager.merge(departmentAdminDTO);
+            entityTransaction.commit();
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            entityTransaction.rollback();
+        }finally {
+            entityManager.close();
+        }
+        return false;
+    }
 }

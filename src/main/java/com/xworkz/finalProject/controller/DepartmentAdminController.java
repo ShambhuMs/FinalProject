@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -34,6 +33,11 @@ public class DepartmentAdminController {
        model.addAttribute("departmentAdmin",true);
        return "AdminSignIn";
     }
+    @GetMapping("/resetPasswordAnyTime")
+    private String checkResetPassword(Model model){
+        model.addAttribute("departmentAdmin",true);
+        return "ResetPasswordAnyTime";
+    }
     @PostMapping("/adminLogin")
     public String departmentLogin(@Valid DepartmentAdminDTO departmentAdminDTO, Model model, HttpSession session){
         Optional<DepartmentAdminDTO> departmentAdminResult = this.departmentAdminService.findByAdminEmailAndPassword
@@ -49,6 +53,24 @@ public class DepartmentAdminController {
             model.addAttribute("departmentAdmin", true);
             return "AdminSignIn";
         }
+    }
+    @PostMapping("/resetPasswordAnyTime")
+    public String resetDepartmentAdminPassword(@Valid PasswordResetDTO passwordResetDTO, Model model,HttpSession session){
+        DepartmentAdminDTO departmentAdminDTO=(DepartmentAdminDTO) session.getAttribute("dto");
+        Optional<DepartmentAdminDTO> optionalDepartmentAdminDTO=  this.adminService.fetchByDepAdminEmail(departmentAdminDTO.getEmail());
+        if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
+            optionalDepartmentAdminDTO.get().setPassword(passwordResetDTO.getNewPassword());
+            boolean updateValue=this.departmentAdminService.updateDepartmentAdminDTO(optionalDepartmentAdminDTO.get());
+            if (updateValue){
+                model.addAttribute("msg","Password Reset Success..");
+            }else {
+                model.addAttribute("errorMsg","Password update failed..\n\n Enter valid password");
+            }
+        } else {
+            model.addAttribute("errorMsg","NewPassword and Confirm Password should be same");
+        }
+        model.addAttribute("departmentAdmin",true);
+        return "ResetPasswordAnyTime";
     }
 
     @GetMapping("/viewComplaintsForDepAdmin")

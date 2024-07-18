@@ -1,7 +1,6 @@
 package com.xworkz.finalProject.controller;
 
 import com.xworkz.finalProject.dto.*;
-import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
 import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
 import com.xworkz.finalProject.model.service.interfaces.DepartmentAdminService;
@@ -120,7 +119,7 @@ public String fetchAllClientDetails(Model model){
                 model.addAttribute("errorMsg",bindingResult.getAllErrors());
                 model.addAttribute("employeeDTO",departmentAdminDTO);
             }else {
-                boolean saved=this.adminService.updateDepartmentAdminDTO(departmentAdminDTO);
+                boolean saved=this.adminService.AddDepartmentAdminDTO(departmentAdminDTO);
                 if (saved){
                     model.addAttribute("msg","DepartmentAdmin details saved...");
                 }else {

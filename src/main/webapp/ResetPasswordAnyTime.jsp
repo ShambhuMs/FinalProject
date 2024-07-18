@@ -65,10 +65,13 @@
 
                 <li class="nav-item" id="home">
                 <c:choose>
-                        <c:when test="${!employee}">
+                        <c:when test="${departmentAdmin}">
+                            <a class="nav-link text-light" href="DepartmentAdminHome.jsp">Home</a>
+                        </c:when>
+                        <c:when test="${!employee && !departmentAdmin}">
                             <a class="nav-link text-light" href="UserHomePage.jsp">Home</a>
                         </c:when>
-                        <c:when test="${employee}">
+                        <c:when test="${employee && !departmentAdmin}">
                              <a class="nav-link text-light" href="EmployeeHome.jsp">Home</a>
                         </c:when>
                   </c:choose>
@@ -78,11 +81,14 @@
     </nav>
     <div class="signup-form">
     <c:choose>
-        <c:when test="${!employee}">
+        <c:when test="${!employee && !departmentAdmin}">
             <form action="resetPasswordAnyTime" method="post">
         </c:when>
         <c:when test="${employee}">
             <form action="employee/resetPasswordAnyTime" method="post">
+         </c:when>
+         <c:when test="${departmentAdmin}">
+               <form action="departmentAdmin/resetPasswordAnyTime" method="post">
          </c:when>
      </c:choose>
             <h2>Password Set</h2>

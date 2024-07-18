@@ -23,5 +23,5 @@ public interface AdminService {
     default Optional<DepartmentAdminDTO> fetchByDepAdminEmail(String email){
         return Optional.empty();
     }
-    boolean updateDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO);
+    boolean AddDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO);
 }

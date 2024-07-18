@@ -102,4 +102,10 @@ public class DepartmentAdminServiceImplementation implements DepartmentAdminServ
             return Collections.emptyList();
         }
     }
+
+    @Override
+    public boolean updateDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO) {
+        boolean update=this.departmentAdminRepository.updateDepartmentAdminDTO(departmentAdminDTO);
+        return update;
+    }
 }

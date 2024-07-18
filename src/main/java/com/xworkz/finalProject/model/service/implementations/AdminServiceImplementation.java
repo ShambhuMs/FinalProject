@@ -8,6 +8,7 @@ import com.xworkz.finalProject.randomPassword.RandomPasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,8 @@ public class AdminServiceImplementation implements AdminService {
     private AdminRepository adminRepository;
     @Autowired
     private JavaMailSender javaMailSender;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public void sendMailToDepartmentAdmin(DepartmentAdminDTO departmentAdminDTO){
         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
         simpleMailMessage.setTo(departmentAdminDTO.getEmail());
@@ -103,12 +106,12 @@ public class AdminServiceImplementation implements AdminService {
     }
 
     @Override
-    public boolean updateDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO) {
+    public boolean AddDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO) {
         String password = RandomPasswordGenerator.generatePassword();
         departmentAdminDTO.setPassword(password);
         departmentAdminDTO.setCreatedBy(DefaultValues.ZERO.getDefaultStatus());
         departmentAdminDTO.setCreatedDate(LocalDateTime.now());
-        boolean saved= this.adminRepository.updateDepartmentAdminDTO(departmentAdminDTO);
+        boolean saved= this.adminRepository.addDepartmentAdminDTO(departmentAdminDTO);
         if (saved){
             sendMailToDepartmentAdmin(departmentAdminDTO);
             return saved;
