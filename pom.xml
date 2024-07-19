@@ -66,11 +66,16 @@
       <scope>compile</scope>
     </dependency>
     <!--// encrypt decrypt-->
+
+    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
     <dependency>
       <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-crypto</artifactId>
-      <version>5.7.3</version>
+      <artifactId>spring-security-core</artifactId>
+      <version>5.6.1</version>
     </dependency>
+
+
+
     <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
     <dependency>
       <groupId>commons-fileupload</groupId>

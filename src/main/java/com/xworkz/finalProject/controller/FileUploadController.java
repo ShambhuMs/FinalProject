@@ -5,8 +5,6 @@ import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.service.interfaces.ProfileService;
 import com.xworkz.finalProject.model.service.interfaces.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -50,7 +47,7 @@ public class FileUploadController {
             String newFilename = signupDTO.getEmail() + "_" + originalFilename;
             Path path = Paths.get(UPLOAD_DIR, newFilename);
             Files.write(path, multipartFile.getBytes());
-            Optional<SignupDTO> optionalSignupDTO = signUpService.findByemail(signupDTO.getEmail());
+            Optional<SignupDTO> optionalSignupDTO = signUpService.findByEmail(signupDTO.getEmail());
             if (!optionalSignupDTO.isPresent()) {
                 model.addAttribute("message", "User not found.");
                 return "ProfileEdit";

@@ -41,70 +41,84 @@ public class SignInController {
     }
 
     @PostMapping("/signIn")
-    public String checkSignIn(@RequestParam String email, @RequestParam String password, Model model,
-                              HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
-        Optional<SignupDTO> signupDTOOptional= this.signUpService.findByemail(email);
-        if(password==null || password.isEmpty()){
-            model.addAttribute("msg","Enter email or password");
-            return  "SignIn";
+    public String checkSignIn(@RequestParam("email") Optional<String> email,
+                              @RequestParam("password") Optional<String> rawPassword,
+                              Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Validate input
+        if (!email.isPresent() || !rawPassword.isPresent()) {
+            model.addAttribute("msg", "Enter email or password");
+            return "SignIn";
         }
-             if (signupDTOOptional.isPresent()) {
-                 if (passwordEncoder.matches(signupDTOOptional.get().getPassword(),password) ||
-                         passwordEncoder.matches(signupDTOOptional.get().getUserPassword(),password)) {
-                     model.addAttribute("dto", signupDTOOptional.get());
-                     model.addAttribute("readOnly", "disable");
-                     HttpSession httpSession = request.getSession();
-                     List<ProfileDTO> profileDTO = profileService.findDatasById(signupDTOOptional.get().getId());
-                     httpSession.setAttribute("dto", signupDTOOptional.get());
-                     if (!profileDTO.isEmpty()) {
-                         profileDTO.forEach(data -> {
-                             if (data.getStatus() == "Active" || data.getStatus().equals("Active")) {
-                                 String ref = "/profile/" + data.getImageName();
-                                 httpSession.setAttribute("profileDTO", ref);
-                             }
-                         });
-                     }
-                    /* else {
-                         httpSession.removeAttribute("profileDTO");
-                     }*/
-                     int count = signupDTOOptional.get().getLogin_count();
-                     signupDTOOptional.get().setLock_account(DefaultValues.ZERO.getIntValue());
-                     if (count == DefaultValues.ZERO.getIntValue()) {
-                         signupDTOOptional.get().setLogin_count(DefaultValues.ONE.getIntValue());
-                         this.signUpService.update(signupDTOOptional.get());
-                         return "PasswordReset";
-                     } else {
-                         int num = count + 1;
-                         signupDTOOptional.get().setLogin_count(num);
-                         this.signUpService.update(signupDTOOptional.get());
-                         /*model.addAttribute("dto",signupDTOOptional);*/
-                         return "UserHomePage";
-                     }
-                 }else {
-                     model.addAttribute("msg","Enter valid email or password..");
-                       int lockAccount=signupDTOOptional.get().getLock_account();
-                  if (lockAccount<DefaultValues.LOCK_ACCOUNT.getIntValue()){
-                          int lockAc= lockAccount+1;
-                          signupDTOOptional.get().setLock_account(lockAc);
-                          this.signUpService.update(signupDTOOptional.get());
-                          int chance=3-lockAc;
-                              model.addAttribute("msg","You have only "+chance+" attempts"+
-                                      "\"Enter Valid Email or Password..");
-                          return "SignIn";
-                  }else {
-                      signupDTOOptional.get().setPassword(null);
-                      signupDTOOptional.get().setUserPassword(null);
-                      signupDTOOptional.get().setUpdatedDate(LocalDateTime.now());
-                      this.signUpService.update(signupDTOOptional.get());
-                      model.addAttribute("msg","Your account is locked...please reset password");
-                      return "FindByEmail";
-                  }
-                 }
+
+        // Find user by email
+        Optional<SignupDTO> signupDTOOptional = signUpService.findByEmail(email.get());
+        if (!signupDTOOptional.isPresent()) {
+            model.addAttribute("msg", "Enter valid email or password..");
+            return "SignIn";
+        }
+        if (signupDTOOptional.get().getPassword().equals(DefaultValues.LOCK_ACCOUNT.getDefaultStatus())) {
+            model.addAttribute("msg", "Password expired. Please forgot new password.");
+            return "SignIn";
+        }
+        SignupDTO signupDTO = signupDTOOptional.get();
+        try {
+            // Check password
+            boolean passwordMatches = passwordEncoder.matches(rawPassword.get(), signupDTO.getPassword())
+                    || passwordEncoder.matches(rawPassword.get(), signupDTO.getUserPassword());
+
+            if (passwordMatches) {
+                model.addAttribute("dto", signupDTO);
+                model.addAttribute("readOnly", "disable");
+
+                HttpSession session = request.getSession();
+                session.setAttribute("dto", signupDTO);
+
+                List<ProfileDTO> profileDTOs = profileService.findDatasById(signupDTO.getId());
+                if (!profileDTOs.isEmpty()) {
+                    profileDTOs.forEach(data -> {
+                        if ("Active".equals(data.getStatus())) {
+                            String ref = "/profile/" + data.getImageName();
+                            session.setAttribute("profileDTO", ref);
+                        }
+                    });
+                }
+                int loginCount = signupDTO.getLogin_count();
+                signupDTO.setLock_account(0);
+                if (loginCount == 0) {
+                    signupDTO.setLogin_count(1);
+                    signUpService.update(signupDTO);
+                    return "PasswordReset";
+                } else {
+                    signupDTO.setLogin_count(loginCount + 1);
+                    signUpService.update(signupDTO);
+                    return "UserHomePage";
+                }
+            } else {
+                handleInvalidPassword(model, signupDTO);
+                return "SignIn";
             }
-            else  {
-                 model.addAttribute("msg","Enter valid email or password..");
-                  return "SignIn";
-            }
+        } catch (IllegalArgumentException e) {
+            handleInvalidPassword(model, signupDTO);
+            return "SignIn";
+        }
+    }
+    private String handleInvalidPassword(Model model, SignupDTO signupDTO) {
+        int lockAccount = signupDTO.getLock_account();
+        if (lockAccount < DefaultValues.LOCK_ACCOUNT.getIntValue()) {
+            signupDTO.setLock_account(lockAccount + 1);
+            signUpService.update(signupDTO);
+            int remainingAttempts = 3 - signupDTO.getLock_account();
+            model.addAttribute("msg", "You have only " + remainingAttempts + " attempts left. " +
+                    "Enter valid email or password.");
+            return "SignIn";
+        } else {
+            signupDTO.setPassword(null);
+            signupDTO.setUpdatedDate(LocalDateTime.now());
+            signUpService.update(signupDTO);
+            model.addAttribute("msg", "Your account is locked...please reset password");
+            return "FindByEmail";
+        }
     }
 
     @PostMapping("/resetPassword")
@@ -114,7 +128,8 @@ public class SignInController {
         Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmailAndPassword(passwordResetDTO.getEmail(),
                 passwordResetDTO.getPassword());
         if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
-            optionalSignupDTO.get().setUserPassword(passwordResetDTO.getNewPassword());
+            String userPassword=passwordEncoder.encode(passwordResetDTO.getNewPassword());
+            optionalSignupDTO.get().setUserPassword(userPassword);
             System.out.println("optionalSignupDTO in controller...: "+optionalSignupDTO);
               boolean updateValue=this.signUpService.update(optionalSignupDTO.get());
               if (updateValue){
@@ -151,8 +166,9 @@ public class SignInController {
                 passwordResetDTO.getPassword());
 
         if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
-            optionalSignupDTO.get().setUserPassword(passwordResetDTO.getConfirmNewPassword());
-            System.out.println("optionalSignupDTO in controller...: "+optionalSignupDTO);
+            String userPassword=passwordEncoder.encode(passwordResetDTO.getNewPassword());
+            optionalSignupDTO.get().setUserPassword(userPassword);
+            log.info("optionalSignupDTO in controller...: "+optionalSignupDTO);
             boolean updateValue=this.signUpService.update(optionalSignupDTO.get());
             if (updateValue){
                 System.out.println("data saved for email: " + optionalSignupDTO.get().getEmail());

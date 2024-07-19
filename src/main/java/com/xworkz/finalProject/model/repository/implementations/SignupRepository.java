@@ -10,6 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -120,5 +123,21 @@ public class SignupRepository implements SignUpRepo {
             entityManager.close();
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<SignupDTO> findExpiredPasswords(LocalDateTime localDateTime) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            Query query= entityManager.createNamedQuery("findByExpireDate");
+            query.setParameter("localDateTime",localDateTime);
+            List<SignupDTO> list=  query.getResultList();
+            return list;
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            entityManager.close();
+        }
+        return Collections.emptyList();
     }
 }

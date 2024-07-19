@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface SignUpService {
     boolean save(SignupDTO signupDTO);
-    default Optional<SignupDTO> findByemail(String email){
+    default Optional<SignupDTO> findByEmail(String email){
         return Optional.empty();
     }
     default Optional<SignupDTO> findByPhoneNumber(long phoneNumber){
@@ -19,5 +19,5 @@ public interface SignUpService {
     default Optional<SignupDTO> findByEmailForReset(String email){
         return Optional.empty();
     }
-
+    public void invalidateExpiredPasswords();
 }

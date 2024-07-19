@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
         " signup.phoneNumber=:phoneNumber")
 @NamedQuery(name = "findByEmailAndPassword",query = "select signup from SignupDTO signup where " +
         "signup.email=:email and signup.password=:password or signup.userPassword=:password")
+@NamedQuery(name = "findByExpireDate",query = "select signup from SignupDTO signup where signup.createdDate < :localDateTime")
+
 /*@NamedQuery(name = "findByEmailAndUserPassword",query = "select signup from SignupDTO signup where " +
         "signup.email=:email and signup.userPassword=:password")*/
 public class SignupDTO {

@@ -131,7 +131,7 @@
        const errorEmail = document.getElementById('error-email');
 
        if (!inputValue.includes('@') || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue) || inputValue.length <= 8 || inputValue.length >= 38) {
-           errorEmail.textContent = 'Email must be valid and contain @, special characters, digits, and be between 8 and 28 characters.';
+           errorEmail.textContent = 'Email must be valid and contain @, special characters, digits, and be between 8 and 38 characters.';
        } else {
            errorEmail.textContent = '';
        }
@@ -144,10 +144,10 @@
 
        const hasAlphabet = /[a-zA-Z]/.test(inputValue);
        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(inputValue);
-       const isValidLength = inputValue.length > 6 && inputValue.length < 18;
+       const isValidLength = inputValue.length > 5 && inputValue.length < 18;
 
        if (!isValidLength) {
-           errorPassword.textContent = 'Password length should be greater than 6 and less than 18.';
+           errorPassword.textContent = 'Password length should be greater than 5 and less than 18.';
        } else {
            errorPassword.textContent = '';
        }

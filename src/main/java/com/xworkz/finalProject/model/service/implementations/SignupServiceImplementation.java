@@ -1,20 +1,28 @@
 package com.xworkz.finalProject.model.service.implementations;
 
+import com.xworkz.finalProject.defaultValue.DefaultValues;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.implementations.SignupRepository;
+import com.xworkz.finalProject.model.repository.interfaces.AdminRepository;
+import com.xworkz.finalProject.model.service.interfaces.AdminService;
 import com.xworkz.finalProject.model.service.interfaces.SignUpService;
 import com.xworkz.finalProject.randomPassword.RandomPasswordGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class SignupServiceImplementation implements SignUpService {
     @Autowired
     private SignupRepository signupRepository;
@@ -22,6 +30,10 @@ public class SignupServiceImplementation implements SignUpService {
     private JavaMailSender javaMailSender;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AdminRepository adminRepository;
+    @Transient
+    public String tempEmail;
 
     public void sendEmail(SignupDTO signupDTO,String password) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -35,11 +47,11 @@ public class SignupServiceImplementation implements SignUpService {
 
     @Override
     public boolean save(SignupDTO signupDTO) {
-        System.out.println("Running save method in Service....");
+        log.info("Running save method in Service....");
         String fullName = signupDTO.getFirstName() + " " + signupDTO.getLastName();
         signupDTO.setCreatedBy(fullName);
         //   signupDTO.setUpdatedBy(fullName);
-        signupDTO.setCreatedDate(LocalDateTime.now());
+        signupDTO.setCreatedDate(LocalDateTime.now().plusMinutes(1)); //setting expiry time to generated password
         //  signupDTO.setUpdatedDate(LocalDateTime.now());
         signupDTO.setLogin_count(0);
         signupDTO.setLock_account(0);
@@ -49,10 +61,27 @@ public class SignupServiceImplementation implements SignUpService {
         boolean saveResult = this.signupRepository.save(signupDTO);
         if (saveResult) {
             sendEmail(signupDTO,password);
+            this.tempEmail= signupDTO.getEmail();
         }
-        System.out.println("dto in service" + signupDTO.getPassword());
+        log.info("dto in service" + signupDTO.getPassword());
         return saveResult;
     }
+
+    @Override
+    public void invalidateExpiredPasswords() {
+        if (tempEmail==null){
+            log.info("Email is empty");
+        }else {
+            Optional<SignupDTO> optionalSignupDTO = this.signupRepository.findByEmail(tempEmail);
+            if (optionalSignupDTO.isPresent() && optionalSignupDTO.get().getCreatedDate().isBefore(LocalDateTime.now())) {
+                optionalSignupDTO.get().setPassword(DefaultValues.LOCK_ACCOUNT.getDefaultStatus());
+                signupRepository.update(optionalSignupDTO.get());
+            } else {
+                log.info("mail not found");
+            }
+        }
+    }
+
 
     @Override
     public Optional<SignupDTO> findByEmailForReset(String email) {
@@ -66,6 +95,7 @@ public class SignupServiceImplementation implements SignUpService {
                 boolean update = this.update(optionalSignupDTO.get());
                 if (update) {
                         sendEmail(optionalSignupDTO.get(),password);
+                        this.tempEmail=optionalSignupDTO.get().getEmail();
                 }
             return optionalSignupDTO;
         } else {
@@ -74,13 +104,13 @@ public class SignupServiceImplementation implements SignUpService {
     }
 
     @Override
-    public Optional<SignupDTO> findByemail(String email) {
+    public Optional<SignupDTO> findByEmail(String email) {
         Optional<SignupDTO> optionalSignupDTO = this.signupRepository.findByEmail(email);
         if (optionalSignupDTO.isPresent()) {
-            System.out.println("data found for email : " + email);
+            log.info("data found for email : " + email);
             return optionalSignupDTO;
         } else {
-            System.out.println("data not found for email : " + email);
+            log.info("data not found for email : " + email);
             return Optional.empty();
         }
     }
@@ -89,10 +119,10 @@ public class SignupServiceImplementation implements SignUpService {
     public Optional<SignupDTO> findByPhoneNumber(long phoneNumber) {
         Optional<SignupDTO> optionalSignupDTO = this.signupRepository.findByPhoneNumber(phoneNumber);
         if (optionalSignupDTO.isPresent()) {
-            System.out.println("data found for phoneNumber : " + phoneNumber);
+            log.info("data found for phoneNumber : " + phoneNumber);
             return optionalSignupDTO;
         } else {
-            System.out.println("data not found for phoneNumber : " + phoneNumber);
+            log.info("data not found for phoneNumber : " + phoneNumber);
             return Optional.empty();
         }
     }
@@ -101,10 +131,10 @@ public class SignupServiceImplementation implements SignUpService {
     public Optional<SignupDTO> findByEmailAndPassword(String email, String password) {
         Optional<SignupDTO> optionalSignupDTO = this.signupRepository.findByEmailAndPassword(email, password);
         if (optionalSignupDTO.isPresent()) {
-            System.out.println("data found for Email  : " + email);
+            log.info("data found for Email  : " + email);
             return optionalSignupDTO;
         } else {
-            System.out.println("data not found for Email : " + email);
+            log.info("data not found for Email : " + email);
             return Optional.empty();
         }
     }
@@ -112,14 +142,7 @@ public class SignupServiceImplementation implements SignUpService {
     @Override
     public boolean update(SignupDTO signupDTO) {
         boolean result = this.signupRepository.update(signupDTO);
-        if (result) {
-            System.out.println("update success..." + signupDTO);
-            return result;
-        } else {
-            System.out.println("update failed..." + signupDTO);
-            return false;
-        }
-
+        return result;
     }
 
 

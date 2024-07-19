@@ -23,7 +23,7 @@ public class AjaxValidationForUserController {
 
     @GetMapping("/validateEmail")
     public String validateUserEmail(@RequestParam String email) {
-        Optional<SignupDTO> optional = signUpService.findByemail(email);
+        Optional<SignupDTO> optional = signUpService.findByEmail(email);
         return optional.isPresent() ? "Email is already Exist" : "";
     }
 

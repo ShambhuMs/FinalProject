@@ -3,6 +3,9 @@ package com.xworkz.finalProject.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -12,6 +15,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @ComponentScan("com.xworkz.finalProject")
 @EnableWebMvc
+@EnableScheduling
 public class ResourceMappConfig implements WebMvcConfigurer {
 
     @Bean
@@ -29,4 +33,10 @@ public class ResourceMappConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/script/**")
                 .addResourceLocations("/javascript/");
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

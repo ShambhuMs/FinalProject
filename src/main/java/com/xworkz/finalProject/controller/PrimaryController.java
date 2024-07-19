@@ -2,18 +2,14 @@ package com.xworkz.finalProject.controller;
 
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.service.interfaces.SignUpService;
-import com.xworkz.finalProject.randomPassword.RandomPasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -33,12 +29,12 @@ public class PrimaryController {
         }else {
            boolean result= this.signUpService.save(signupDTO);
            if (result){
-               model.addAttribute("msg",signupDTO.getFirstName()+", Your application submitted..");
-               System.out.println("dto in controller"+signupDTO.getPassword());
+               model.addAttribute("msg",signupDTO.getFirstName()+", Your application submitted.." +
+                       "please SignIn through password sent by email");
            }
             else {
                 System.out.println("dto in controller"+signupDTO);
-               Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(signupDTO.getEmail());
+               Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByEmail(signupDTO.getEmail());
                long phoneNumber= signupDTO.getPhoneNumber();
                Optional<SignupDTO> optionalPhoneNumber=this.signUpService.findByPhoneNumber(phoneNumber);
                if (optionalSignupDTO.isPresent()){

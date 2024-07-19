@@ -6,14 +6,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:Application.properties")
 @Slf4j
+@EnableTransactionManagement
 public class DatabaseConfig {
     @Value("${Jdbc.driver}")
     private String driver;
@@ -48,5 +53,8 @@ public class DatabaseConfig {
         return localContainerEntityManagerFactoryBean;
 
     }
-
+    @Bean
+    public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
+        return new JpaTransactionManager(localContainerEntityManagerFactoryBean.getObject());
+    }
 }

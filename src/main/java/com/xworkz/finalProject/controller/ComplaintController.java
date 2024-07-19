@@ -70,7 +70,7 @@ public class ComplaintController {
     @PostMapping("/viewComplaintDetails")
     public String viewAllComplaints(HttpSession session,Model model){
       SignupDTO signupDTO=(SignupDTO)  session.getAttribute("dto");
-      Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByemail(signupDTO.getEmail());
+      Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByEmail(signupDTO.getEmail());
       List<ComplaintDTO> complaintDTOList=this.complaintService.findByUserId(optionalSignupDTO.get().getId());
       if (!complaintDTOList.isEmpty()){
           List<ComplaintDTO> activeComplaints =new ArrayList<>();
