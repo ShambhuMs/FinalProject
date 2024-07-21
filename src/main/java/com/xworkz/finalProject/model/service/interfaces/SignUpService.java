@@ -19,5 +19,5 @@ public interface SignUpService {
     default Optional<SignupDTO> findByEmailForReset(String email){
         return Optional.empty();
     }
-    public void invalidateExpiredPasswords();
+
 }

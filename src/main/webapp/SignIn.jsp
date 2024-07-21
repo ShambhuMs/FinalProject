@@ -75,9 +75,7 @@
                 <li class="nav-item" id="home">
                     <a class="nav-link text-light" href="index.jsp">Home</a>
                 </li>
-                <li class="nav-item" id="pass">
-                    <a class="nav-link text-light" href="PasswordReset.jsp">Password</a>
-                </li>
+
             </ul>
         </div>
     </nav>

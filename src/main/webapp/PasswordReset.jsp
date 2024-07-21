@@ -64,9 +64,7 @@
                 <li class="nav-item" id="SignIn">
                     <a class="nav-link text-light" href="SignIn.jsp">SignIn</a>
                 </li>
-                <li class="nav-item" id="userHome">
-                    <a class="nav-link text-light" href="UserHomePage.jsp">UserHomePage</a>
-                </li>
+
             </ul>
         </div>
     </nav>
@@ -74,16 +72,13 @@
         <form id="contactForm" action="resetPassword" method="post">
             <h2>Password Set</h2>
         <span style="color:green">${msg}</span>
-        <span style="color:red">${errorMsg}</span>
-        <span style="color:red">${mail}</span>
-
-            <div class="form-group">
+           <div class="form-group">
                 <input type="text" ${readOnly=='disable' ? 'readonly': ''} class="form-control" placeholder="Enter email" id="email" name="email" value="${dto.email}" required>
                 <div id="error-email" class="error"> </div>
             </div>
              <div class="form-group">
                <label for="password">Password</label>
-                <input type="password"  ${readOnly=='disable' ? 'readonly': ''}  class="form-control" placeholder="Enter password" id="password" name="password" value="${dto.password}" required>
+                <input type="password"    class="form-control" placeholder="Enter password" id="password" name="password" value="" required>
                 <div id="error-password" class="error"></div>
             </div>
             <div class="form-group">

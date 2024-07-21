@@ -62,7 +62,8 @@
                        <a class="nav-link text-light" href="RaiseComplaint.jsp">RaiseComplaint</a>
                  </li>
                      <li>
-                              <img src="${pageContext.request.contextPath}${sessionScope.profileDTO}" width="70" height="70" value="" class="rounded-circle profile-image" id="profileImage">
+                    <a class="nav-link text-light" href="EditProfile.jsp"><img src="${pageContext.request.contextPath}${sessionScope.profileDTO}"
+                     width="70" height="70" value="" class="rounded-circle profile-image" id="profileImage"> </a>
                      </li>
                  <li>
                   <form id="viewComplaint" action="viewComplaintDetails" method="post">

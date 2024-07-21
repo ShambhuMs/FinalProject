@@ -45,6 +45,12 @@
         top:150px;
         width:700px;
         }
+        h3{
+                position:relative;
+                left:450px;
+                top:200px;
+                width:700px;
+                }
         .tableOut{
         position:relative;
         top:180px;
@@ -69,7 +75,7 @@
             </ul>
         </div>
     </nav>
-    <h2>ViewComplaint details:</h2>
+    <h2>View Complaint Details:</h2>
         <h3 style="color:red">${msg} </h3>
 <c:if test="${complaintDto.isEmpty()==false}">
 <div class="tableOut">

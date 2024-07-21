@@ -96,7 +96,7 @@
         <span style="color:red">${errorMsg}</span>
             <div class="form-group">
           <c:choose>
-             <c:when test="${!employee}">
+             <c:when test="${!employee && !departmentAdmin}">
                 <input type="text" ${readOnly=='disable' ? 'readonly': 'hidden'} class="form-control"
                      placeholder="Enter email" id="email" name="email" value="${dto.email}"  required>
              </c:when>

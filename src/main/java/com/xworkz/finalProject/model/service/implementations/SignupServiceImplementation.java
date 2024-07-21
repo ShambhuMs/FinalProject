@@ -70,11 +70,11 @@ public class SignupServiceImplementation implements SignUpService {
 
     @Override
     public Optional<SignupDTO> findByEmailForReset(String email) {
-        Optional<SignupDTO> optionalSignupDTO = this.signupRepository.findByEmailForReset(email);
+        Optional<SignupDTO> optionalSignupDTO = this.signupRepository.findByEmail(email);
         if (optionalSignupDTO.isPresent()) {
             String password = RandomPasswordGenerator.generatePassword();
             String encryptPassword= passwordEncoder.encode(password);
-            optionalSignupDTO.get().setExpireTime(LocalTime.of(0,0));
+            optionalSignupDTO.get().setExpireTime(LocalTime.now());
                 optionalSignupDTO.get().setPassword(encryptPassword);
                 optionalSignupDTO.get().setUpdatedDate(LocalDateTime.now());
                 optionalSignupDTO.get().setUpdatedBy(optionalSignupDTO.get().getFirstName());
@@ -126,6 +126,8 @@ public class SignupServiceImplementation implements SignUpService {
 
     @Override
     public boolean update(SignupDTO signupDTO) {
+        signupDTO.setUpdatedBy(signupDTO.getFirstName());
+        signupDTO.setUpdatedDate(LocalDateTime.now());
         boolean result = this.signupRepository.update(signupDTO);
         return result;
     }
