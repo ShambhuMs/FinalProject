@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -57,6 +58,7 @@ public class SignupDTO {
     private String userPassword;
     private int login_count;
     private int lock_account;
+    private LocalTime expireTime;
 
     public String getPassword() {
         return password;

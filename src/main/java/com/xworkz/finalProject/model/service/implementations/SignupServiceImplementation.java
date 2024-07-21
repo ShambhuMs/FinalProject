@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Transient;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +33,6 @@ public class SignupServiceImplementation implements SignUpService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AdminRepository adminRepository;
-    @Transient
-    public String tempEmail;
 
     public void sendEmail(SignupDTO signupDTO,String password) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -51,36 +50,22 @@ public class SignupServiceImplementation implements SignUpService {
         String fullName = signupDTO.getFirstName() + " " + signupDTO.getLastName();
         signupDTO.setCreatedBy(fullName);
         //   signupDTO.setUpdatedBy(fullName);
-        signupDTO.setCreatedDate(LocalDateTime.now().plusMinutes(1)); //setting expiry time to generated password
+        signupDTO.setCreatedDate(LocalDateTime.now()); //setting expiry time to generated password
         //  signupDTO.setUpdatedDate(LocalDateTime.now());
         signupDTO.setLogin_count(0);
         signupDTO.setLock_account(0);
         String password = RandomPasswordGenerator.generatePassword();
         String encryptPassword=passwordEncoder.encode(password);
+        signupDTO.setExpireTime(LocalTime.now());
         signupDTO.setPassword(encryptPassword);
         boolean saveResult = this.signupRepository.save(signupDTO);
         if (saveResult) {
             sendEmail(signupDTO,password);
-            this.tempEmail= signupDTO.getEmail();
         }
         log.info("dto in service" + signupDTO.getPassword());
         return saveResult;
     }
 
-    @Override
-    public void invalidateExpiredPasswords() {
-        if (tempEmail==null){
-            log.info("Email is empty");
-        }else {
-            Optional<SignupDTO> optionalSignupDTO = this.signupRepository.findByEmail(tempEmail);
-            if (optionalSignupDTO.isPresent() && optionalSignupDTO.get().getCreatedDate().isBefore(LocalDateTime.now())) {
-                optionalSignupDTO.get().setPassword(DefaultValues.LOCK_ACCOUNT.getDefaultStatus());
-                signupRepository.update(optionalSignupDTO.get());
-            } else {
-                log.info("mail not found");
-            }
-        }
-    }
 
 
     @Override
@@ -89,13 +74,13 @@ public class SignupServiceImplementation implements SignUpService {
         if (optionalSignupDTO.isPresent()) {
             String password = RandomPasswordGenerator.generatePassword();
             String encryptPassword= passwordEncoder.encode(password);
+            optionalSignupDTO.get().setExpireTime(LocalTime.of(0,0));
                 optionalSignupDTO.get().setPassword(encryptPassword);
                 optionalSignupDTO.get().setUpdatedDate(LocalDateTime.now());
                 optionalSignupDTO.get().setUpdatedBy(optionalSignupDTO.get().getFirstName());
                 boolean update = this.update(optionalSignupDTO.get());
                 if (update) {
                         sendEmail(optionalSignupDTO.get(),password);
-                        this.tempEmail=optionalSignupDTO.get().getEmail();
                 }
             return optionalSignupDTO;
         } else {

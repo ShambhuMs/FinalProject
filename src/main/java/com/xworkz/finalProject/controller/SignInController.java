@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +68,7 @@ public class SignInController {
             boolean passwordMatches = passwordEncoder.matches(rawPassword.get(), signupDTO.getPassword())
                     || passwordEncoder.matches(rawPassword.get(), signupDTO.getUserPassword());
 
-            if (passwordMatches) {
+            if (passwordMatches && !signupDTO.getExpireTime().plusMinutes(1).isBefore(LocalTime.now()) ) {
                 model.addAttribute("dto", signupDTO);
                 model.addAttribute("readOnly", "disable");
 
@@ -123,21 +124,16 @@ public class SignInController {
 
     @PostMapping("/resetPassword")
     public String resetUserPassword(@Valid PasswordResetDTO passwordResetDTO, Model model){
-        System.out.println("newPassword : "+ passwordResetDTO.getPassword());
-        System.out.println("confirmNewPassword : "+ passwordResetDTO.getConfirmNewPassword());
         Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmailAndPassword(passwordResetDTO.getEmail(),
                 passwordResetDTO.getPassword());
         if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
             String userPassword=passwordEncoder.encode(passwordResetDTO.getNewPassword());
             optionalSignupDTO.get().setUserPassword(userPassword);
-            System.out.println("optionalSignupDTO in controller...: "+optionalSignupDTO);
+            optionalSignupDTO.get().setExpireTime(LocalTime.of(0,0,0));
               boolean updateValue=this.signUpService.update(optionalSignupDTO.get());
               if (updateValue){
-                  System.out.println("data saved for email: " + optionalSignupDTO.get().getEmail());
                   model.addAttribute("msg","Password Reset Success..");
-                  return "PasswordReset";
-              }else {
-                  System.out.println("Data not saved!!!!!!!!");
+                  return "UserHomePage";
               }
         } else {
             model.addAttribute("errorMsg","NewPassword and Confirm Password should be same");

@@ -69,9 +69,9 @@
                         <button type="submit" class="btn btn-black btn-block text-white" id="submitBtn"  name="submit">ViewComplaints</button>
                      </form>
                  </l>
-
-            </ul>
+          </ul>
         </div>
     </nav>
+    <h2 style="color:green">${msg} </h2>
 </body>
 </html>
