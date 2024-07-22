@@ -3752,3 +3752,48 @@ java.util.NoSuchElementException: No value present
 21-07-2024 23:07:40.303 [http-nio-8080-exec-7] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : shambhu@gmail.com
 21-07-2024 23:07:48.544 [http-nio-8080-exec-8] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : shambhu@gmail.com
 21-07-2024 23:27:27.305 [Thread-4] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+22-07-2024 17:03:29.547 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcher'
+22-07-2024 17:03:30.918 [main] INFO  c.x.f.configuration.DatabaseConfig.<init> - Created no-arg constructor in DatabaseConfig...
+22-07-2024 17:03:31.352 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+22-07-2024 17:03:31.651 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.6.15.Final
+22-07-2024 17:03:32.199 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+22-07-2024 17:03:34.150 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+22-07-2024 17:03:35.108 [main] INFO  o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 5.4.3.Final
+22-07-2024 17:03:36.591 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+22-07-2024 17:03:36.988 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22-07-2024 17:03:36.998 [main] INFO  c.x.f.controller.SignInController.<init> - created no-arg constructor in SignInController...
+22-07-2024 17:03:38.122 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 8565 ms
+22-07-2024 17:26:03.969 [Thread-4] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+22-07-2024 17:26:17.286 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcher'
+22-07-2024 17:26:18.491 [main] INFO  c.x.f.configuration.DatabaseConfig.<init> - Created no-arg constructor in DatabaseConfig...
+22-07-2024 17:26:18.899 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+22-07-2024 17:26:19.185 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.6.15.Final
+22-07-2024 17:26:19.776 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+22-07-2024 17:26:21.507 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+22-07-2024 17:26:22.479 [main] INFO  o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 5.4.3.Final
+22-07-2024 17:26:24.208 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+22-07-2024 17:26:24.751 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22-07-2024 17:26:24.767 [main] INFO  c.x.f.controller.SignInController.<init> - created no-arg constructor in SignInController...
+22-07-2024 17:26:25.749 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 8457 ms
+22-07-2024 17:39:16.713 [http-nio-8080-exec-5] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 17:41:55.855 [http-nio-8080-exec-1] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 17:45:44.302 [http-nio-8080-exec-3] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 17:46:47.511 [http-nio-8080-exec-9] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 17:47:25.157 [http-nio-8080-exec-7] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:20:55.200 [http-nio-8080-exec-3] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:21:12.053 [http-nio-8080-exec-9] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:21:47.014 [http-nio-8080-exec-3] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:23:04.958 [http-nio-8080-exec-5] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:25:33.606 [http-nio-8080-exec-9] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:28:00.533 [http-nio-8080-exec-1] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:28:42.312 [http-nio-8080-exec-6] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:31:20.445 [http-nio-8080-exec-8] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:34:22.583 [http-nio-8080-exec-2] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:39:34.382 [http-nio-8080-exec-3] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 18:41:37.358 [http-nio-8080-exec-7] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 19:03:58.733 [http-nio-8080-exec-6] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 19:04:01.478 [http-nio-8080-exec-5] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 19:04:04.668 [http-nio-8080-exec-9] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 19:04:13.061 [http-nio-8080-exec-3] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 19:04:17.985 [http-nio-8080-exec-6] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
+22-07-2024 19:04:42.098 [Thread-4] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'

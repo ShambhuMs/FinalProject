@@ -83,6 +83,7 @@
     <form action="signIn" method="post">
         <h2 class="text-center">Login</h2>
        <span style="color:red">  ${msg} </span>
+       <span style="color:green">  ${successMsg} </span>
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Enter email " id="email" name="email" required>
             <div id="error-email" class="error"></div>

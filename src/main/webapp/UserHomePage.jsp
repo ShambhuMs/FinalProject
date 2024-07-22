@@ -1,6 +1,6 @@
- <%@ page isELIgnored="false" %>
- <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
- <!DOCTYPE html>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,26 +23,25 @@
         .form-container {
             padding-top: 80px;
         }
-         .navbar-nav {
+        .navbar-nav {
             align-items: center;
             display: flex;
             height: 100%;
-            width:1200px;
+            width: 1200px;
         }
-        .btn{
-          width:160px;
-           position:relative;
-            left:500px;
+        .btn {
+            width: 160px;
+            position: relative;
+            left: 500px;
         }
-         #profileImage{
-          position:relative;
-          left:900px;
+        #profileImage {
+            position: relative;
+            left: 900px;
         }
-        #RaiseComplaint{
-                position:relative;
-                  left:850px;
+        #RaiseComplaint {
+            position: relative;
+            left: 850px;
         }
-
     </style>
 </head>
 <body>
@@ -52,27 +51,24 @@
                 <li class="nav-item" id="img">
                     <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz" class="logo-img">
                 </li>
-                 <li class="nav-item" id="ResetPasswordAnyTime">
-                       <a class="nav-link text-light" href="ResetPasswordAnyTime.jsp">ResetPassword</a>
-                 </li>
-                  <li class="nav-item" id="EditProfile">
-                       <a class="nav-link text-light" href="EditProfile.jsp">EditProfile</a>
-                 </li>
-                 <li class="nav-item" id="RaiseComplaint">
-                       <a class="nav-link text-light" href="RaiseComplaint.jsp">RaiseComplaint</a>
-                 </li>
-                     <li>
+                <li class="nav-item" id="ResetPasswordAnyTime">
+                    <a class="nav-link text-light" href="ResetPasswordAnyTime.jsp">ResetPassword</a>
+                </li>
+                <li class="nav-item" id="EditProfile">
+                    <a class="nav-link text-light" href="EditProfile.jsp">EditProfile</a>
+                </li>
+                <li class="nav-item" id="RaiseComplaint">
+                    <a class="nav-link text-light" href="RaiseComplaint.jsp">RaiseComplaint</a>
+                </li>
+                <li>
                     <a class="nav-link text-light" href="EditProfile.jsp"><img src="${pageContext.request.contextPath}${sessionScope.profileDTO}"
-                     width="70" height="70" value="" class="rounded-circle profile-image" id="profileImage"> </a>
-                     </li>
-                 <li>
-                  <form id="viewComplaint" action="viewComplaintDetails" method="post">
-                        <button type="submit" class="btn btn-black btn-block text-white" id="submitBtn"  name="submit">ViewComplaints</button>
-                     </form>
-                 </l>
-          </ul>
+                        width="70" height="70" value="" class="rounded-circle profile-image" id="profileImage"> </a>
+                </li>
+                <li class="nav-item" id="">
+                                    <a class="nav-link text-light" href="ViewComplaint.jsp">ViewComplaint</a>
+                </li>
+            </ul>
         </div>
     </nav>
-    <h2 style="color:green">${msg} </h2>
 </body>
 </html>

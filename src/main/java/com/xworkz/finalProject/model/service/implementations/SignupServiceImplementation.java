@@ -50,7 +50,7 @@ public class SignupServiceImplementation implements SignUpService {
         String fullName = signupDTO.getFirstName() + " " + signupDTO.getLastName();
         signupDTO.setCreatedBy(fullName);
         //   signupDTO.setUpdatedBy(fullName);
-        signupDTO.setCreatedDate(LocalDateTime.now()); //setting expiry time to generated password
+        signupDTO.setCreatedDate(LocalDateTime.now());
         //  signupDTO.setUpdatedDate(LocalDateTime.now());
         signupDTO.setLogin_count(0);
         signupDTO.setLock_account(0);

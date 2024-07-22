@@ -72,6 +72,7 @@
         <form id="contactForm" action="resetPassword" method="post">
             <h2>Password Set</h2>
         <span style="color:green">${msg}</span>
+        <span style="color:red">${errorMsg}</span>
            <div class="form-group">
                 <input type="text" ${readOnly=='disable' ? 'readonly': ''} class="form-control" placeholder="Enter email" id="email" name="email" value="${dto.email}" required>
                 <div id="error-email" class="error"> </div>
