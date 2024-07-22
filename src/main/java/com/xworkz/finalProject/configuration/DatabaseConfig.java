@@ -18,7 +18,6 @@ import javax.sql.DataSource;
 @Configuration
 @PropertySource("classpath:Application.properties")
 @Slf4j
-@EnableTransactionManagement
 public class DatabaseConfig {
     @Value("${Jdbc.driver}")
     private String driver;

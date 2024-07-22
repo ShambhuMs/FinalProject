@@ -74,9 +74,16 @@
             background-color: #23272b;
             color: white;
         }
+         #profileImage {
+            position: relative;
+            left: 1050px;
+        }
+        #dropdownMenuButton {
+            position: relative;
+            left: 950px;
+        }
     </style>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -92,12 +99,16 @@
                         ViewComplaints
                     </button>
                     <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
-                        <form id="viewComplaint" action="viewComplaintDetails" method="post">
+                        <form id="viewComplaint" action="viewComplaints" method="post">
                             <button class="dropdown-item text-light" type="submit" name="viewComplaints" value="Active">Active</button>
-                            <button class="dropdown-item text-light" type="submit" name="assign" value="Resolved">Resolved</button>
-                            <button class="dropdown-item text-light" type="submit" name="assign" value="UnResolved">UnResolved</button>
+                            <button class="dropdown-item text-light" type="submit" name="viewComplaints" value="Resolved">Resolved</button>
+                            <button class="dropdown-item text-light" type="submit" name="viewComplaints" value="UnResolved">UnResolved</button>
                         </form>
                     </div>
+                </li>
+                 <li>
+                    <img src="${pageContext.request.contextPath}${sessionScope.profileDTO}"
+                        width="70" height="70" value="" class="rounded-circle profile-image" id="profileImage"> </a>
                 </li>
             </ul>
         </div>
@@ -116,9 +127,11 @@
                         <th scope="col">City</th>
                         <th scope="col">Address</th>
                         <th scope="col">Description</th>
+                        <c:forEach items="${complaintDto}" var="complaintDto">
                         <c:if test="${complaintDto.getComplaintStatus() == 'Active'}">
                             <th scope="col">Edit</th>
                         </c:if>
+                        </c:forEach>
                     </tr>
                 </thead>
                 <tbody>

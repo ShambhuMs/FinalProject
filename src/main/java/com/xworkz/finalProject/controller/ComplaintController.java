@@ -67,27 +67,60 @@ public class ComplaintController {
         return "RaiseComplaint";
     }
 
-    @PostMapping("/viewComplaintDetails")
-    public String viewAllComplaints(HttpSession session,Model model){
+    @GetMapping("/viewComplaints")
+    public String viewAllComplaints(Model model,HttpSession session){
+        SignupDTO signupDTO=(SignupDTO)  session.getAttribute("dto");
+        Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByEmail(signupDTO.getEmail());
+        List<ComplaintDTO> complaintDTOList=this.complaintService.findByUserId(optionalSignupDTO.get().getId());
+        if (!complaintDTOList.isEmpty()){
+            model.addAttribute("complaintDto",complaintDTOList);
+        }else {
+            model.addAttribute("msg","0 Records found");
+        }
+        return "ViewComplaint";
+    }
+
+
+    @PostMapping("/viewComplaints")
+    public String viewComplaintsByStatus(@RequestParam String viewComplaints, HttpSession session,Model model){
       SignupDTO signupDTO=(SignupDTO)  session.getAttribute("dto");
       Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByEmail(signupDTO.getEmail());
       List<ComplaintDTO> complaintDTOList=this.complaintService.findByUserId(optionalSignupDTO.get().getId());
-      if (!complaintDTOList.isEmpty()){
-          List<ComplaintDTO> activeComplaints =new ArrayList<>();
-          complaintDTOList.forEach(complaintDTO -> {
-              if (complaintDTO.getComplaintStatus().equals(DefaultValues.STATUS.getDefaultStatus())){
-                  activeComplaints.add(complaintDTO);
-              }
-          });
-          if (!activeComplaints.isEmpty()){
+      List<ComplaintDTO> activeComplaints =new ArrayList<>();
+      if (viewComplaints.equals(DefaultValues.STATUS.getDefaultStatus())) { //Active complaints
+          if (!complaintDTOList.isEmpty()) {
+              complaintDTOList.forEach(complaintDTO -> {
+                  if (complaintDTO.getComplaintStatus().equals(DefaultValues.STATUS.getDefaultStatus())) {
+                      activeComplaints.add(complaintDTO);
+                  }
+              });
+          }
+      }else if (viewComplaints.equals("Resolved")) { //Resolved complaints
+          if (!complaintDTOList.isEmpty()) {
+              complaintDTOList.forEach(complaintDTO -> {
+                  if (complaintDTO.getComplaintStatus().equals("Resolved")) {
+                      activeComplaints.add(complaintDTO);
+                  }
+              });
+          }
+      }else if (viewComplaints.equals("UnResolved")) {// UnResolved  complaints
+          if (!complaintDTOList.isEmpty()) {
+              complaintDTOList.forEach(complaintDTO -> {
+                  if (complaintDTO.getComplaintStatus().equals("UnResolved")) {
+                      activeComplaints.add(complaintDTO);
+                  }
+              });
+          }
+      }
+      if (!activeComplaints.isEmpty()){
               model.addAttribute("complaintDto",activeComplaints);
           }
           else {
               model.addAttribute("msg","0 Records found");
           }
-      }else {
+      /*}else {
           model.addAttribute("msg","0 Records found");
-      }
+      }*/
       return "ViewComplaint";
     }
 

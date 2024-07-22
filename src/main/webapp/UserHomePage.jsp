@@ -42,6 +42,10 @@
             position: relative;
             left: 850px;
         }
+        #ViewComplaint{
+           position: relative;
+            left: 500px;
+        }
     </style>
 </head>
 <body>
@@ -61,11 +65,11 @@
                     <a class="nav-link text-light" href="RaiseComplaint.jsp">RaiseComplaint</a>
                 </li>
                 <li>
-                    <a class="nav-link text-light" href="EditProfile.jsp"><img src="${pageContext.request.contextPath}${sessionScope.profileDTO}"
-                        width="70" height="70" value="" class="rounded-circle profile-image" id="profileImage"> </a>
+                    <img src="${pageContext.request.contextPath}${sessionScope.profileDTO}"
+                        width="70" height="70" value="" class="rounded-circle profile-image" id="profileImage">
                 </li>
-                <li class="nav-item" id="">
-                                    <a class="nav-link text-light" href="ViewComplaint.jsp">ViewComplaint</a>
+                <li class="nav-item" id="ViewComplaint">
+                           <a class="nav-link text-light" href="viewComplaints">ViewComplaint</a>
                 </li>
             </ul>
         </div>

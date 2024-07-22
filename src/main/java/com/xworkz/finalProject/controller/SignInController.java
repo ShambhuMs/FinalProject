@@ -45,27 +45,23 @@ public class SignInController {
     public String checkSignIn(@RequestParam("email") Optional<String> email,
                               @RequestParam("password") Optional<String> rawPassword,
                               Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         // Validate input
         if (!email.isPresent() || !rawPassword.isPresent()) {
             model.addAttribute("msg", "Enter email or password");
             return "SignIn";
         }
-
         // Find user by email
         Optional<SignupDTO> signupDTOOptional = signUpService.findByEmail(email.get());
         if (!signupDTOOptional.isPresent()) {
             model.addAttribute("msg", "Enter valid email or password..");
             return "SignIn";
         }
-
         SignupDTO signupDTO = signupDTOOptional.get();
         try {
             // Check password
             boolean passwordMatches = passwordEncoder.matches(rawPassword.get(), signupDTO.getPassword())
                     || passwordEncoder.matches(rawPassword.get(), signupDTO.getUserPassword());
-
-            if ((passwordMatches && !signupDTO.getExpireTime().plusMinutes(1).isBefore(LocalTime.now())) ||
+            if ((passwordMatches && !signupDTO.getExpireTime().plusMinutes(15).isBefore(LocalTime.now())) ||
                     (passwordMatches && signupDTO.getExpireTime().equals(LocalTime.of(0,0,0)))) {
                 model.addAttribute("dto", signupDTO);
                 model.addAttribute("readOnly", "disable");
@@ -124,13 +120,13 @@ public class SignInController {
     public String resetUserPassword(@Valid PasswordResetDTO passwordResetDTO, Model model){
         Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmail(passwordResetDTO.getEmail());
         if (passwordEncoder.matches(passwordResetDTO.getPassword(),optionalSignupDTO.get().getPassword())){
-            if (!optionalSignupDTO.get().getExpireTime().plusMinutes(1).isBefore(LocalTime.now())){
+            if (!optionalSignupDTO.get().getExpireTime().plusMinutes(15).isBefore(LocalTime.now())){
                 if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
                     String userPassword=passwordEncoder.encode(passwordResetDTO.getNewPassword());
                     optionalSignupDTO.get().setUserPassword(userPassword);
                     optionalSignupDTO.get().setExpireTime(LocalTime.of(0,0,0));
                     optionalSignupDTO.get().setLock_account(0);
-                    boolean updateValue=this.signUpService.update(optionalSignupDTO.get());
+                    boolean updateValue=this.signUpService.update(optionalSignupDTO.get()); //update password 
                     if (updateValue){
                         model.addAttribute("successMsg","Password Reset Success.. Login with new password");
                         return "SignIn";

@@ -15,8 +15,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @ComponentScan("com.xworkz.finalProject")
 @EnableWebMvc
-@EnableScheduling
-public class ResourceMappConfig implements WebMvcConfigurer {
+public class ResourceMapConfig implements WebMvcConfigurer {
 
     @Bean
     public ViewResolver viewResolver(){
