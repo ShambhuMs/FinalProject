@@ -3925,3 +3925,4 @@ com.xworkz.finalProject.controller.AdminController#fetchAllComplaintDetails(Mode
 22-07-2024 22:09:04.793 [http-nio-8080-exec-8] INFO  c.x.f.controller.SignInController.resetUserPassword2 - data saved for email: asishkumarmishra688@gmail.com
 22-07-2024 22:09:52.017 [http-nio-8080-exec-5] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
 22-07-2024 22:09:52.629 [http-nio-8080-exec-5] INFO  c.x.f.controller.SignInController.resetUserPassword2 - data saved for email: asishkumarmishra688@gmail.com
+22-07-2024 22:59:06.418 [Thread-4] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'

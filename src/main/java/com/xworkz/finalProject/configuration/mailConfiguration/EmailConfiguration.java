@@ -22,8 +22,8 @@ public class EmailConfiguration {
         emailSender.setUsername("shambhu88.xworkz@gmail.com");
         emailSender.setPassword("padh uebq sznx jpzr");
         Properties properties=emailSender.getJavaMailProperties();
-        properties.put("mail.transport.protocol","smtp");
-        properties.put("mail.smtp.auth","true"); //
+        properties.put("mail.transport.protocol","smtp");//simple mail transport protocol(SMTP)
+        properties.put("mail.smtp.auth","true"); //authentication
         properties.put("mail.smtp.ssl.trust","smtp.gmail.com"); // only for gmail
         properties.put("mail.smtp.starttls.enable","true"); //all ready
         properties.put("mail.debug","true");

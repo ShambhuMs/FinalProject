@@ -58,7 +58,6 @@ public class FileUploadController {
                     profileDTO.setStatus("InActive");
                   boolean  value= this.profileService.updateStatus(profileDTO);
                 });
-
                  ProfileDTO profileDTO = new ProfileDTO();
                  profileDTO.setImageName(newFilename);
                  profileDTO.setImageType(multipartFile.getContentType());

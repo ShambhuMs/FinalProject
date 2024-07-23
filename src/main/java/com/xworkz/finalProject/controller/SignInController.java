@@ -115,7 +115,6 @@ public class SignInController {
             return "FindByEmail";
         }
     }
-
     @PostMapping("/resetPassword")
     public String resetUserPassword(@Valid PasswordResetDTO passwordResetDTO, Model model){
         Optional<SignupDTO> optionalSignupDTO=  this.signUpService.findByEmail(passwordResetDTO.getEmail());
@@ -142,8 +141,7 @@ public class SignInController {
         }
         return "PasswordReset";
     }
-
-   @GetMapping("/fetchByEmail")
+    @GetMapping("/fetchByEmail")
     public  String  getDataByEmail(@RequestParam String email,Model model){
        Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByEmailForReset(email);
        if (optionalSignupDTO.isPresent()){
