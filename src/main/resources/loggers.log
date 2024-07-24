@@ -3926,3 +3926,39 @@ com.xworkz.finalProject.controller.AdminController#fetchAllComplaintDetails(Mode
 22-07-2024 22:09:52.017 [http-nio-8080-exec-5] INFO  c.x.f.m.s.i.SignupServiceImplementation.findByEmail - data found for email : asishkumarmishra688@gmail.com
 22-07-2024 22:09:52.629 [http-nio-8080-exec-5] INFO  c.x.f.controller.SignInController.resetUserPassword2 - data saved for email: asishkumarmishra688@gmail.com
 22-07-2024 22:59:06.418 [Thread-4] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+24-07-2024 18:52:11.031 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcher'
+24-07-2024 18:52:12.157 [main] INFO  c.x.f.configuration.DatabaseConfig.<init> - Created no-arg constructor in DatabaseConfig...
+24-07-2024 18:52:12.507 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+24-07-2024 18:52:12.707 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.6.15.Final
+24-07-2024 18:52:13.280 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+24-07-2024 18:52:15.029 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+24-07-2024 18:52:15.903 [main] INFO  o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 5.4.3.Final
+24-07-2024 18:52:17.575 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+24-07-2024 18:52:17.986 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+24-07-2024 18:52:17.994 [main] INFO  c.x.f.controller.SignInController.<init> - created no-arg constructor in SignInController...
+24-07-2024 18:52:18.897 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 7859 ms
+24-07-2024 18:54:20.491 [Thread-4] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+24-07-2024 18:54:34.384 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcher'
+24-07-2024 18:54:35.418 [main] INFO  c.x.f.configuration.DatabaseConfig.<init> - Created no-arg constructor in DatabaseConfig...
+24-07-2024 18:54:35.792 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+24-07-2024 18:54:36.086 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.6.15.Final
+24-07-2024 18:54:36.611 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+24-07-2024 18:54:38.185 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+24-07-2024 18:54:39.252 [main] INFO  o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 5.4.3.Final
+24-07-2024 18:54:40.798 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+24-07-2024 18:54:41.144 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+24-07-2024 18:54:41.152 [main] INFO  c.x.f.controller.SignInController.<init> - created no-arg constructor in SignInController...
+24-07-2024 18:54:41.990 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 7600 ms
+24-07-2024 19:16:42.586 [Thread-4] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+24-07-2024 19:16:55.515 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcher'
+24-07-2024 19:16:56.511 [main] INFO  c.x.f.configuration.DatabaseConfig.<init> - Created no-arg constructor in DatabaseConfig...
+24-07-2024 19:16:56.833 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+24-07-2024 19:16:57.061 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.6.15.Final
+24-07-2024 19:16:57.602 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+24-07-2024 19:16:59.187 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+24-07-2024 19:17:00.091 [main] INFO  o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 5.4.3.Final
+24-07-2024 19:17:01.678 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+24-07-2024 19:17:02.154 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+24-07-2024 19:17:02.194 [main] INFO  c.x.f.controller.SignInController.<init> - created no-arg constructor in SignInController...
+24-07-2024 19:17:03.125 [main] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 7601 ms
+24-07-2024 19:18:14.191 [Thread-4] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'

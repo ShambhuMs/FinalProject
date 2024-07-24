@@ -110,6 +110,17 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" id="submitBtn" value="" name="submit">Login</button>
         </div>
+         <div class="clearfix">
+         <c:choose>
+            <c:when test="${employee }">
+                        <a href="employee/findByEmail" class="float-right">Forgot Password?</a>
+            </c:when>
+            <c:when test="${departmentAdmin}">
+                      <a href="departmentAdmin/findByEmail" class="float-right">Forgot Password?</a>
+            </c:when>
+           </c:choose>
+           </div>
+        </form>
 </div>
 <script>
     const emailInput = document.getElementById('email');

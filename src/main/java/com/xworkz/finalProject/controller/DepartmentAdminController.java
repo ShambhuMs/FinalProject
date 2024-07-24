@@ -4,7 +4,9 @@ import com.xworkz.finalProject.dto.*;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
 import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
 import com.xworkz.finalProject.model.service.interfaces.DepartmentAdminService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/departmentAdmin")
+@Slf4j
 public class DepartmentAdminController {
     @Autowired
     private DepartmentAdminService departmentAdminService;
@@ -27,6 +30,8 @@ public class DepartmentAdminController {
     private AdminService adminService;
     @Autowired
     private ComplaintService complaintService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/adminLogin")
     private String checkForm(Model model){
@@ -40,17 +45,23 @@ public class DepartmentAdminController {
     }
     @PostMapping("/adminLogin")
     public String departmentLogin(@Valid DepartmentAdminDTO departmentAdminDTO, Model model, HttpSession session){
-        Optional<DepartmentAdminDTO> departmentAdminResult = this.departmentAdminService.findByAdminEmailAndPassword
-                (departmentAdminDTO.getEmail(), departmentAdminDTO.getPassword());
-        if (departmentAdminResult.isPresent()){
+        model.addAttribute("departmentAdmin", true);
+        if (departmentAdminDTO.getEmail().equals("") || departmentAdminDTO.getPassword().equals("")) {
+            model.addAttribute("msg", "Enter email or password");
+            return "AdminSignIn";
+        }
+        Optional<DepartmentAdminDTO> departmentAdminResult = this.adminService.fetchByDepAdminEmail(departmentAdminDTO.getEmail());
+        if (!departmentAdminResult.isPresent()) {
+            model.addAttribute("msg", "Enter email or password");
+            return "AdminSignIn";
+        }
+        if (passwordEncoder.matches(departmentAdminResult.get().getPassword(),departmentAdminDTO.getPassword())){
             model.addAttribute("success","Welcome to Department Admin Home");
-            model.addAttribute("departmentAdmin", true);
             session.setAttribute("dto",departmentAdminResult.get());
             return "DepartmentAdminHome";
         }else {
             model.addAttribute("msg","Enter valid email and password");
             model.addAttribute("dto", departmentAdminDTO);
-            model.addAttribute("departmentAdmin", true);
             return "AdminSignIn";
         }
     }
@@ -59,7 +70,8 @@ public class DepartmentAdminController {
         DepartmentAdminDTO departmentAdminDTO=(DepartmentAdminDTO) session.getAttribute("dto");
         Optional<DepartmentAdminDTO> optionalDepartmentAdminDTO=  this.adminService.fetchByDepAdminEmail(departmentAdminDTO.getEmail());
         if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
-            optionalDepartmentAdminDTO.get().setPassword(passwordResetDTO.getNewPassword());
+            String encryptPassword=passwordEncoder.encode(passwordResetDTO.getNewPassword());
+            optionalDepartmentAdminDTO.get().setPassword(encryptPassword);
             boolean updateValue=this.departmentAdminService.updateDepartmentAdminDTO(optionalDepartmentAdminDTO.get());
             if (updateValue){
                 model.addAttribute("msg","Password Reset Success..");
@@ -76,6 +88,10 @@ public class DepartmentAdminController {
     @GetMapping("/viewComplaintsForDepAdmin")
     public String fetchAllRecords(Model model,HttpSession session){
         DepartmentAdminDTO departmentAdminDTO=(DepartmentAdminDTO) session.getAttribute("dto");
+        if (departmentAdminDTO==null){
+            model.addAttribute("msg","Please Re-Login Your Account");
+            return "ViewComplaintsForDepAdmin";
+        }
         Optional<DepartmentAdminDTO> departmentAdminDTOOptional= this.adminService.fetchByDepAdminEmail(departmentAdminDTO.getEmail());
       List<ComplaintDTO> complaintDTOList=this.departmentAdminService.getComplaintsByDepartmentId
               (departmentAdminDTOOptional.get().getDepartmentId());

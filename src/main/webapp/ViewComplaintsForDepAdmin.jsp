@@ -164,7 +164,7 @@
                         <form action="departmentAdmin/updateStatusOrAssign" >
                             <input type="hidden" name="id" value="${complaint.id}" >
                             <div class="input-group">
-                            <select class="form-select" name="employeeId">
+                            <select class="form-select" name="employeeId" required>
                                   <c:choose>
                                       <c:when test="${fn:length(employeesByDepartment[complaint.id]) > 0}">
                                           <option value="">Choose...</option>
@@ -179,7 +179,7 @@
                               </select>
                           <td class="d-none d-md-table-cell">
                                 <div class="input-group">
-                                <select class="form-select" id="status" name="complaintStatus">
+                                <select class="form-select" id="status" name="complaintStatus" required>
                                     <option value="" ${selectedType == null ? 'selected' : ''}>Choose...</option>
                                     <option value="Pending" ${selectedType == 'Pending' ? 'selected' : ''}>Pending</option>
                                     <option value="InProgress" ${selectedType == 'InProgress' ? 'selected' : ''}>InProgress</option>
