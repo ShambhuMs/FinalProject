@@ -55,7 +55,7 @@ public class DepartmentAdminController {
             model.addAttribute("msg", "Enter email or password");
             return "AdminSignIn";
         }
-        if (passwordEncoder.matches(departmentAdminResult.get().getPassword(),departmentAdminDTO.getPassword())){
+        if (passwordEncoder.matches(departmentAdminDTO.getPassword(),departmentAdminResult.get().getPassword())){
             model.addAttribute("success","Welcome to Department Admin Home");
             session.setAttribute("dto",departmentAdminResult.get());
             return "DepartmentAdminHome";

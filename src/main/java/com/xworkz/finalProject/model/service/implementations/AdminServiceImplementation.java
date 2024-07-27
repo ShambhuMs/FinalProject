@@ -24,12 +24,12 @@ public class AdminServiceImplementation implements AdminService {
     private JavaMailSender javaMailSender;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    public void sendMailToDepartmentAdmin(DepartmentAdminDTO departmentAdminDTO){
+    public void sendMailToDepartmentAdmin(DepartmentAdminDTO departmentAdminDTO,String password){
         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
         simpleMailMessage.setTo(departmentAdminDTO.getEmail());
         simpleMailMessage.setSubject("One Time Password");
         simpleMailMessage.setText("Dear " + departmentAdminDTO.getDepartmentAdminName() +" your 'Department Admin Account'" +
-                " has created successfully, Please SignIn through this password :" + departmentAdminDTO.getPassword() + "\n\n"+
+                " has created successfully, Please SignIn through this password :" + password + "\n\n"+
                 "Thanks and Regards,\n" + "X-workz Team");
         javaMailSender.send(simpleMailMessage);
     }
@@ -108,12 +108,13 @@ public class AdminServiceImplementation implements AdminService {
     @Override
     public boolean AddDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO) {
         String password = RandomPasswordGenerator.generatePassword();
-        departmentAdminDTO.setPassword(password);
+        String encryptPassword=passwordEncoder.encode(password);
+        departmentAdminDTO.setPassword(encryptPassword);
         departmentAdminDTO.setCreatedBy(DefaultValues.ZERO.getDefaultStatus());
         departmentAdminDTO.setCreatedDate(LocalDateTime.now());
         boolean saved= this.adminRepository.addDepartmentAdminDTO(departmentAdminDTO);
         if (saved){
-            sendMailToDepartmentAdmin(departmentAdminDTO);
+            sendMailToDepartmentAdmin(departmentAdminDTO,password);
             return saved;
         }
         return false;
