@@ -86,8 +86,6 @@ public class EmployeeController {
                 if (complaintDTO.getEmployeeId() != null) {
                     if (complaintDTO.getEmployeeId() == employeeDTO.getEmployeeId()) {
                         assignedComplaints.add(complaintDTO);
-                    } else {
-                        model.addAttribute("msg", "No complaints have been assigned..");
                     }
                 }
             });

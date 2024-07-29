@@ -88,6 +88,10 @@
           left:550px;
           margin-top:100px;
         }
+         .modal-dialog {
+                    max-width: 600px;
+                }
+
     </style>
 </head>
 <body>
@@ -113,7 +117,6 @@
       <h2 style="color:red">${msg}</h2>
       <c:if test="${empDTO.isEmpty() == false}">
                   <div class="tableOut">
-                      <span style="color:red">${msg}</span>
                       <table class="table">
                           <thead class="thead-light">
                               <tr>
@@ -127,7 +130,6 @@
                                   <th scope="col">UserId</th>
                                   <th scope="col">ComplaintStatus</th>
                                   <th scope="col">Action</th>
-                                  <th scope="col">Update</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -143,35 +145,109 @@
                                       <td>${complaint.getUserId()}</td>
                                       <td>${complaint.getComplaintStatus()}</td>
                                       <td class="d-none d-md-table-cell">
-                              <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
-                                      <form action="updateComplaintStatus" method="post">
-                                      <input type="hidden" name="id" value="${complaint.id}">
-                                        <div class="input-group">
-                                      <select class="form-select" id="status" name="status">
-                                          <option value="0" ${selectedType == null ? 'selected' : ''}>Choose...</option>
-                                          <option value="UnResolved" ${selectedType == 'UnResolved' ? 'selected' : ''}>UnResolved</option>
-                                          <option value="Resolved" ${selectedType == 'Resolved' ? 'selected' : ''}>Resolved</option>
-                                          <option value="Pending" ${selectedType == 'Pending' ? 'selected' : ''}>Pending</option>
-                                      </select>
-                                      </td>
-                                      <td>
-                                         <button type="submit" class="btn btn-primary">Update</button>
-                                      </td>
-                                       </div>
-                                     </form>
-                              </td>
-                               </c:if>
-                          </tr>
+                                <form action="#" method="post" class="status-form">
+                                                                  <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
+                                                                      <input type="hidden" name="id" value="${complaint.id}">
+                                                                      <div class="input-group">
+                                                                          <select class="form-select status-select" name="status" data-complaint-id="${complaint.id}">
+                                                                              <option value="0">Choose...</option>
+                                                                              <option value="inProgress">In Progress</option>
+                                                                              <option value="resolved">Resolved</option>
+                                                                              <option value="notResolved">Not Resolved</option>
+                                                                          </select>
+                                                                          <button type="button" class="btn btn-primary ms-2 update-btn" data-complaint-id="${complaint.id}">Update</button>
+                                                                      </div>
+                                                                  </c:if>
+                                   </form>
 
-                                 </c:forEach>
+                              </td>
+
+                          </tr>
+                            </c:forEach>
                           </tbody>
                       </table>
                   </div>
               </c:if>
-
-              <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
      </div>
+
+<!-- Modal for updating status -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="statusModalLabel">Update Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="statusForm" action="updateComplaintStatus" method="post">
+                    <input type="hidden" name="id" id="complaintId">
+                    <input type="hidden" name="status" id="complaintStatus">
+                    <div class="mb-3">
+                        <label for="comments" class="form-label">Comment</label>
+                        <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3" id="otpSendSection" style="display: none;">
+                        <button type="button" class="btn btn-secondary mt-2" id="sendOtpButton">Send OTP</button>
+                    </div>
+                    <div class="mb-3" id="otpEnterSection" style="display: none;">
+                        <label for="otp" class="form-label">Enter OTP</label>
+                        <input type="text" class="form-control" id="otp" name="otp">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                     <c:if test="${not empty otpError}">
+                                    <div class="alert alert-danger mt-3">${otpError}</div>
+                     </c:if>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script>
+
+   document.querySelectorAll('.update-btn').forEach(function(button) {
+       button.addEventListener('click', function() {
+           const complaintId = this.dataset.complaintId;
+           const form = this.closest('form');
+           const status = form.querySelector('.status-select').value;
+           const modal = new bootstrap.Modal(document.getElementById('statusModal'), {
+               backdrop: 'static',
+               keyboard: false
+           });
+
+           document.getElementById('complaintId').value = complaintId;
+           document.getElementById('complaintStatus').value = status;
+
+           if (status === 'resolved') {
+               document.getElementById('otpSendSection').style.display = 'block';
+           } else {
+               document.getElementById('otpSendSection').style.display = 'none';
+               document.getElementById('otpEnterSection').style.display = 'none';
+           }
+
+           modal.show();
+       });
+   });
+ document.getElementById('sendOtpButton').addEventListener('click', function() {
+         const complaintId = document.getElementById('complaintId').value;
+
+         const xhr = new XMLHttpRequest();
+         xhr.open("POST", "sendOtp", true);
+         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+         xhr.onreadystatechange = function () {
+             if (xhr.readyState === 4 && xhr.status === 200) {
+                 document.getElementById('otpSendSection').style.display = 'none';
+                 document.getElementById('otpEnterSection').style.display = 'block';
+             } else if (xhr.readyState === 4) {
+                 alert("Failed to send OTP.");
+             }
+         };
+         xhr.send("id=" + complaintId);
+     });
+
+</script>
+
 </body>
 </html>
 
