@@ -5,17 +5,17 @@ import com.xworkz.finalProject.dto.EmployeeDTO;
 import com.xworkz.finalProject.dto.PasswordResetDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
+import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
 import com.xworkz.finalProject.model.service.interfaces.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +28,8 @@ public class EmployeeController {
     private EmployeeService employeeService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private ComplaintService complaintService;
 
     @GetMapping("/adminLogin")
     private String checkForm(Model model){
@@ -98,5 +100,30 @@ public class EmployeeController {
             model.addAttribute("msg","No complaints have been assigned..");
         }
         return "EmployeeHome";
+    }
+
+    @GetMapping("/updateComplaintStatusByEmployee")
+    public String updateComplaintStatusByEmployee(ComplaintDTO complaintDTO, Model model, HttpSession session,
+                                                  RedirectAttributes redirectAttributes){
+        if (complaintDTO==null){
+            redirectAttributes.addFlashAttribute("msg","complaint dto is empty");
+            return "redirect:/employee/viewAssignedComplaints";
+        }
+       Optional<ComplaintDTO> optionalComplaintDTO=  this.complaintService.findById(complaintDTO.getId());
+       if (optionalComplaintDTO.isPresent()){
+           optionalComplaintDTO.get().setComplaintStatus(complaintDTO.getComplaintStatus());
+           optionalComplaintDTO.get().setComment(complaintDTO.getComment());
+           EmployeeDTO employeeDTO=(EmployeeDTO) session.getAttribute("dto");
+           optionalComplaintDTO.get().setUpdatedBy(employeeDTO.getEmployeeName());
+           optionalComplaintDTO.get().setUpdatedDate(LocalDateTime.now());
+          boolean update= this.complaintService.updateComplaint(optionalComplaintDTO.get());
+          if (update){
+              redirectAttributes.addFlashAttribute("successMsg","Updated successfully");
+          }
+          else {
+              redirectAttributes.addFlashAttribute("msg","Update failed");
+          }
+       }
+        return "redirect:/employee/viewAssignedComplaints";
     }
 }

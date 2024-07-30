@@ -62,5 +62,5 @@ public class ComplaintDTO {
     private String complaintStatus;
     @Column(name = "employee_id")
     private Long employeeId;
-
+    private String comment;
 }

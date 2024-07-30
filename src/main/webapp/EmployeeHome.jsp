@@ -12,7 +12,7 @@
         body {
             background-color: #f0f2f5;
             margin: 0;
-            padding-top: 80px; /* Adjust this to match the height of your navbar */
+            padding-top: 80px;
         }
         .complaint-form-wrapper {
             position:relative;
@@ -115,6 +115,7 @@
     </nav>
     <div>
       <h2 style="color:red">${msg}</h2>
+      <h2 style="color:green">${successMsg}</h2>
       <c:if test="${empDTO.isEmpty() == false}">
                   <div class="tableOut">
                       <table class="table">
@@ -149,11 +150,11 @@
                                                                   <c:if test="${complaint.getComplaintStatus() != 'Resolved'}">
                                                                       <input type="hidden" name="id" value="${complaint.id}">
                                                                       <div class="input-group">
-                                                                          <select class="form-select status-select" name="status" data-complaint-id="${complaint.id}">
+                                                                          <select class="form-select status-select" name="complaintStatus" data-complaint-id="${complaint.id}">
                                                                               <option value="0">Choose...</option>
-                                                                              <option value="inProgress">In Progress</option>
-                                                                              <option value="resolved">Resolved</option>
-                                                                              <option value="notResolved">Not Resolved</option>
+                                                                              <option value="InProgress">In Progress</option>
+                                                                              <option value="Resolved">Resolved</option>
+                                                                              <option value="UnResolved">UnResolved</option>
                                                                           </select>
                                                                           <button type="button" class="btn btn-primary ms-2 update-btn" data-complaint-id="${complaint.id}">Update</button>
                                                                       </div>
@@ -161,7 +162,6 @@
                                    </form>
 
                               </td>
-
                           </tr>
                             </c:forEach>
                           </tbody>
@@ -179,19 +179,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="statusForm" action="updateComplaintStatus" method="post">
+                <form id="statusForm" action="employee/updateComplaintStatusByEmployee">
                     <input type="hidden" name="id" id="complaintId">
-                    <input type="hidden" name="status" id="complaintStatus">
+                    <input type="hidden" name="complaintStatus" id="complaintStatus">
                     <div class="mb-3">
                         <label for="comments" class="form-label">Comment</label>
-                        <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                        <textarea class="form-control" id="comments" name="comment" rows="3"></textarea>
                     </div>
                     <div class="mb-3" id="otpSendSection" style="display: none;">
                         <button type="button" class="btn btn-secondary mt-2" id="sendOtpButton">Send OTP</button>
                     </div>
                     <div class="mb-3" id="otpEnterSection" style="display: none;">
                         <label for="otp" class="form-label">Enter OTP</label>
-                        <input type="text" class="form-control" id="otp" name="otp">
+                        <input type="text" class="form-control" id="otp" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                      <c:if test="${not empty otpError}">
@@ -219,7 +219,7 @@
            document.getElementById('complaintId').value = complaintId;
            document.getElementById('complaintStatus').value = status;
 
-           if (status === 'resolved') {
+           if (status === 'Resolved') {
                document.getElementById('otpSendSection').style.display = 'block';
            } else {
                document.getElementById('otpSendSection').style.display = 'none';
@@ -231,7 +231,6 @@
    });
  document.getElementById('sendOtpButton').addEventListener('click', function() {
          const complaintId = document.getElementById('complaintId').value;
-
          const xhr = new XMLHttpRequest();
          xhr.open("POST", "sendOtp", true);
          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -245,9 +244,7 @@
          };
          xhr.send("id=" + complaintId);
      });
-
 </script>
-
 </body>
 </html>
 
