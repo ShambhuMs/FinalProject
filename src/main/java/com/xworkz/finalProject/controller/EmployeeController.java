@@ -7,6 +7,7 @@ import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
 import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
 import com.xworkz.finalProject.model.service.interfaces.EmployeeService;
+import com.xworkz.finalProject.model.service.interfaces.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +30,8 @@ public class EmployeeController {
     private AdminService adminService;
     @Autowired
     private ComplaintService complaintService;
+    @Autowired
+    private SignUpService signUpService;
 
     @GetMapping("/adminLogin")
     private String checkForm(Model model){
@@ -103,14 +105,19 @@ public class EmployeeController {
     }
 
     @GetMapping("/updateComplaintStatusByEmployee")
-    public String updateComplaintStatusByEmployee(ComplaintDTO complaintDTO, Model model, HttpSession session,
-                                                  RedirectAttributes redirectAttributes){
+    public String updateComplaintStatusByEmployee(@RequestParam(defaultValue = " ") String password,
+                                                  @RequestParam ComplaintDTO complaintDTO, Model model,
+                                                  HttpSession session, RedirectAttributes redirectAttributes){
         if (complaintDTO==null){
             redirectAttributes.addFlashAttribute("msg","complaint dto is empty");
             return "redirect:/employee/viewAssignedComplaints";
         }
        Optional<ComplaintDTO> optionalComplaintDTO=  this.complaintService.findById(complaintDTO.getId());
        if (optionalComplaintDTO.isPresent()){
+         Optional<SignupDTO> signupDTO = this.signUpService.findById(optionalComplaintDTO.get().getUserId());
+          /* if (complaintDTO.getComplaintStatus().equals("Resolved") && signupDTO.isPresent()){
+               this.employeeService.updateOtp(signupDTO.get());
+           }*/
            optionalComplaintDTO.get().setComplaintStatus(complaintDTO.getComplaintStatus());
            optionalComplaintDTO.get().setComment(complaintDTO.getComment());
            EmployeeDTO employeeDTO=(EmployeeDTO) session.getAttribute("dto");

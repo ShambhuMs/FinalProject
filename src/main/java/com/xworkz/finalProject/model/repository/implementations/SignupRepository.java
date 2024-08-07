@@ -123,4 +123,21 @@ public class SignupRepository implements SignUpRepo {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public Optional<SignupDTO> findById(int id) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            Query query= entityManager.createNamedQuery("findByUserId");
+            query.setParameter("id",id);
+            Object object=  query.getSingleResult();
+            SignupDTO signupDTO=(SignupDTO) object;
+            return Optional.ofNullable(signupDTO);
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            entityManager.close();
+        }
+        return Optional.empty();
+    }
 }

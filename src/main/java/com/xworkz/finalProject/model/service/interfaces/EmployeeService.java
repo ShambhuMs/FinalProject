@@ -1,6 +1,7 @@
 package com.xworkz.finalProject.model.service.interfaces;
 
 import com.xworkz.finalProject.dto.EmployeeDTO;
+import com.xworkz.finalProject.dto.SignupDTO;
 
 import java.util.Optional;
 
@@ -9,4 +10,5 @@ public interface EmployeeService {
         return Optional.empty();
     }
     boolean updateEmployee(EmployeeDTO employeeDTO);
+    boolean updateOtp(SignupDTO signupDTO);
 }

@@ -19,5 +19,7 @@ public interface SignUpService {
     default Optional<SignupDTO> findByEmailForReset(String email){
         return Optional.empty();
     }
-
+    default Optional<SignupDTO> findById(int id){
+        return Optional.empty();
+    }
 }

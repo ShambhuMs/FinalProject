@@ -3,8 +3,10 @@ package com.xworkz.finalProject.model.service.implementations;
 import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.ProfileDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
+import com.xworkz.finalProject.model.repository.implementations.SignupRepository;
 import com.xworkz.finalProject.model.repository.interfaces.ComplaintRepository;
 import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
+import com.xworkz.finalProject.model.service.interfaces.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

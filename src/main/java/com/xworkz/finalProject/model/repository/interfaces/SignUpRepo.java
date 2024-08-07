@@ -20,4 +20,8 @@ public interface SignUpRepo {
 
     boolean update(SignupDTO signupDTO);
     List<SignupDTO> findExpiredPasswords(LocalDateTime localDateTime);
+    default Optional<SignupDTO> findById(int id){
+        return Optional.empty();
+    }
+
 }

@@ -3,8 +3,8 @@ package com.xworkz.finalProject.randomPassword;
 import java.security.SecureRandom;
 
 public class RandomPasswordGenerator {
-    private static  final String CHARACTERS="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
-    private static final int PASSWORD_LENGTH=16;
+    private static  final String CHARACTERS="0123456789";
+    private static final int PASSWORD_LENGTH=6;
     private static final SecureRandom random=new SecureRandom();
 
     public static String generatePassword(){

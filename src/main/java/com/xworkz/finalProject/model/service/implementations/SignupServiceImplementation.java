@@ -132,5 +132,9 @@ public class SignupServiceImplementation implements SignUpService {
         return result;
     }
 
-
+    @Override
+    public Optional<SignupDTO> findById(int id) {
+        Optional<SignupDTO> optionalSignupDTO = this.signupRepository.findById(id);
+        return Optional.ofNullable(optionalSignupDTO.get());
+    }
 }
