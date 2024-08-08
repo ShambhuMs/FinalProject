@@ -10,5 +10,5 @@ public interface EmployeeService {
         return Optional.empty();
     }
     boolean updateEmployee(EmployeeDTO employeeDTO);
-    boolean updateOtp(SignupDTO signupDTO);
+    boolean updateOtp(int complaintId);
 }

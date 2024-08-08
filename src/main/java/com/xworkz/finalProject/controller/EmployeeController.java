@@ -106,8 +106,9 @@ public class EmployeeController {
 
     @GetMapping("/updateComplaintStatusByEmployee")
     public String updateComplaintStatusByEmployee(@RequestParam(defaultValue = " ") String password,
-                                                  @RequestParam ComplaintDTO complaintDTO, Model model,
+                                                   ComplaintDTO complaintDTO, Model model,
                                                   HttpSession session, RedirectAttributes redirectAttributes){
+        model.addAttribute("employee",true);
         if (complaintDTO==null){
             redirectAttributes.addFlashAttribute("msg","complaint dto is empty");
             return "redirect:/employee/viewAssignedComplaints";
@@ -115,15 +116,18 @@ public class EmployeeController {
        Optional<ComplaintDTO> optionalComplaintDTO=  this.complaintService.findById(complaintDTO.getId());
        if (optionalComplaintDTO.isPresent()){
          Optional<SignupDTO> signupDTO = this.signUpService.findById(optionalComplaintDTO.get().getUserId());
-          /* if (complaintDTO.getComplaintStatus().equals("Resolved") && signupDTO.isPresent()){
-               this.employeeService.updateOtp(signupDTO.get());
-           }*/
+           if (complaintDTO.getComplaintStatus().equals("Resolved") && signupDTO.isPresent()){
+               if (!signupDTO.get().getPassword().equals(password) && password!=null){
+                   model.addAttribute("otpError", "Invalid OTP. Please try again.");
+                   return "redirect:/employee/viewAssignedComplaints";
+               }
+           }
            optionalComplaintDTO.get().setComplaintStatus(complaintDTO.getComplaintStatus());
            optionalComplaintDTO.get().setComment(complaintDTO.getComment());
            EmployeeDTO employeeDTO=(EmployeeDTO) session.getAttribute("dto");
            optionalComplaintDTO.get().setUpdatedBy(employeeDTO.getEmployeeName());
            optionalComplaintDTO.get().setUpdatedDate(LocalDateTime.now());
-          boolean update= this.complaintService.updateComplaint(optionalComplaintDTO.get());
+            boolean update= this.complaintService.updateComplaint(optionalComplaintDTO.get());
           if (update){
               redirectAttributes.addFlashAttribute("successMsg","Updated successfully");
           }

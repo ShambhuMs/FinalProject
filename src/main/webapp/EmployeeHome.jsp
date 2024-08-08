@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ViewComplaintDetails</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="/FinalProject/script/UserOtp.js"> </script>
     <base href="http://localhost:8080/FinalProject/">
     <style>
         body {
@@ -191,9 +192,10 @@
                     </div>
                     <div class="mb-3" id="otpEnterSection" style="display: none;">
                         <label for="otp" class="form-label">Enter OTP</label>
-                        <input type="text" class="form-control" id="otp" name="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                        <input type="text" class="form-control" id="otp" name="password" onblur="validateOTP()">
+                        <div id="otpError" class="text-danger mt-3"></div>
+                     </div>
+                    <button type="submit" class="btn btn-primary" id="btn">Submit</button>
                      <c:if test="${not empty otpError}">
                                     <div class="alert alert-danger mt-3">${otpError}</div>
                      </c:if>
@@ -231,7 +233,7 @@ document.querySelectorAll('.update-btn').forEach(function(button) {
  document.getElementById('sendOtpButton').addEventListener('click', function() {
          const complaintId = document.getElementById('complaintId').value;
          const xhr = new XMLHttpRequest();
-         xhr.open("POST", "sendOtp", true);
+         xhr.open("POST", "employee/sendOtp", true);
          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
          xhr.onreadystatechange = function () {
              if (xhr.readyState === 4 && xhr.status === 200) {

@@ -22,7 +22,7 @@ import java.time.LocalTime;
 @NamedQuery(name = "findByEmailAndPassword",query = "select signup from SignupDTO signup where " +
         "signup.email=:email and signup.password=:password or signup.userPassword=:password")
 @NamedQuery(name = "findByExpireDate",query = "select signup from SignupDTO signup where signup.createdDate < :localDateTime")
-@NamedQuery(name = "findByUserId",query = "select signup from SignupDTO signup where " +
+@NamedQuery(name = "findBySignUserId",query = "select signup from SignupDTO signup where " +
         "signup.id=:id ")
 public class SignupDTO {
     @Id

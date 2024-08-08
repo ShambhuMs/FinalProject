@@ -1,8 +1,10 @@
 package com.xworkz.finalProject.model.service.implementations;
 
+import com.xworkz.finalProject.dto.ComplaintDTO;
 import com.xworkz.finalProject.dto.EmployeeDTO;
 import com.xworkz.finalProject.dto.SignupDTO;
 import com.xworkz.finalProject.model.repository.implementations.SignupRepository;
+import com.xworkz.finalProject.model.repository.interfaces.ComplaintRepository;
 import com.xworkz.finalProject.model.repository.interfaces.EmployeeRepository;
 import com.xworkz.finalProject.model.service.interfaces.EmployeeService;
 import com.xworkz.finalProject.randomPassword.RandomPasswordGenerator;
@@ -26,6 +28,8 @@ public class EmployeeServiceImplementation implements EmployeeService {
     private SignupRepository signupRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ComplaintRepository complaintRepository;
     @Override
     public Optional<EmployeeDTO> findByEmailAndPassword(String email, String password) {
         Optional<EmployeeDTO> optionalEmployeeDTO=this.employeeRepository.findByEmailAndPassword(email, password);
@@ -39,14 +43,17 @@ public class EmployeeServiceImplementation implements EmployeeService {
     }
 
     @Override
-    public boolean updateOtp(SignupDTO signupDTO) {
-        String otp=RandomPasswordGenerator.generatePassword();
-        String password= passwordEncoder.encode(otp);
-        signupDTO.setPassword(password);
-
-       boolean update= this.signupRepository.update(signupDTO);
-        sendEmail(signupDTO,otp);
-        return update;
+    public boolean updateOtp(int complaintId) {
+        Optional<ComplaintDTO> optionalComplaintDTO= this.complaintRepository.findById(complaintId);
+        if (optionalComplaintDTO.isPresent()){
+          Optional<SignupDTO> optionalSignupDTO= signupRepository.findById(optionalComplaintDTO.get().getUserId());
+            String otp=RandomPasswordGenerator.generatePassword();
+            optionalSignupDTO.get().setPassword(otp);
+            boolean update= this.signupRepository.update(optionalSignupDTO.get());
+            sendEmail(optionalSignupDTO.get(),otp);
+            return update;
+        }
+        return false;
     }
 
     public void sendEmail(SignupDTO signupDTO, String otp) {

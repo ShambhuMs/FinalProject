@@ -128,7 +128,7 @@ public class SignupRepository implements SignUpRepo {
     public Optional<SignupDTO> findById(int id) {
         EntityManager entityManager= entityManagerFactory.createEntityManager();
         try {
-            Query query= entityManager.createNamedQuery("findByUserId");
+            Query query= entityManager.createNamedQuery("findBySignUserId");
             query.setParameter("id",id);
             Object object=  query.getSingleResult();
             SignupDTO signupDTO=(SignupDTO) object;
