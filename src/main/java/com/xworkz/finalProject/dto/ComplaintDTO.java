@@ -26,6 +26,8 @@ import java.time.LocalDateTime;
         "complaint.complaintType=:complaintType")
 @NamedQuery(name = "findComplaintsByDepartmentId",query = "select complaint from ComplaintDTO complaint where " +
         "complaint.departmentId = :departmentId")
+@NamedQuery(name = "AdminRead",query = "SELECT c FROM ComplaintDTO c WHERE c.adminRead = false")
+@NamedQuery(name = "MarkAsRead",query = "UPDATE ComplaintDTO c SET c.adminRead = true WHERE c.id = :complaintId")
 public class ComplaintDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,4 +65,6 @@ public class ComplaintDTO {
     @Column(name = "employee_id")
     private Long employeeId;
     private String comment;
+    @Column(name = "admin_read")
+    private boolean adminRead;
 }

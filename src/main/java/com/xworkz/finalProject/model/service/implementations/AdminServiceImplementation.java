@@ -119,4 +119,13 @@ public class AdminServiceImplementation implements AdminService {
         }
         return false;
     }
+    @Override
+    public List<ComplaintDTO> getUnreadNotifications() {
+        return adminRepository.findUnread();
+    }
+    @Override
+    public boolean markAsRead(long id) {
+        adminRepository.markNotificationAsRead(id);
+        return true;
+    }
 }

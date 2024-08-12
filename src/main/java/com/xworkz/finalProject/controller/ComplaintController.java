@@ -45,6 +45,7 @@ public class ComplaintController {
                 complaintDTO.setUserId(signupDTO1.getId());
                 complaintDTO.setComplaintStatus(DefaultValues.STATUS.getDefaultStatus());
                 complaintDTO.setEmployeeId(DefaultValues.ZERO.getLongValue());
+                complaintDTO.setAdminRead(false);
                 boolean saved = this.complaintService.saveComplaintDetails(complaintDTO);
                 if (saved) {
                     model.addAttribute("successMessage", "Your complaint Submitted...");

@@ -24,4 +24,7 @@ public interface AdminService {
         return Optional.empty();
     }
     boolean AddDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO);
+
+    public List<ComplaintDTO> getUnreadNotifications();
+    boolean markAsRead(long id);
 }

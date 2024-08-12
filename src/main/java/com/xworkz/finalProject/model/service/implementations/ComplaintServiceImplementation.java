@@ -10,7 +10,11 @@ import com.xworkz.finalProject.model.service.interfaces.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +48,25 @@ public class ComplaintServiceImplementation implements ComplaintService {
     public boolean updateComplaint(ComplaintDTO complaintDTO) {
        boolean update= this.complaintRepository.updateComplaint(complaintDTO);
         return update;
+    }
+    // for formatting Local date to date format
+    @Override
+    public Date convertToDateViaInstant(LocalDateTime dateToConvert) {
+        return java.util.Date.from(dateToConvert.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    //formatting LocalDate to Date to display the date and time only
+    @Override
+    public String formatNotificationDate(Date date) {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+        SimpleDateFormat todayFormat = new SimpleDateFormat("yyyyMMdd");
+
+        Date now = new Date();
+        if (todayFormat.format(now).equals(todayFormat.format(date))) {
+            return timeFormat.format(date);
+        } else {
+            return dateFormat.format(date);
+        }
     }
 }

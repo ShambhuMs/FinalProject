@@ -1,21 +1,26 @@
 package com.xworkz.finalProject.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xworkz.finalProject.dto.*;
 import com.xworkz.finalProject.model.service.interfaces.AdminService;
 import com.xworkz.finalProject.model.service.interfaces.ComplaintService;
 import com.xworkz.finalProject.model.service.interfaces.DepartmentAdminService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class AdminController {
     @Autowired
     private AdminService adminService;
@@ -128,4 +133,80 @@ public String fetchAllClientDetails(Model model){
             }
             return "AddDepartmentAdmin";
         }
+
+        @GetMapping("/getNotification")
+        @ResponseBody
+     public void getNotifications(AdminDTO adminDTO, HttpSession session, HttpServletResponse response) {
+            try {
+                List<ComplaintDTO> notifications = adminService.getUnreadNotifications();
+                int notificationCount = notifications.size();
+
+//            // Format dates and times
+//            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+                List<Map<String, Object>> formattedNotifications = new ArrayList<>();
+                Map<Long, String> formattedDates = new HashMap<>();
+                notifications.forEach(notification -> {
+                    Date createdAtDate = complaintService.convertToDateViaInstant(notification.getCreatedDate());
+
+                    String formattedDate = complaintService.formatNotificationDate(createdAtDate);
+                    formattedDates.put(notification.getId(), formattedDate);
+                });
+                for (ComplaintDTO notification : notifications) {
+                    Map<String, Object> notificationMap = new HashMap<>();
+                    notificationMap.put("id", notification.getId());
+                    notificationMap.put("type", notification.getComplaintType());
+                    notificationMap.put("area", notification.getCity());
+                    notificationMap.put("address", notification.getAddress());
+//                notificationMap.put("formattedDate", dateFormat.format(notification.getModifiedAt()));
+
+                    notificationMap.put("formattedTime", formattedDates);
+                    notificationMap.put("read", notification.isAdminRead());
+                    formattedNotifications.add(notificationMap);
+                }
+
+                Map<String, Object> result = new HashMap<>();
+                result.put("notificationCount", notificationCount);
+                result.put("notifications", formattedNotifications);
+
+                notifications.sort((n1, n2) -> n2.getCreatedDate().compareTo(n1.getCreatedDate()));
+                session.setAttribute("notifications", notifications);
+                session.setAttribute("notificationCount", notificationCount);
+//                model.addAttribute("formattedDates", formattedDates);
+                session.setAttribute("formattedDates", formattedDates);
+                response.setContentType("application/json");
+                response.getWriter().write(new ObjectMapper().writeValueAsString(result));
+            } catch (Exception e) {
+                log.error("Error fetching notifications", e);
+                try {
+                    response.getWriter().write("{}");
+                } catch (IOException ioException) {
+                    log.error("Error writing response", ioException);
+                }
+            }
+        }
+    @GetMapping("/markNotificationAsRead")
+    @ResponseBody
+    public String markNotificationAsRead(@RequestParam int notificationId, HttpSession session) {
+        log.info("Marking notification as read: {}", notificationId);
+
+        boolean success = adminService.markAsRead(notificationId);
+        if (success) {
+            // Update session attributes
+            List<ComplaintDTO> notifications = (List<ComplaintDTO>) session.getAttribute("notifications");
+            notifications.removeIf(notification -> notification.getId() == notificationId);
+            session.setAttribute("notifications", notifications);
+            session.setAttribute("notificationCount", notifications.size());
+            return "success";
+        }
+        return "error";
+    }
+
+    @GetMapping("/viewNotificationComplaints")
+    public String viewComplaint(@RequestParam("id") long complaintId, Model model) {
+       Optional<ComplaintDTO> complaint = complaintService.findById(complaintId);
+        model.addAttribute("complaint", complaint.get());
+        return "AdminNotification"; // Ensure this JSP exists and matches your view
+}
 }

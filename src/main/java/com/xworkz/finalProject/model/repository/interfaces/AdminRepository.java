@@ -25,4 +25,6 @@ public interface AdminRepository {
         return Optional.empty();
     }
     boolean addDepartmentAdminDTO(DepartmentAdminDTO departmentAdminDTO);
+    public List<ComplaintDTO> findUnread();
+    void markNotificationAsRead(long id);
 }
