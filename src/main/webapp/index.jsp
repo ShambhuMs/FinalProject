@@ -56,7 +56,7 @@
                     <a class="nav-link text-light" href="AdminSignIn.jsp">AdminSignIn</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="SignIn.jsp">SignIn</a>
+                    <a class="nav-link text-light" href="SignIn.jsp">UserSignIn</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" href="departmentAdmin/adminLogin">DepartmentAdminSignIn</a>
@@ -64,18 +64,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="employee/adminLogin">EmployeeSignIn</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="ResetPasswordAnyTime.jsp">ResetPasswordAnyTime</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="DepartmentAdminHome.jsp">DepartmentAdminHome</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="AdminHomePage.jsp">AdminHomePage</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="UserHomePage.jsp">UserHomePage</a>
-                </li>
+
             </ul>
         </div>
     </nav>
@@ -84,7 +73,7 @@
             <div class="mb-1 mt-3">
                 <p class="fw-bold">
                     <h4>Tech Stack:</h4>
-                    <span>JSP, Bootstrap CSS, JavaScript, Java, Spring, Spring JPA/Hibernate, Ajax, MYSQL.</span>
+                    <span>JSP, Bootstrap CSS, JavaScript, Java, Spring MVC, Spring JPA/Hibernate, Ajax, MYSQL.</span>
                 </p>
             </div>
             <div class="mb-1 mt-3">
@@ -102,7 +91,10 @@
             <div class="mb-1 mt-3">
                 <p class="fw-bold">
                     <h4>Description:</h4>
-                    <span>Currently working on designing for accepting the complaints and department Admin will handling the complaints and assigning complaint to Particular department employees. Saving All details in database.</span>
+                    <span>Currently working on designing for accepting the complaints and department Admin will handling
+                     the complaints and assigning complaint to Particular department employees.after complaint resolved
+                     by employee he will confirming from the customer by an otp otherwise it cannot be consider as resolved and also
+                     saving all details in database.</span>
                 </p>
             </div>
         </form>
