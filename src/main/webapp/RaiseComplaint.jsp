@@ -134,7 +134,7 @@
         <div class="form-group">
             <label for="address">Address</label>
             <input type="text" class="form-control" placeholder="Enter Address" id="address" name="address"
-           value="${complaintDto.address}"  onblur="setAddress()" required/>
+           ${readOnly=="disable"? 'readonly' : ''} value="${complaintDto.address}"  onblur="setAddress()" required/>
             <div id="error-address" class="error"></div>
         </div>
       <div class="mb-3">

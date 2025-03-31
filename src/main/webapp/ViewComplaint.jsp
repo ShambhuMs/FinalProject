@@ -127,11 +127,11 @@
                         <th scope="col">City</th>
                         <th scope="col">Address</th>
                         <th scope="col">Description</th>
-                        <c:forEach items="${complaintDto}" var="complaintDto">
-                        <c:if test="${complaintDto.getComplaintStatus() == 'Active'}">
+                   <%--      <c:forEach items="${complaintDto}" var="complaintDto">
+                        <c:if test="${complaintDto.getComplaintStatus() == 'Active'}">   --%>
                             <th scope="col">Edit</th>
-                        </c:if>
-                        </c:forEach>
+                    <%--     </c:if>
+                       </c:forEach>  --%>
                     </tr>
                 </thead>
                 <tbody>

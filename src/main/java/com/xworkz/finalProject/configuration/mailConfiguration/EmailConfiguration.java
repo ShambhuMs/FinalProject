@@ -26,7 +26,7 @@ public class EmailConfiguration {
         properties.put("mail.smtp.auth","true"); //authentication
         properties.put("mail.smtp.ssl.trust","smtp.gmail.com"); // only for gmail
         properties.put("mail.smtp.starttls.enable","true"); //all ready
-        properties.put("mail.debug","true");
+        properties.put("mail.debug","false");
         return emailSender;
     }
 }

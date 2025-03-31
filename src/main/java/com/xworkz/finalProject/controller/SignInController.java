@@ -123,7 +123,7 @@ public class SignInController {
                 if (passwordResetDTO.getNewPassword().equals(passwordResetDTO.getConfirmNewPassword())){
                     String userPassword=passwordEncoder.encode(passwordResetDTO.getNewPassword());
                     optionalSignupDTO.get().setUserPassword(userPassword);
-                    optionalSignupDTO.get().setExpireTime(LocalTime.of(0,0,0));
+                   // optionalSignupDTO.get().setExpireTime(LocalTime.of(0,0,0));
                     optionalSignupDTO.get().setLock_account(0);
                     boolean updateValue=this.signUpService.update(optionalSignupDTO.get()); //update password 
                     if (updateValue){

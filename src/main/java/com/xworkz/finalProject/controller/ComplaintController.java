@@ -71,12 +71,17 @@ public class ComplaintController {
     @GetMapping("/viewComplaints")
     public String viewAllComplaints(Model model,HttpSession session){
         SignupDTO signupDTO=(SignupDTO)  session.getAttribute("dto");
+        if (signupDTO!=null){
         Optional<SignupDTO> optionalSignupDTO= this.signUpService.findByEmail(signupDTO.getEmail());
-        List<ComplaintDTO> complaintDTOList=this.complaintService.findByUserId(optionalSignupDTO.get().getId());
-        if (!complaintDTOList.isEmpty()){
-            model.addAttribute("complaintDto",complaintDTOList);
-        }else {
-            model.addAttribute("msg","0 Records found");
+        List<ComplaintDTO> complaintDTOList = this.complaintService.findByUserId(optionalSignupDTO.get().getId());
+            if (!complaintDTOList.isEmpty()) {
+                model.addAttribute("complaintDto", complaintDTOList);
+            } else {
+                model.addAttribute("msg", "0 Records found");
+            }
+        }
+        else {
+            model.addAttribute("msg", "Your Session Expired, Please re-login");
         }
         return "ViewComplaint";
     }
