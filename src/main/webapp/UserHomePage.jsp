@@ -12,10 +12,18 @@
         body {
             background-color: #f0f2f5;
             margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
 
         .navbar {
-            margin-bottom: 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
         .logo-img {
             margin-right: 15px;
@@ -47,6 +55,29 @@
             left: 500px;
         }
 
+        .typewriter-container {
+            font-size: 1.5rem;
+            font-weight: bold;
+            white-space: pre-wrap;
+            color: red;
+            display: inline-block;
+            overflow: hidden;
+            word-wrap: break-word;
+            text-align: center;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 20px;
+            background-color: red;
+            margin-left: 5px;
+            animation: blink 0.6s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -75,5 +106,25 @@
             </ul>
         </div>
     </nav>
+
+    <div class="typewriter-container" id="typewriter"></div><span class="cursor" id="cursor"></span>
+
+    <script>
+        const text = "Welcome to the Issue Management System - Track, Report, and Resolve Issues Efficiently!";
+        const speed = 50; // Typing speed in milliseconds
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                document.getElementById("cursor").style.display = "none"; // Hide cursor after typing
+            }
+        }
+
+        typeWriter();
+    </script>
 </body>
 </html>
