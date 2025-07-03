@@ -22,5 +22,8 @@ COPY --from=builder /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 # Expose the port
 EXPOSE 8080
 
+# Set JVM memory options to avoid memory limit issues (adjust as needed)
+ENV JAVA_OPTS="-Xms128m -Xmx256m"
+
 # Start Tomcat
 CMD ["catalina.sh", "run"]
