@@ -8,16 +8,7 @@
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>C:\Users\shamb\Desktop\FinalProject\src\main\resources\loggers.log</file>
-        <append>true</append>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
-        </encoder>
-    </appender>
-
     <root level="INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE"/>
     </root>
 </configuration>
