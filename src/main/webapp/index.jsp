@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <base href="http://localhost:8080/FinalProject/" />
+    <base href="${pageContext.request.contextPath}/" />
     <style>
         body {
             background-color: #f8f9fa;
