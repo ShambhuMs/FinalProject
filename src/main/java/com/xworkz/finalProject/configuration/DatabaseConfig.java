@@ -19,13 +19,13 @@ import javax.sql.DataSource;
 @PropertySource("classpath:Application.properties")
 @Slf4j
 public class DatabaseConfig {
-    @Value("${Jdbc.driver}")
+    @Value("${mysql.driver}")
     private String driver;
-    @Value("${Jdbc.url}")
+    @Value("${mysql.url}")
     private String url;
-    @Value("${Jdbc.userName}")
+    @Value("${mysql.userName}")
     private String userName;
-    @Value("${Jdbc.password}")
+    @Value("${mysql.password}")
     private String password;
 
     public DatabaseConfig(){
