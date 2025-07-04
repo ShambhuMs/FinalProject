@@ -8,7 +8,7 @@
     <title>Employee Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="/FinalProject/script/AddDepartmentAdmin.js"></script>
-    <base href="http://localhost:8080/FinalProject/">
+    <base href="${pageContext.request.contextPath}">
     <style>
         body {
             background-color: #f0f2f5;
