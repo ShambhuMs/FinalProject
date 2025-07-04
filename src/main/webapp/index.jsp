@@ -44,7 +44,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">
-            <img src="/FinalProject/images/xworkz.jpg" width="140" height="70" alt="Xworkz">
+            <img src="${pageContext.request.contextPath}/images/xworkz.jpg" width="140" height="70" alt="Xworkz">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
             <span class="navbar-toggler-icon"></span>

@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdminLogin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <base href="${pageContext.request.contextPath}" />
+    <base href="${pageContext.request.contextPath}/" />
+
     <style>
         body {
             background-color: #f0f2f5;
@@ -75,6 +76,7 @@
             </li>
             <li class="nav-item" id="home">
                 <a class="nav-link text-light" href="index.jsp">Home</a>
+
             </li>
         </ul>
     </div>
