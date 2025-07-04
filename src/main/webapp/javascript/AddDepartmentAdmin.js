@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", `http://localhost:8080/FinalProject/validateDepartmentAdminEmail?email=${encodeURIComponent(email)}`, true);
+        xhr.open("GET", `http:${pageContext.request.contextPath}/validateDepartmentAdminEmail?email=${encodeURIComponent(email)}`, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.onreadystatechange = function() {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", `http://localhost:8080/FinalProject/validateDepartmentAdminPhone?phoneNumber=${encodeURIComponent(phoneNumber)}`, true);
+        xhr.open("GET", `http:${pageContext.request.contextPath}/validateDepartmentAdminPhone?phoneNumber=${encodeURIComponent(phoneNumber)}`, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.onreadystatechange = function() {

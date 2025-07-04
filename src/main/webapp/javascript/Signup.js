@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           // AJAX request to check if email already exists
           let xhr = new XMLHttpRequest();
-          xhr.open("GET", `http://localhost:8080/FinalProject/validateEmail?email=${encodeURIComponent(email)}`, true);
+          xhr.open("GET", `http:${pageContext.request.contextPath}/validateEmail?email=${encodeURIComponent(email)}`, true);
           xhr.setRequestHeader("Content-Type", "application/json");
 
           xhr.onreadystatechange = function() {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // AJAX request to check if phone number already exists
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", `http://localhost:8080/FinalProject/validatePhone?phoneNumber=${encodeURIComponent(phoneNumber)}`, true);
+        xhr.open("GET", `http:${pageContext.request.contextPath}/validatePhone?phoneNumber=${encodeURIComponent(phoneNumber)}`, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.onreadystatechange = function() {

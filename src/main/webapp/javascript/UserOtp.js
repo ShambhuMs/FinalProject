@@ -23,7 +23,7 @@ function validateOTP() {
     let complaintId = document.getElementById("complaintId").value; // Get the complaint ID from the hidden input
 
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", `http://localhost:8080/FinalProject/validateOtp?otp=${encodeURIComponent(otp)}&complaintId=${encodeURIComponent(complaintId)}`, true);
+    xhr.open("GET", `http:${pageContext.request.contextPath}/validateOtp?otp=${encodeURIComponent(otp)}&complaintId=${encodeURIComponent(complaintId)}`, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
