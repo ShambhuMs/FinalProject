@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ViewComplaintDetails</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="/FinalProject/script/UserOtp.js"> </script>
+    <script>
+        const contextPath = "${pageContext.request.contextPath}";
+     </script>
+    <script src="${pageContext.request.contextPath}/script/UserOtp.js"> </script>
     <base href="${pageContext.request.contextPath}">
     <style>
         body {

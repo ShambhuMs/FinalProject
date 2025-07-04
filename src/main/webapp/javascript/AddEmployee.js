@@ -34,7 +34,7 @@
             }
 
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", `http:${pageContext.request.contextPath}/departmentAdmin/validateEmployeeEmail?email=${encodeURIComponent(email)}`, true);
+            xhr.open("GET", `${contextPath}/departmentAdmin/validateEmployeeEmail?email=${encodeURIComponent(email)}`, true);
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onreadystatechange = function() {
@@ -71,7 +71,7 @@
             }
 
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", `http:${pageContext.request.contextPath}/departmentAdmin/validateEmployeePhone?phoneNumber=${encodeURIComponent(phoneNumber)}`, true);
+            xhr.open("GET", `${contextPath}/departmentAdmin/validateEmployeePhone?phoneNumber=${encodeURIComponent(phoneNumber)}`, true);
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onreadystatechange = function() {

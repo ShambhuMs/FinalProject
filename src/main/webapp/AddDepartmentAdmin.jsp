@@ -7,7 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="/FinalProject/script/AddDepartmentAdmin.js"></script>
+    <script>
+         const contextPath = "${pageContext.request.contextPath}";
+     </script>
+    <script src="${pageContext.request.contextPath}/script/AddDepartmentAdmin.js"></script>
+
     <base href="${pageContext.request.contextPath}">
     <style>
         body {

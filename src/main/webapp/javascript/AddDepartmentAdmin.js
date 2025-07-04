@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", `http:${pageContext.request.contextPath}/validateDepartmentAdminPhone?phoneNumber=${encodeURIComponent(phoneNumber)}`, true);
+        xhr.open("GET", `${contextPath}/validateDepartmentAdminPhone?phoneNumber=${encodeURIComponent(phoneNumber)}`, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.onreadystatechange = function() {
